@@ -24,8 +24,8 @@ class HomeAdapter(val hItems: MutableList<VideoDTO>) : RecyclerView.Adapter<Home
         holder.itemView.setOnClickListener {  //클릭이벤트추가부분
             itemClick?.onClick(it, position)
         }
-        holder.thumbnails.setImageResource(hItems[position].thumbnails)
-        holder.title.text = hItems[position].title
+        //holder.thumbnails.setImageResource(hItems[position].thumbnails)
+        //holder.title.text = hItems[position].title
     }
 
     override fun getItemId(position: Int): Long {
