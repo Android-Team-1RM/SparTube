@@ -24,5 +24,16 @@ class MainActivity : AppCompatActivity() {
 
         // 2. TabLayout과 ViewPager2를 연결하고, TabItem의 메뉴명을 설정
         TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain, {tab, position -> tab.text = tabTitles[position]}).attach()
+
+        videoDetailPageBtnSet()
     }
+
+    private fun videoDetailPageBtnSet(){
+
+        //VideoDetailPageActivity 생성하기
+        binding.videoDetailPage.setOnClickListener{
+            startActivity(VideoDetailPageActivity.VideoDetailPageIntent(this@MainActivity))
+        }
+    }
+
 }
