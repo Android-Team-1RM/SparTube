@@ -12,7 +12,7 @@ interface VideoService {
         @Query("q") q: String?,
         @Query("type") type: String?,
         @Query("maxResults") maxResults: Int
-    ): Call<VideoDTO?>?
+    ): Call<VideoDTO>
 
     companion object {
         const val YOUTUBE_URL = "https://www.googleapis.com"

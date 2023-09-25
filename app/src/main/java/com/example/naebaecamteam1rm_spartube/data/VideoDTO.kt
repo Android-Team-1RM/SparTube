@@ -4,6 +4,16 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
+import retrofit2.Call
+
+@Serializable
+data class Item (
+    val kind: String,
+    val etag: String,
+    val id: ID,
+    val snippet: Snippet
+)
+
 
 @Serializable
 data class VideoDTO (
@@ -13,14 +23,6 @@ data class VideoDTO (
     val regionCode: String,
     val pageInfo: PageInfo,
     val items: List<Item>
-)
-
-@Serializable
-data class Item (
-    val kind: String,
-    val etag: String,
-    val id: ID,
-    val snippet: Snippet
 )
 
 @Serializable
