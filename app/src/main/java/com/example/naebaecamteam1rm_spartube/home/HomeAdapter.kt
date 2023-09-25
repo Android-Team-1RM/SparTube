@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.naebaecamteam1rm_spartube.data.TestData
+import com.example.naebaecamteam1rm_spartube.data.VideoDTO
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
-class HomeAdapter(val hItems: MutableList<TestData>) : RecyclerView.Adapter<HomeAdapter.Holder>() {
+class HomeAdapter(val hItems: MutableList<VideoDTO>) : RecyclerView.Adapter<HomeAdapter.Holder>() {
 
     interface ItemClick {
         fun onClick(view : View, position : Int)
@@ -24,7 +24,7 @@ class HomeAdapter(val hItems: MutableList<TestData>) : RecyclerView.Adapter<Home
         holder.itemView.setOnClickListener {  //클릭이벤트추가부분
             itemClick?.onClick(it, position)
         }
-        holder.preview.setImageResource(hItems[position].preview)
+        holder.thumbnails.setImageResource(hItems[position].thumbnails)
         holder.title.text = hItems[position].title
     }
 
@@ -37,7 +37,7 @@ class HomeAdapter(val hItems: MutableList<TestData>) : RecyclerView.Adapter<Home
     }
 
     inner class Holder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
-        val preview = binding.ivPreview
+        val thumbnails = binding.ivThumbnails
         val title = binding.tvTitle
     }
 }
