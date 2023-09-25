@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentHomeBinding
@@ -19,7 +20,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val MY_KEY = "AIzaSyB2m29rIghDyQeAEnCGryQpheg1CT_XNtg" // API KEY
+    private val MY_KEY = "" // API KEY
     private var Q // 유튜브 검색값
             : String? = null
     private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
