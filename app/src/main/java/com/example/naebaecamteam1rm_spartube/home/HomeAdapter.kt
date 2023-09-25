@@ -1,13 +1,18 @@
 package com.example.naebaecamteam1rm_spartube.home
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.naebaecamteam1rm_spartube.data.VideoDTO
+import com.bumptech.glide.Glide
+
+import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
-class HomeAdapter(val hItems: MutableList<VideoDTO>) : RecyclerView.Adapter<HomeAdapter.Holder>() {
+class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>() {
+    var list = ArrayList<TubeDataModel>()
+    var mContext = context
 
     interface ItemClick {
         fun onClick(view : View, position : Int)
@@ -16,16 +21,20 @@ class HomeAdapter(val hItems: MutableList<VideoDTO>) : RecyclerView.Adapter<Home
     var itemClick : ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return Holder(binding)
+        return Holder(
+            ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.itemView.setOnClickListener {  //클릭이벤트추가부분
-            itemClick?.onClick(it, position)
-        }
-        //holder.thumbnails.setImageResource(hItems[position].thumbnails)
-        //holder.title.text = hItems[position].title
+        var item = list[position]
+        holder.bind(item)
+//        holder.itemView.setOnClickListener {  //클릭이벤트추가부분
+//            itemClick?.onClick(it, position)
+//        }
+//        holder.thumbnails.setImageResource(list[position].url)
+//        holder.title.text = list[position].title
     }
 
     override fun getItemId(position: Int): Long {
@@ -33,11 +42,20 @@ class HomeAdapter(val hItems: MutableList<VideoDTO>) : RecyclerView.Adapter<Home
     }
 
     override fun getItemCount(): Int {
-        return hItems.size
+        return list.size
     }
 
     inner class Holder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
-        val thumbnails = binding.ivThumbnails
-        val title = binding.tvTitle
+//        val thumbnails = binding.ivThumbnails
+//        val title = binding.tvTitle
+        fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
+            itemView.setOnClickListener{
+                itemClick?.onClick(it, adapterPosition)
+            }
+            Glide.with(mContext)
+                .load(item.thumbnail)
+                .into(ivThumbnails)
+            tvTitle.text = item.title
+        }
     }
 }
