@@ -1,4 +1,4 @@
-package com.example.naebaecamteam1rm_spartube.home
+package com.example.naebaecamteam1rm_spartube.homepage
 
 import android.content.Context
 import android.os.Bundle
@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
-import com.example.naebaecamteam1rm_spartube.data.ChannelDTO
+import com.example.naebaecamteam1rm_spartube.api.Contants
+import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
@@ -22,8 +22,6 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
-    private val MY_KEY = "AIzaSyB2m29rIghDyQeAEnCGryQpheg1CT_XNtg" // API KEY
     private var Q // 유튜브 검색값
             : String? = null
     private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
@@ -51,6 +49,7 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         initView()
+        setMostPopuler()
         return binding.root
     }
 
@@ -88,12 +87,13 @@ class HomeFragment : Fragment() {
                 startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context, tubeData))
             }
         }
+
     }
 
     fun setMostPopuler() = with(binding) {
 
         Q = "항저우 아시안게임"
-        RetrofitInstance.api.getList(MY_KEY, "snippet", Q, "video", MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getList(Contants.MY_KEY, "snippet", Q, "video", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
@@ -144,7 +144,7 @@ class HomeFragment : Fragment() {
         Q = "항저우 아시안게임"
         //val keyword: String = "야구"
         //channelId = "UCnXNukjRxXGD8aeZGRV-lYg" //스포타임 채널 ID
-        RetrofitInstance.api.getchannelList(MY_KEY, "snippet", Q/*+ keyword.toString()*/, "channel", /*channelId,*/ MAX_RESULTS)
+        RetrofitInstance.api.getchannelList(Contants.MY_KEY, "snippet", Q/*+ keyword.toString()*/, "channel", /*channelId,*/ MAX_RESULTS)
             ?.enqueue(object :
                 Callback<VideoDTO> {
                 override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
@@ -190,6 +190,9 @@ class HomeFragment : Fragment() {
 
             })
 
+    }
+    fun modifyItemToAddFavorite(item: TubeDataModel){
+        listAdapter.modifyItemToAddFavorite(item)
     }
 }
 
