@@ -1,11 +1,13 @@
 package com.example.naebaecamteam1rm_spartube.mypage
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.naebaecamteam1rm_spartube.R
+import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class MyPageAdapter: ListAdapter<MyPageModel,MyPageAdapter.ViewHolder>(
@@ -19,7 +21,13 @@ class MyPageAdapter: ListAdapter<MyPageModel,MyPageAdapter.ViewHolder>(
         }
     }) {
 
+    interface ItemClick {
 
+        fun onClick(view : View, tubeData : TubeDataModel)
+
+    }
+
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
