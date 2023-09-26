@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
+import com.example.naebaecamteam1rm_spartube.data.toMyPageModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityVideoDetailPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
@@ -56,14 +57,17 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
         binding.btnLike.setOnClickListener{
             val mainActivity = MainActivity.newInstence()
-            mainActivity!!.addFavorite(
-                MyPageModel(
-                    TubeData.title,
-                    TubeData.thumbnail,
-                    true
-                )
-            )
-            Toast.makeText(this@VideoDetailPageActivity,"좋아요",Toast.LENGTH_SHORT).show()
+            if(!TubeData.isLike){
+                TubeData.isLike = true
+
+                mainActivity!!.addFavorite(TubeData.toMyPageModel())
+                mainActivity!!.addFavoriteToHome(TubeData)
+                Toast.makeText(this@VideoDetailPageActivity,"좋아요",Toast.LENGTH_SHORT).show()
+            }else{
+                TubeData.isLike = false
+
+            }
+
 
             //좋아요의 값을 갖고가는 함수를 만든다.      -> TubeData.isLike를 넘겨주면 된다.
 

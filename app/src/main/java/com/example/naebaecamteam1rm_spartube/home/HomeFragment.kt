@@ -169,6 +169,9 @@ class HomeFragment : Fragment() {
         })
 
     }
+    fun modifyItemToAddFavorite(item: TubeDataModel){
+        listAdapter.modifyItemToAddFavorite(item)
+    }
 }
 
 

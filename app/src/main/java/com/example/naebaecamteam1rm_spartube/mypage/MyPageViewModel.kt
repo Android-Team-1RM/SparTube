@@ -1,6 +1,5 @@
 package com.example.naebaecamteam1rm_spartube.mypage
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,10 +19,21 @@ class MyPageViewModel:ViewModel() {
             )
         }
     }
-    fun removeItem(position:Int?){//라이브데이터에서 아이템 삭제하는 기능
-        if(position == null || position<0) return
+    fun removeItem(item: MyPageModel?){//라이브데이터에서 아이템 삭제하는 기능
+        if(item== null) return
+        fun findIndex(item:MyPageModel?):Int{
+            val currentList = list.value.orEmpty().toMutableList()
+            val findPosition = currentList.find{
+                it.thumbnail == item?.thumbnail
+            }
+            return currentList.indexOf(findPosition)
+        }
+        val findPosition = findIndex(item)
+        if(findPosition<0){
+            return
+        }
         val currentList = list.value.orEmpty().toMutableList()
-        currentList.removeAt(position)
+        currentList.removeAt(findPosition)
         _list.value = currentList
 
     }
@@ -32,7 +42,7 @@ class MyPageViewModel:ViewModel() {
         fun findIndex(item:MyPageModel?):Int{
             val currentList = list.value.orEmpty().toMutableList()
             val findPosition = currentList.find{
-                it.thumbnails == item?.thumbnails
+                it.thumbnail == item?.thumbnail
             }
             return currentList.indexOf(findPosition)
         }

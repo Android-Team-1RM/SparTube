@@ -7,3 +7,12 @@ data class TubeDataModel(
     val url: String? = null,
     val isLike: Boolean = false,
     )
+fun TubeDataModel.toMyPageModel():MyPageModel{//MyPageModel로 모델 변환함수 작성
+    return MyPageModel(
+        title = title,
+        thumbnail = thumbnail,
+        description = description,
+        url = url,
+        isLike =  isLike
+    )
+}

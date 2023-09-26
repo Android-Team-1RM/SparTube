@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
+import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 
 class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>() {
 
@@ -18,7 +19,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
 
     interface ItemClick {
 
-        fun onClick(view : View, tubeData : TubeDataModel)
+        fun onClick(view: View, tubeData: TubeDataModel)
 
     }
 
@@ -39,7 +40,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
 //        holder.itemView.setOnClickListener {  //클릭이벤트추가부분
 //            itemClick?.onClick(it, position)
 //        }
-//        holder.thumbnails.setImageResource(list[position].url)
+//        holder.thumbnail.setImageResource(list[position].url)
 //        holder.title.text = list[position].title
     }
 
@@ -53,11 +54,11 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
 
     inner class Holder(val binding: ItemRecyclerviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        //        val thumbnails = binding.ivThumbnails
+        //        val thumbnail = binding.ivThumbnails
         //        val title = binding.tvTitle
 
-        fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
-            itemView.setOnClickListener{
+        fun bind(item: TubeDataModel) = with(binding) { //클릭이벤트추가부분
+            itemView.setOnClickListener {
                 itemClick?.onClick(it, item)
             }
             Glide.with(mContext)
@@ -67,5 +68,22 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
 
 
         }
+    }
+
+    fun modifyItemToAddFavorite(item: TubeDataModel) {//좋아요 바꾸기 위한 함수
+        if (item == null) return
+        fun findIndex(item: TubeDataModel): Int {
+            val findPosition = list.find {
+                it.thumbnail == item?.thumbnail
+            }
+            return list.indexOf(findPosition)
+        }
+
+        val findPosition = findIndex(item)
+        if (findPosition < 0) {
+            return
+        }
+        list[findPosition] = item
+        notifyDataSetChanged()
     }
 }
