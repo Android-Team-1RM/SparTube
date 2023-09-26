@@ -1,23 +1,25 @@
 package com.example.naebaecamteam1rm_spartube.home
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
 
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>() {
+
     var list = ArrayList<TubeDataModel>()
+
     var mContext = context
 
     interface ItemClick {
-        fun onClick(view: View, position: Int)
+
+        fun onClick(view : View, tubeData : TubeDataModel)
+
     }
 
     var itemClick: ItemClick? = null
@@ -33,6 +35,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var item = list[position]
         holder.bind(item)
+
 //        holder.itemView.setOnClickListener {  //클릭이벤트추가부분
 //            itemClick?.onClick(it, position)
 //        }
@@ -50,21 +53,19 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
 
     inner class Holder(val binding: ItemRecyclerviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        private val context = binding.root.context
-
         //        val thumbnails = binding.ivThumbnails
-//        val title = binding.tvTitle
-        fun bind(item: TubeDataModel) = with(binding) { //클릭이벤트추가부분
-            itemView.setOnClickListener {
-                itemClick?.onClick(it, adapterPosition)
-                val intent = Intent(context, VideoDetailPageActivity::class.java)
-                intent.run { context.startActivity(this) }
+        //        val title = binding.tvTitle
+
+        fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
+            itemView.setOnClickListener{
+                itemClick?.onClick(it, item)
             }
             Glide.with(mContext)
                 .load(item.thumbnail)
                 .into(ivThumbnails)
             tvTitle.text = item.title
+
+
         }
     }
 }

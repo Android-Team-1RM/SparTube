@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".main.MainActivity">
 
     <!-- ViewPager2: 이 위치에 Fragment들이 나옴-->
     <androidx.viewpager2.widget.ViewPager2
