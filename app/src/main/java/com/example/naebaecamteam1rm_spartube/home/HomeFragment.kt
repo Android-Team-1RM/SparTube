@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
@@ -20,7 +22,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val MY_KEY = "" // API KEY
+    private val MY_KEY = "AIzaSyB7cFtbaq2aTKvWLb6AvE6EyNXDSJPRWWQ" // API KEY
     private var Q // 유튜브 검색값
             : String? = null
     private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
@@ -58,6 +60,12 @@ class HomeFragment : Fragment() {
         gridmanager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recycler.layoutManager =gridmanager
         recycler.adapter=listAdapter
+
+        listAdapter.itemClick = object :HomeAdapter.ItemClick{
+            override fun onClick(view: View, tubeData : TubeDataModel) {
+                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context,tubeData))
+            }
+        }
 
     }
     fun settest() =with(binding){
