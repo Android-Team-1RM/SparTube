@@ -53,8 +53,5 @@ class MainActivity : AppCompatActivity() {
         myPageFragment.addItem(item)
     }
 
-//    fun search(item : TubeDataModel){
-//        val searchFragment = viewPagerAdapter.get
-//    }
 
 }
