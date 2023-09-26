@@ -4,5 +4,6 @@ import com.example.naebaecamteam1rm_spartube.data.Thumbnails
 
 data class MyPageModel(
     val title: String?,
-    val thumbnails: String?
+    val thumbnails: String?,
+    val isFavorte: Boolean = true
 )
