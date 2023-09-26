@@ -59,5 +59,10 @@ class MainActivity : AppCompatActivity() {
         homeFragment.modifyItemToAddFavorite(item)
     }
 
+//    fun addPlayList(item: TubeDataModel?){
+//        val playListFragment = viewPagerAdapter.getPlayListFragment()
+//        playListFragment.addItem(item)
+//    }
+
 
 }

@@ -7,7 +7,7 @@
     android:id="@+id/video_detail_page_panel_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VideoDetailPageActivity"
+    tools:context=".videodetailpage.VideoDetailPageActivity"
     >
 
     <RelativeLayout
@@ -97,35 +97,41 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-
+                    android:padding="8dp"
                     android:id="@+id/btn_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="4dp"
                     android:text="@string/btn_like"
+                    android:drawableLeft="@drawable/video_detail_page_btn_ic_like"
                     android:background="@drawable/video_detail_page_btn_shape"
                     android:elevation="4dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:padding="8dp"
                     android:id="@+id/btn_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="4dp"
                     android:text="@string/btn_share"
+                    android:drawableLeft="@drawable/video_detail_page_btn_ic_share"
                     android:background="@drawable/video_detail_page_btn_shape"
                     android:elevation="4dp"/>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:padding="8dp"
                     android:id="@+id/btn_play_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="4dp"
                     android:text="@string/btn_play_list"
+                    android:drawableLeft="@drawable/video_detail_page_btn_ic_checklist"
                     android:background="@drawable/video_detail_page_btn_shape"
                     android:elevation="4dp"/>
+
             </LinearLayout>
             <androidx.cardview.widget.CardView
                 android:layout_margin="8dp"

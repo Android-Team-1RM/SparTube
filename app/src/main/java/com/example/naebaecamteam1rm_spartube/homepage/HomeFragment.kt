@@ -1,4 +1,4 @@
-package com.example.naebaecamteam1rm_spartube.home
+package com.example.naebaecamteam1rm_spartube.homepage
 
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
+import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO

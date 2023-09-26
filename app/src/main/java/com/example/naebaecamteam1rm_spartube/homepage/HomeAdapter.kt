@@ -1,4 +1,4 @@
-package com.example.naebaecamteam1rm_spartube.home
+package com.example.naebaecamteam1rm_spartube.homepage
 
 import android.content.Context
 import android.view.LayoutInflater

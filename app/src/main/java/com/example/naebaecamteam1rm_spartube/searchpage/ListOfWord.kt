@@ -1,4 +1,4 @@
-package com.example.naebaecamteam1rm_spartube.search
+package com.example.naebaecamteam1rm_spartube.searchpage
 
 val searchWordList: List<String> =
     listOf(

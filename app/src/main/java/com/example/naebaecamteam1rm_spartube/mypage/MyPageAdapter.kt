@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.databinding.ItemMyPageRecyclerviewBinding
+import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class MyPageAdapter(context : Context,
                     private val onClickItem: (MyPageModel) -> Unit
@@ -23,6 +24,14 @@ class MyPageAdapter(context : Context,
         }
     }) {
     private var mContext = context
+
+    interface ItemClick {
+
+        fun onClick(view : View, tubeData : MyPageModel)
+
+    }
+
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemMyPageRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false),

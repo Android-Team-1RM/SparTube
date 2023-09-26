@@ -1,4 +1,4 @@
-package com.example.naebaecamteam1rm_spartube.search
+package com.example.naebaecamteam1rm_spartube.searchpage
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -20,7 +20,7 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
     }
 
     interface ItemClick {
-        fun onClick(view : View, position : Int)
+        fun onClick(view : View, tubeData : TubeDataModel)
     }
 
     var itemClick : ItemClick? = null
@@ -48,7 +48,7 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
 
         fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
             itemView.setOnClickListener{
-                itemClick?.onClick(it, adapterPosition)
+                itemClick?.onClick(it, item)
             }
             Glide.with(mContext)
                 .load(item.thumbnail)

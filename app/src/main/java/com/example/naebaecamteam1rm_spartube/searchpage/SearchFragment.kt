@@ -1,4 +1,4 @@
-package com.example.naebaecamteam1rm_spartube.search
+package com.example.naebaecamteam1rm_spartube.searchpage
 
 import android.content.Context
 import android.os.Bundle
@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentSearchBinding
-import kotlinx.coroutines.CoroutineScope
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -92,6 +90,12 @@ class SearchFragment : Fragment() {
         adapter = SearchAdapter(mContext)
         binding.rvSearchResult.adapter = adapter
         binding.rvSearchResult.layoutManager = gridmanager
+
+        adapter.itemClick = object : SearchAdapter.ItemClick{
+            override fun onClick(view: View, tubeData : TubeDataModel) {
+                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context,tubeData))
+            }
+        }
 
     }
 

@@ -3,16 +3,16 @@ package com.example.naebaecamteam1rm_spartube.main
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.naebaecamteam1rm_spartube.PlaylistFragment
-import com.example.naebaecamteam1rm_spartube.home.HomeFragment
+import com.example.naebaecamteam1rm_spartube.playlistpage.PlayListFragment
+import com.example.naebaecamteam1rm_spartube.homepage.HomeFragment
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageFragment
-import com.example.naebaecamteam1rm_spartube.search.SearchFragment
+import com.example.naebaecamteam1rm_spartube.searchpage.SearchFragment
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
     // 1. ViewPager2에 연결할 Fragment 들을 생성
-    val fragmentList = listOf<Fragment>(HomeFragment(), SearchFragment(), PlaylistFragment(),
+    val fragmentList = listOf<Fragment>(HomeFragment(), SearchFragment(), PlayListFragment(),
         MyPageFragment()
     )
 
@@ -31,5 +31,8 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     }
     fun getHomeFragment():HomeFragment{
         return fragmentList[0] as HomeFragment
+    }
+    fun getPlayListFragment():PlayListFragment{
+        return fragmentList[2] as PlayListFragment
     }
 }

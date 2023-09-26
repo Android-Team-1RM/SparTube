@@ -25,6 +25,7 @@ class MyPageFragment: Fragment() {
     private val viewModel: MyPageViewModel by lazy{
         ViewModelProvider(this)[MyPageViewModel::class.java]
     }
+
     private lateinit var gridmanager:StaggeredGridLayoutManager
     private lateinit var mContext: Context
 

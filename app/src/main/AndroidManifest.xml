@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".VideoDetailPageActivity"
+            android:name=".videodetailpage.VideoDetailPageActivity"
             android:exported="false">
         </activity>
     </application>
