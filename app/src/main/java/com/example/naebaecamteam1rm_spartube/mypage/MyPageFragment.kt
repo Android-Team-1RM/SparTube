@@ -8,7 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
+import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
+import com.example.naebaecamteam1rm_spartube.home.HomeAdapter
 
 class MyPageFragment: Fragment() {
     companion object{
@@ -50,6 +53,11 @@ class MyPageFragment: Fragment() {
         recyclerview.layoutManager =gridmanager
         recyclerview.adapter = listAdapter
 
+        listAdapter.itemClick = object : MyPageAdapter.ItemClick{
+            override fun onClick(view: View, tubeData : TubeDataModel) {
+                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context,tubeData))
+            }
+        }
     }
     private fun initViewModel(){
         with(viewModel){
