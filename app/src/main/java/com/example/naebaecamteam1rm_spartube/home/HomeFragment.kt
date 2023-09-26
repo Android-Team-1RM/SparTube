@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
@@ -29,7 +30,7 @@ class HomeFragment : Fragment() {
         HomeAdapter(mContext)
     }
     private lateinit var mContext: Context
-    private lateinit var gridmanager: StaggeredGridLayoutManager
+    private lateinit var manager: LinearLayoutManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,13 +58,62 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
-        gridmanager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
-        recyclerMostPopular.layoutManager = gridmanager
+        manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerMostPopular.layoutManager = manager
         recyclerMostPopular.adapter = listAdapter
 
     }
 
     fun setMostPopuler() = with(binding) {
+        Q = "아시안게임"
+        RetrofitInstance.api.getList(MY_KEY, "snippet", Q, "videop", MAX_RESULTS)?.enqueue(object :
+            Callback<VideoDTO> {
+            override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
+                if (response.isSuccessful) {//응답 성공시 실행
+                    Log.d("test", "Response")
+                    val data = response.body()
+                    val youtubeList = data?.items
+                    if (youtubeList == null) {// 가져온 데이터 없으면 리턴
+                        return
+                    } else {
+                        for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
+                            val title = youtubeList.get(i).snippet.title
+                            val thumbnail = youtubeList.get(i).snippet.thumbnails.default.url
+                            val description = youtubeList.get(i).snippet.description
+//                            val url = data.etag
+                            Log.d("title", "$title")
+                            Log.d("thumbnail", "$thumbnail")
+                            Log.d("description", "$description")
+//                            Log.d("url","$url")
+
+                            y_datas.add(
+                                TubeDataModel(
+// y_data에
+                                    title = title,
+                                    thumbnail = thumbnail,
+                                    description = description,
+
+                                    )
+                            )
+                            Log.d("y_datas", "$y_datas")
+                            listAdapter.list = y_datas //리스트를 어댑터에 적용
+                            listAdapter.notifyDataSetChanged()// notity
+
+                        }
+                    }
+
+                }
+            }
+
+            override fun onFailure(call: Call<VideoDTO>, t: Throwable) {//실패시 찍히는 로그
+                Log.d("test1", "fail")
+            }
+
+        })
+
+    }
+
+    fun setCategoryCannels() = with(binding) {
         Q = "아시안게임"
         RetrofitInstance.api.getList(MY_KEY, "snippet", Q, "videop", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
