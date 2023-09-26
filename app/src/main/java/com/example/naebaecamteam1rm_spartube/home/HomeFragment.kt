@@ -22,7 +22,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val MY_KEY = "AIzaSyB7cFtbaq2aTKvWLb6AvE6EyNXDSJPRWWQ" // API KEY
+    private val MY_KEY = "AIzaSyAawNkbc1gCqUs16GXHboFL7xy_AaI93NQ" // API KEY
 
     private var Q // 유튜브 검색값
             : String? = null
