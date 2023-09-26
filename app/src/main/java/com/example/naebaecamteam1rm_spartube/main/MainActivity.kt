@@ -53,5 +53,10 @@ class MainActivity : AppCompatActivity() {
         myPageFragment.addItem(item)
     }
 
+//    fun addPlayList(item: TubeDataModel?){
+//        val playListFragment = viewPagerAdapter.getPlayListFragment()
+//        playListFragment.addItem(item)
+//    }
+
 
 }

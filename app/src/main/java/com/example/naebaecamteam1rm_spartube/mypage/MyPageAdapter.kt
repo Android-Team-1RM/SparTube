@@ -4,20 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.R
-import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
-import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class MyPageAdapter(context : Context): ListAdapter<MyPageModel,MyPageAdapter.ViewHolder>(
     object:DiffUtil.ItemCallback<MyPageModel>(){
         override fun areContentsTheSame(oldItem: MyPageModel, newItem: MyPageModel): Boolean {
-            return oldItem.thumbnails == newItem.thumbnails
+            return oldItem.thumbnail == newItem.thumbnail
         }
 
         override fun areItemsTheSame(oldItem: MyPageModel, newItem: MyPageModel): Boolean {
@@ -28,7 +25,7 @@ class MyPageAdapter(context : Context): ListAdapter<MyPageModel,MyPageAdapter.Vi
 
     interface ItemClick {
 
-        fun onClick(view : View, tubeData : TubeDataModel)
+        fun onClick(view : View, tubeData : MyPageModel)
 
     }
 
@@ -46,8 +43,11 @@ class MyPageAdapter(context : Context): ListAdapter<MyPageModel,MyPageAdapter.Vi
         private val binding:ItemRecyclerviewBinding
     ):RecyclerView.ViewHolder(binding.root){
         fun bind(item:MyPageModel) = with(binding){
+            itemView.setOnClickListener{
+                itemClick?.onClick(it, item)
+            }
             Glide.with(mContext)
-                .load(item.thumbnails)
+                .load(item.thumbnail)
                 .error(R.drawable.video_detail_page_img_base)
                 .into(ivThumbnails)
             tvTitle.text = item.title
