@@ -11,18 +11,23 @@ import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>() {
+
     var list = ArrayList<TubeDataModel>()
+
     var mContext = context
 
     interface ItemClick {
-        fun onClick(view : View, position : Int)
+
+        fun onClick(view : View, tubeData : TubeDataModel)
+
     }
 
-    var itemClick : ItemClick? = null
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
-            ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false
+            ItemRecyclerviewBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }
@@ -30,6 +35,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var item = list[position]
         holder.bind(item)
+
 //        holder.itemView.setOnClickListener {  //클릭이벤트추가부분
 //            itemClick?.onClick(it, position)
 //        }
@@ -45,17 +51,21 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
         return list.size
     }
 
-    inner class Holder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
-//        val thumbnails = binding.ivThumbnails
-//        val title = binding.tvTitle
+    inner class Holder(val binding: ItemRecyclerviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        //        val thumbnails = binding.ivThumbnails
+        //        val title = binding.tvTitle
+
         fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
             itemView.setOnClickListener{
-                itemClick?.onClick(it, adapterPosition)
+                itemClick?.onClick(it, item)
             }
             Glide.with(mContext)
                 .load(item.thumbnail)
                 .into(ivThumbnails)
             tvTitle.text = item.title
+
+
         }
     }
 }
