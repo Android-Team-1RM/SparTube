@@ -7,8 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitInstance {
     val api: VideoService
         get() = retrofit.create(VideoService::class.java)
-    private val retrofit:Retrofit
-        private get(){
+    private val retrofit: Retrofit
+        private get() {
             val gson = GsonBuilder().setLenient().create()
 
             return Retrofit.Builder()

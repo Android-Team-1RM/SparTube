@@ -15,14 +15,15 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
     var mContext = context
 
     interface ItemClick {
-        fun onClick(view : View, position : Int)
+        fun onClick(view: View, position: Int)
     }
 
-    var itemClick : ItemClick? = null
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
-            ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false
+            ItemRecyclerviewBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }
@@ -45,11 +46,12 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
         return list.size
     }
 
-    inner class Holder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
-//        val thumbnails = binding.ivThumbnails
+    inner class Holder(val binding: ItemRecyclerviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        //        val thumbnails = binding.ivThumbnails
 //        val title = binding.tvTitle
-        fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
-            itemView.setOnClickListener{
+        fun bind(item: TubeDataModel) = with(binding) { //클릭이벤트추가부분
+            itemView.setOnClickListener {
                 itemClick?.onClick(it, adapterPosition)
             }
             Glide.with(mContext)

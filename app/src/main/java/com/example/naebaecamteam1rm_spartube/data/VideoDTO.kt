@@ -4,10 +4,9 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
-import retrofit2.Call
 
 @Serializable
-data class Item (
+data class Item(
     val kind: String,
     val etag: String,
     val id: ID,
@@ -16,7 +15,7 @@ data class Item (
 
 
 @Serializable
-data class VideoDTO (
+data class VideoDTO(
     val kind: String,
     val etag: String,
     val nextPageToken: String,
@@ -26,7 +25,7 @@ data class VideoDTO (
 )
 
 @Serializable
-data class ID (
+data class ID(
     val kind: String,
 
     @SerialName("videoId")
@@ -34,7 +33,7 @@ data class ID (
 )
 
 @Serializable
-data class Snippet (
+data class Snippet(
     val publishedAt: String,
 
     @SerialName("channelId")
@@ -49,21 +48,21 @@ data class Snippet (
 )
 
 @Serializable
-data class Thumbnails (
+data class Thumbnails(
     val default: Default,
     val medium: Default,
     val high: Default
 )
 
 @Serializable
-data class Default (
+data class Default(
     val url: String,
     val width: Long,
     val height: Long
 )
 
 @Serializable
-data class PageInfo (
+data class PageInfo(
     val totalResults: Long,
     val resultsPerPage: Long
 )
