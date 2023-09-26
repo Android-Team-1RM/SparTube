@@ -10,17 +10,6 @@ class MyPageViewModel:ViewModel() {
     val list: LiveData<List<MyPageModel>> get() = _list
 
     init{
-        _list.value = mutableListOf<MyPageModel>().apply{
-            for(i in 0 until 3){
-                add(
-                    MyPageModel(
-                        "test $i",
-                        "test1 $i"
-                    )
-                )
-            }
-
-        }
     }
     fun addItem(item:MyPageModel?){//라이브데이터에 아이템 추가하는 기능
         if(item == null) return

@@ -26,4 +26,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]
     }
+    fun getMyPageFragment():MyPageFragment{
+        return fragmentList[3] as MyPageFragment
+    }
 }
