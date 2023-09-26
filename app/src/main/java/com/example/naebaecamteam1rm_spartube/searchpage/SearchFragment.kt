@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.naebaecamteam1rm_spartube.Contants
 import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
@@ -20,7 +21,6 @@ import retrofit2.Response
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private val tag = "SearchFragment"
-    private val MY_KEY = "AIzaSyAc4RlJZzge6tvjG8zZjefnsJy9A_iSnTw"
     private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
     private lateinit var mContext: Context
     private lateinit var adapter: SearchAdapter
@@ -101,7 +101,7 @@ class SearchFragment : Fragment() {
 
 
     fun settest(search: String) =with(binding){
-        RetrofitInstance.api.getList(MY_KEY,"snippet","아시안게임 $search","videop",MAX_RESULTS)?.enqueue( object :
+        RetrofitInstance.api.getList(Contants.MY_KEY,"snippet","아시안게임 $search","videop",MAX_RESULTS)?.enqueue( object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if(response.isSuccessful){
