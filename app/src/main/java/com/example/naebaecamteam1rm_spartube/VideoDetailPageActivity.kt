@@ -35,7 +35,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
         binding = ActivityVideoDetailPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        overridePendingTransition(R.anim.activity_video_detail_page_slide_up, 0)
+        overridePendingTransition(R.anim.activity_video_detail_page_slide_up,R.anim.activity_video_detail_page_none)
 
         initView()
         btnSet()
@@ -46,6 +46,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
         Glide.with(this)
             .load(TubeData.thumbnail)
             .error(R.drawable.video_detail_page_img_base)
+            .fitCenter()
             .into(binding.ivThumbnail)
         binding.tvTitle.text = TubeData.title
         binding.tvDescription.text = TubeData.description
@@ -88,7 +89,9 @@ class VideoDetailPageActivity : AppCompatActivity() {
         }
 
         binding.icBtnDown.setOnClickListener{
+
             finish()
+            overridePendingTransition(R.anim.activity_video_detail_page_none,R.anim.activity_video_detail_page_slide_down)
         }
     }
 
