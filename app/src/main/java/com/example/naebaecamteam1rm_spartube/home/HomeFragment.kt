@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
@@ -63,6 +65,12 @@ class HomeFragment : Fragment() {
         recyclerMostPopular.layoutManager = manager
         recyclerMostPopular.adapter = listAdapter
 
+        listAdapter.itemClick = object :HomeAdapter.ItemClick{
+            override fun onClick(view: View, tubeData : TubeDataModel) {
+                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context,tubeData))
+            }
+        }
+
         recyclerCategoryCannels.layoutManager = manager
         recyclerCategoryCannels.adapter = listAdapter
 
@@ -77,7 +85,6 @@ class HomeFragment : Fragment() {
         RetrofitInstance.api.getList(MY_KEY, "snippet", Q /*+ keyword.toString()*/, "videop", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
-                Log.d("bb", "Response")
                 if (response.isSuccessful) {//응답 성공시 실행
                     Log.d("test", "Response")
                     val data = response.body()

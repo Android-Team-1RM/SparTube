@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
 
@@ -15,6 +16,7 @@ class MyPageFragment: Fragment() {
     }
     private var _binding : FragmentMyPageBinding? =null
     private val binding get() = _binding!!
+
     private val listAdapter by lazy{
         MyPageAdapter()
     }
@@ -22,6 +24,7 @@ class MyPageFragment: Fragment() {
         ViewModelProvider(this)[MyPageViewModel::class.java]
     }
     private lateinit var gridmanager:StaggeredGridLayoutManager
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,6 +44,7 @@ class MyPageFragment: Fragment() {
         _binding = null
         super.onDestroyView()
     }
+
     private fun initView() = with(binding){
         gridmanager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerview.layoutManager =gridmanager
