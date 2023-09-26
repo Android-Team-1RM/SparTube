@@ -3,9 +3,21 @@ package com.example.naebaecamteam1rm_spartube.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityMainBinding
+import com.example.naebaecamteam1rm_spartube.mypage.MyPageFragment
+import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
+    init{
+        instance = this
+    }
+    companion object{
+        private var instance: MainActivity? =null
+        fun newInstence(): MainActivity?{
+            return instance
+        }
+
+    }
     private val binding by lazy { ActivityMainBinding. inflate(layoutInflater) }
 
     private val viewPagerAdapter by lazy {
@@ -23,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding.viewPagerMain.run{
             isUserInputEnabled= false
         }
-
+        binding.viewPagerMain.offscreenPageLimit = viewPagerAdapter.itemCount
 
         // TabLayout과 ViewPager2를 연결
         // 1. 탭메뉴의 이름을 리스트로 생성
@@ -35,6 +47,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    fun addFavorite(item: MyPageModel?){
+        val myPageFragment = viewPagerAdapter.getMyPageFragment()
+        myPageFragment.addItem(item)
+    }
 
 }
