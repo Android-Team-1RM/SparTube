@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
+import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 
 class MyPageFragment: Fragment() {
     companion object{
@@ -29,7 +29,11 @@ class MyPageFragment: Fragment() {
     private lateinit var mContext: Context
 
     private val listAdapter by lazy{
-        MyPageAdapter(mContext)
+        MyPageAdapter(mContext,
+            onClickItem = {item ->
+                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(mContext,item.toTubeData()))
+            }
+        )
     }
 
     override fun onAttach(context: Context) {
@@ -61,12 +65,6 @@ class MyPageFragment: Fragment() {
         recyclerview.layoutManager =gridmanager
         recyclerview.adapter = listAdapter
 
-        listAdapter.itemClick = object : MyPageAdapter.ItemClick{
-            override fun onClick(view: View, myPageModel : MyPageModel) {
-                val tubeData = myPageModel.TubeDataModel()
-                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context,tubeData))
-            }
-        }
     }
     private fun initViewModel(){
         with(viewModel){
@@ -77,6 +75,9 @@ class MyPageFragment: Fragment() {
     }
     fun addItem(item:MyPageModel?){
         viewModel.addItem(item)
+    }
+    fun removeItem(item:MyPageModel?){
+        viewModel.removeItem(item)
     }
 
 }

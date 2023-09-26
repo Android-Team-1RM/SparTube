@@ -66,6 +66,7 @@ class HomeFragment : Fragment() {
 
         listAdapter.itemClick = object :HomeAdapter.ItemClick{
             override fun onClick(view: View, tubeData : TubeDataModel) {
+                Log.d("favoriteTest","${tubeData.isLike}")
                 startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context,tubeData))
             }
         }
@@ -168,6 +169,9 @@ class HomeFragment : Fragment() {
 
         })
 
+    }
+    fun modifyItemToAddFavorite(item: TubeDataModel){
+        listAdapter.modifyItemToAddFavorite(item)
     }
 }
 

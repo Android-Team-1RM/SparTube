@@ -29,6 +29,9 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     fun getMyPageFragment():MyPageFragment{
         return fragmentList[3] as MyPageFragment
     }
+    fun getHomeFragment():HomeFragment{
+        return fragmentList[0] as HomeFragment
+    }
     fun getPlayListFragment():PlayListFragment{
         return fragmentList[2] as PlayListFragment
     }
