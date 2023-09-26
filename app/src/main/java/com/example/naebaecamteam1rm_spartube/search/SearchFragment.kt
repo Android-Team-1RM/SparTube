@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
@@ -24,6 +27,8 @@ class SearchFragment : Fragment() {
     private lateinit var mContext: Context
     private lateinit var adapter: SearchAdapter
     private val youDatas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
+    private lateinit var gridmanager: StaggeredGridLayoutManager
+    private lateinit var manager: LinearLayoutManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,8 +74,10 @@ class SearchFragment : Fragment() {
     }
 
     fun setView(){
+        manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         adapter = SearchAdapter(mContext)
         binding.rvSearchResult.adapter = adapter
+        binding.rvSearchResult.layoutManager = manager
 
     }
 
