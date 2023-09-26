@@ -1,5 +1,7 @@
 package com.example.naebaecamteam1rm_spartube.data
 
+import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
+
 data class TubeDataModel(
     val title: String?, //제목
     val thumbnail: String?, // 썸네일 이미지 URL

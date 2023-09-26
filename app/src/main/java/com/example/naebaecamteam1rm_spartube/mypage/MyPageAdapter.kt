@@ -25,14 +25,6 @@ class MyPageAdapter(context : Context,
     }) {
     private var mContext = context
 
-    interface ItemClick {
-
-        fun onClick(view : View, tubeData : MyPageModel)
-
-    }
-
-    var itemClick: ItemClick? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemMyPageRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         onClickItem)

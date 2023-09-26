@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
-import com.example.naebaecamteam1rm_spartube.home.HomeAdapter
+import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 
 class MyPageFragment: Fragment() {
     companion object{
@@ -32,7 +31,7 @@ class MyPageFragment: Fragment() {
     private val listAdapter by lazy{
         MyPageAdapter(mContext,
             onClickItem = {item ->
-                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context,item.toTubeData()))
+                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(mContext,item.toTubeData()))
             }
         )
     }
