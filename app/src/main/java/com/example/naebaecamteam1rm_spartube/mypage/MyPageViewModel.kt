@@ -1,6 +1,5 @@
 package com.example.naebaecamteam1rm_spartube.mypage
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,7 +31,7 @@ class MyPageViewModel:ViewModel() {
         fun findIndex(item:MyPageModel?):Int{
             val currentList = list.value.orEmpty().toMutableList()
             val findPosition = currentList.find{
-                it.thumbnails == item?.thumbnails
+                it.thumbnail == item?.thumbnail
             }
             return currentList.indexOf(findPosition)
         }

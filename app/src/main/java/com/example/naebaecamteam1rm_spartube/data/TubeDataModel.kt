@@ -5,5 +5,5 @@ data class TubeDataModel(
     val thumbnail: String?, // 썸네일 이미지 URL
     val description: String?,
     val url: String? = null,
-    val isLike: Boolean = false,
+    var isLike: Boolean = false,
     )

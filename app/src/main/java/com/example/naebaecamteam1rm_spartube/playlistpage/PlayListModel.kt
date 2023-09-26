@@ -1,8 +1,8 @@
-package com.example.naebaecamteam1rm_spartube.mypage
+package com.example.naebaecamteam1rm_spartube.playlistpage
 
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 
-data class MyPageModel(
+data class PlayListModel(
     val title: String?,
     val thumbnail: String?,
     val description: String?,
@@ -10,7 +10,7 @@ data class MyPageModel(
     val isLike: Boolean = true
 )
 
-fun MyPageModel.TubeDataModel(): TubeDataModel {
+fun PlayListModel.TubeDataModel(): TubeDataModel {
     return TubeDataModel(
         title = title,
         thumbnail = thumbnail,
