@@ -28,7 +28,6 @@ class SearchFragment : Fragment() {
     private lateinit var adapter: SearchAdapter
     private val youDatas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
     private lateinit var gridmanager: StaggeredGridLayoutManager
-    private lateinit var manager: LinearLayoutManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,6 +60,19 @@ class SearchFragment : Fragment() {
         firstBtn.text = btnRandomWord.getOrElse(0){""}
         secondBtn.text = btnRandomWord.getOrElse(1){""}
         thirdBtn.text = btnRandomWord.getOrElse(2){""}
+
+        firstBtn.setOnClickListener {
+            adapter.clearItem()
+            settest(firstBtn.text.toString())
+        }
+        secondBtn.setOnClickListener {
+            adapter.clearItem()
+            settest(secondBtn.text.toString())
+        }
+        thirdBtn.setOnClickListener {
+            adapter.clearItem()
+            settest(thirdBtn.text.toString())
+        }
     }
 
     private fun searchInEdit(){
@@ -73,17 +85,19 @@ class SearchFragment : Fragment() {
         }
     }
 
+
+
     fun setView(){
-        manager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        gridmanager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         adapter = SearchAdapter(mContext)
         binding.rvSearchResult.adapter = adapter
-        binding.rvSearchResult.layoutManager = manager
+        binding.rvSearchResult.layoutManager = gridmanager
 
     }
 
 
     fun settest(search: String) =with(binding){
-        RetrofitInstance.api.getList(MY_KEY,"snippet",search,"videop",MAX_RESULTS)?.enqueue( object :
+        RetrofitInstance.api.getList(MY_KEY,"snippet","아시안게임 $search","videop",MAX_RESULTS)?.enqueue( object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if(response.isSuccessful){
