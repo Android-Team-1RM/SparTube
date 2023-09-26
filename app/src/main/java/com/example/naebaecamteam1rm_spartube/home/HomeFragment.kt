@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
@@ -25,6 +24,7 @@ class HomeFragment : Fragment() {
     private var Q // 유튜브 검색값
             : String? = null
     private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
+    private var channelId: String? = null
     private val y_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
     private val listAdapter by lazy {
         HomeAdapter(mContext)
@@ -44,6 +44,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         initView()
         setMostPopuler()
+        setCategoryCannels()
         return binding.root
     }
 
@@ -62,13 +63,21 @@ class HomeFragment : Fragment() {
         recyclerMostPopular.layoutManager = manager
         recyclerMostPopular.adapter = listAdapter
 
+        recyclerCategoryCannels.layoutManager = manager
+        recyclerCategoryCannels.adapter = listAdapter
+
+    }
+    private fun categoryVideo(){
+
     }
 
     fun setMostPopuler() = with(binding) {
+        //val keyword: String = "야구"
         Q = "아시안게임"
-        RetrofitInstance.api.getList(MY_KEY, "snippet", Q, "videop", MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getList(MY_KEY, "snippet", Q /*+ keyword.toString()*/, "videop", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
+                Log.d("bb", "Response")
                 if (response.isSuccessful) {//응답 성공시 실행
                     Log.d("test", "Response")
                     val data = response.body()
@@ -115,7 +124,8 @@ class HomeFragment : Fragment() {
 
     fun setCategoryCannels() = with(binding) {
         Q = "아시안게임"
-        RetrofitInstance.api.getList(MY_KEY, "snippet", Q, "videop", MAX_RESULTS)?.enqueue(object :
+        channelId = "UCnXNukjRxXGD8aeZGRV-lYg" //스포타임 채널 ID
+        RetrofitInstance.api.getchannelList(MY_KEY, "snippet", Q, channelId,  MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
