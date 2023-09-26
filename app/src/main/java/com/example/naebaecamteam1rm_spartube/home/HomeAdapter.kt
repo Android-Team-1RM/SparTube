@@ -52,6 +52,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
         RecyclerView.ViewHolder(binding.root) {
 
         private val context = binding.root.context
+
         //        val thumbnails = binding.ivThumbnails
 //        val title = binding.tvTitle
         fun bind(item: TubeDataModel) = with(binding) { //클릭이벤트추가부분
