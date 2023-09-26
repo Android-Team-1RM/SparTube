@@ -1,11 +1,13 @@
 package com.example.naebaecamteam1rm_spartube.home
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.naebaecamteam1rm_spartube.VideoDetailPageActivity
 
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
@@ -15,14 +17,15 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
     var mContext = context
 
     interface ItemClick {
-        fun onClick(view : View, position : Int)
+        fun onClick(view: View, position: Int)
     }
 
-    var itemClick : ItemClick? = null
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
-            ItemRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false
+            ItemRecyclerviewBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }
@@ -45,12 +48,18 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
         return list.size
     }
 
-    inner class Holder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
-//        val thumbnails = binding.ivThumbnails
+    inner class Holder(val binding: ItemRecyclerviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        private val context = binding.root.context
+
+        //        val thumbnails = binding.ivThumbnails
 //        val title = binding.tvTitle
-        fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
-            itemView.setOnClickListener{
+        fun bind(item: TubeDataModel) = with(binding) { //클릭이벤트추가부분
+            itemView.setOnClickListener {
                 itemClick?.onClick(it, adapterPosition)
+                val intent = Intent(context, VideoDetailPageActivity::class.java)
+                intent.run { context.startActivity(this) }
             }
             Glide.with(mContext)
                 .load(item.thumbnail)

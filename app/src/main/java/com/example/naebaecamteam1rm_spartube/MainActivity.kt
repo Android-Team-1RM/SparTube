@@ -16,6 +16,9 @@ class MainActivity : AppCompatActivity() {
 
         // ViewPager2의 adapter 설정
         binding.viewPagerMain.adapter = viewpagerAdapter
+        binding.viewPagerMain.run{
+            isUserInputEnabled= false
+        }
 
 
         // TabLayout과 ViewPager2를 연결
