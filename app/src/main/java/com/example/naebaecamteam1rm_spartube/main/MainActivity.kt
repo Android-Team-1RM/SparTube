@@ -2,6 +2,7 @@ package com.example.naebaecamteam1rm_spartube.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityMainBinding
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageFragment
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
@@ -51,5 +52,6 @@ class MainActivity : AppCompatActivity() {
         val myPageFragment = viewPagerAdapter.getMyPageFragment()
         myPageFragment.addItem(item)
     }
+
 
 }
