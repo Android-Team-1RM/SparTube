@@ -27,15 +27,16 @@ data class ID(
     val kind: String,
 
     @SerialName("videoId")
-    val videoID: String
+    val videoId: String
 )
 
 @Serializable
+
 data class Snippet(
     val publishedAt: String,
 
     @SerialName("channelId")
-    val channelID: String,
+    val channelId: String,
 
     val title: String,
     val description: String,
