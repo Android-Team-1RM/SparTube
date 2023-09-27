@@ -31,6 +31,7 @@ data class ID(
 )
 
 @Serializable
+
 data class Snippet(
     val publishedAt: String,
 
