@@ -5,7 +5,7 @@
     <corners
         android:radius="25dp"/>
     <solid
-        android:color="@color/btn_color_type_a"/>
+        android:color="@color/deep_blue"/>
     <padding
         android:bottom="8dp"
         android:left="8dp"

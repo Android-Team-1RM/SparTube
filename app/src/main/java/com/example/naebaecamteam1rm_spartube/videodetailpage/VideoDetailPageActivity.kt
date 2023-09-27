@@ -4,15 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import coil.load
-
-import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.R
-import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.Utils
+import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.toMyPageModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityVideoDetailPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
@@ -67,23 +65,24 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
     private fun btnSet() {
 
-        val leftPadding = resources.getDimensionPixelSize(R.dimen.left_padding) // 리소스에서 패딩 값을 가져옴
-        val topPadding = resources.getDimensionPixelSize(R.dimen.top_padding)
-        val rightPadding = resources.getDimensionPixelSize(R.dimen.right_padding)
-        val bottomPadding = resources.getDimensionPixelSize(R.dimen.bottom_padding)
-
-        binding.btnLike.setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
-
-
-        val backgroundDrawableRes = if (TubeData.isLike) {
-            R.drawable.video_detail_page_btn_shape_like // 좋아요 상태일 때 배경 drawable
-        } else {
-            R.drawable.video_detail_page_btn_shape_im // 좋아요 상태가 아닐 때 배경 drawable
-        }
-
-        binding.btnLike.setBackgroundResource(backgroundDrawableRes)
+//        val leftPadding = resources.getDimensionPixelSize(R.dimen.left_padding) // 리소스에서 패딩 값을 가져옴
+//        val topPadding = resources.getDimensionPixelSize(R.dimen.top_padding)
+//        val rightPadding = resources.getDimensionPixelSize(R.dimen.right_padding)
+//        val bottomPadding = resources.getDimensionPixelSize(R.dimen.bottom_padding)
+//
+//        binding.btnLike.setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
+//
+//
+//        val backgroundDrawableRes = if (TubeData.isLike) {
+//            R.drawable.video_detail_page_btn_shape_like // 좋아요 상태일 때 배경 drawable
+//        } else {
+//            R.drawable.video_detail_page_btn_shape_im // 좋아요 상태가 아닐 때 배경 drawable
+//        }
+//
+//        binding.btnLike.setBackgroundResource(backgroundDrawableRes)
 
         binding.btnLike.setOnClickListener {
+            Log.d("btnLike","btnLikeOk")
             if (TubeData.isLike) {
 
                 TubeData.isLike = false
@@ -91,7 +90,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.removeFavoriteToMyPage(TubeData.toMyPageModel())
-                mainActivity!!.modifyFavoriteToHome(TubeData)
+                mainActivity.modifyFavoriteToHome(TubeData)
                 Utils.deletePrefItem(this, TubeData.thumbnail!!)
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요 해제", Toast.LENGTH_SHORT).show()
             } else {
@@ -111,42 +110,41 @@ class VideoDetailPageActivity : AppCompatActivity() {
                     )
 
                 )
-                mainActivity!!.modifyFavoriteToHome(TubeData)
+                mainActivity.modifyFavoriteToHome(TubeData)
                 Utils.addPrefItem(this, TubeData.toMyPageModel())
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요", Toast.LENGTH_SHORT).show()
             }
-
-
-
-            binding.btnShare.setOnClickListener {
-                val sharedIntent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(
-                        Intent.EXTRA_TEXT,
-                        // 전달하려는 Data(Value)
-                        TubeData.url
-                    )
-                    type = "text/plain"
-                }
-                startActivity(Intent.createChooser(sharedIntent, null))
-            }
-
-            binding.btnPlayList.setOnClickListener {
-
-                //재생 목록에서 값을 갖고가는 함수를 만든다.      -> TubeData를 넘겨주면 된다.
-
-            }
-
-            binding.icBtnDown.setOnClickListener {
-
-                finish()
-                overridePendingTransition(
-                    R.anim.activity_video_detail_page_none,
-                    R.anim.activity_video_detail_page_slide_down
-                )
-            }
         }
 
+
+        binding.btnShare.setOnClickListener {
+            Log.d("btnShare","btnShareOk")
+            val sharedIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    // 전달하려는 Data(Value)
+                    TubeData.url
+                )
+                type = "text/plain"
+            }
+            startActivity(Intent.createChooser(sharedIntent, null))
+        }
+
+        binding.btnPlayList.setOnClickListener {
+            Log.d("btnPlayList","btnPlayList")
+            //재생 목록에서 값을 갖고가는 함수를 만든다.      -> TubeData를 넘겨주면 된다.
+
+        }
+
+        binding.icBtnDown.setOnClickListener {
+
+            finish()
+            overridePendingTransition(
+                R.anim.activity_video_detail_page_none,
+                R.anim.activity_video_detail_page_slide_down
+            )
+        }
 
     }
 }
