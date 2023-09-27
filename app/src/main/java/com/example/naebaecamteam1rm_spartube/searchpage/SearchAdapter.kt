@@ -1,6 +1,7 @@
 package com.example.naebaecamteam1rm_spartube.searchpage
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +53,7 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
                 itemClick?.onClick(it, item)
             }
             Glide.with(mContext)
-                .load(item.thumbnail)
+                .load(Uri.parse(item.thumbnail))
                 .into(ivThumbnails)
             tvTitle.text = item.title
         }
