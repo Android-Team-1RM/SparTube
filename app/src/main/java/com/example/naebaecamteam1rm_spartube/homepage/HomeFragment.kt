@@ -72,8 +72,8 @@ class HomeFragment : Fragment() {
 
     private fun initView() = with(binding) {
         setMostPopulerVideo() // 모스트 파퓰러
-        setMostPopulerShorts() // 쇼츠
-        setCategoryCannels() // 카테고리 채널
+//        setMostPopulerShorts() // 쇼츠
+//        setCategoryCannels() // 카테고리 채널
 
         vmanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerMpVideo.layoutManager = vmanager
@@ -126,19 +126,22 @@ class HomeFragment : Fragment() {
                                 val title = youtubeList.get(i).snippet.title
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
+                                val videoID = youtubeList.get(i).id.videoId
+                                var url = "https://www.youtube.com/watch?v=" + videoID
 //                            val url = data.etag
                                 Log.d("title", "$title")
                                 Log.d("thumbnail", "$thumbnail")
                                 Log.d("description", "$description")
+                                Log.d("url","$url")
 //                            Log.d("url","$url")
 
                                 y_datas.add(
                                     TubeDataModel(
-// y_data에
                                         title = title,
                                         thumbnail = thumbnail,
                                         description = description,
-
+                                        videoId = videoID,
+                                        url = url
                                         )
                                 )
                                 Log.d("y_datas", "$y_datas")
@@ -177,19 +180,22 @@ class HomeFragment : Fragment() {
                             val title = youtubeList.get(i).snippet.title
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
+                            val videoID = youtubeList.get(i).id.videoId
 //                            val url = data.etag
                             Log.d("title", "$title")
                             Log.d("thumbnail", "$thumbnail")
                             Log.d("description", "$description")
 //                            Log.d("url","$url")
 
-                            s_datas.add(
+                            y_datas.add(
                                 TubeDataModel(
+// y_data에
                                     title = title,
                                     thumbnail = thumbnail,
                                     description = description,
+                                    videoId = videoID
 
-                                    )
+                                )
                             )
                             Log.d("s_datas", "$s_datas")
                             listShortsAdapter.list = s_datas //리스트를 어댑터에 적용
@@ -227,19 +233,22 @@ class HomeFragment : Fragment() {
                                 val title = youtubeList.get(i).snippet.title
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
+                                val videoID = youtubeList.get(i).id.videoId
 //                            val url = data.etag
-                                Log.d("Channeltitle", "$title")
-                                Log.d("Channelthumbnail", "$thumbnail")
-                                Log.d("Channeldescription", "$description")
+                                Log.d("title", "$title")
+                                Log.d("thumbnail", "$thumbnail")
+                                Log.d("description", "$description")
 //                            Log.d("url","$url")
 
-                                c_datas.add(
+                                y_datas.add(
                                     TubeDataModel(
+// y_data에
                                         title = title,
                                         thumbnail = thumbnail,
                                         description = description,
+                                        videoId = videoID
 
-                                        )
+                                    )
                                 )
                                 Log.d("c_datas", "$c_datas")
                                 listChannelAdapter.list = c_datas //리스트를 어댑터에 적용
