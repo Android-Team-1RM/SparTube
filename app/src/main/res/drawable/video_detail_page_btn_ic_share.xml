@@ -3,5 +3,6 @@
     <item
         android:drawable="@drawable/video_detail_page_ic_share_im"
         android:width="20dp"
-        android:height="20dp" />
+        android:height="20dp"
+        android:padding="10dp"/>
 </layer-list>
