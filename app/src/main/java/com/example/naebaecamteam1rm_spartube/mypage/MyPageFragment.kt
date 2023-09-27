@@ -61,13 +61,14 @@ class MyPageFragment: Fragment() {
     }
 
     private fun initView() = with(binding){
-        gridmanager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerview.layoutManager =gridmanager
+//        gridmanager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+//        recyclerview.layoutManager =gridmanager
         recyclerview.adapter = listAdapter
 
     }
     private fun initViewModel(){
         with(viewModel){
+            viewModel.getLikeItems(mContext)
             list.observe(viewLifecycleOwner){
                 listAdapter.submitList(it)
             }
