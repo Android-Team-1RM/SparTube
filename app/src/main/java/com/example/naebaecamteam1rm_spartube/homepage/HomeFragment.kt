@@ -124,7 +124,7 @@ class HomeFragment : Fragment() {
                         } else {
                             for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 val title = youtubeList.get(i).snippet.title
-                                val thumbnail = youtubeList.get(i).snippet.thumbnails.default.url
+                                val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
 //                            val url = data.etag
                                 Log.d("title", "$title")
@@ -175,7 +175,7 @@ class HomeFragment : Fragment() {
                     } else {
                         for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             val title = youtubeList.get(i).snippet.title
-                            val thumbnail = youtubeList.get(i).snippet.thumbnails.default.url
+                            val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
 //                            val url = data.etag
                             Log.d("title", "$title")
@@ -225,7 +225,7 @@ class HomeFragment : Fragment() {
                         } else {
                             for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 val title = youtubeList.get(i).snippet.title
-                                val thumbnail = youtubeList.get(i).snippet.thumbnails.default.url
+                                val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
 //                            val url = data.etag
                                 Log.d("Channeltitle", "$title")
