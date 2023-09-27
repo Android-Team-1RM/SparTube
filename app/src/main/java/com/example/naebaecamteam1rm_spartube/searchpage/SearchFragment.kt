@@ -86,7 +86,7 @@ class SearchFragment : Fragment() {
 
 
     fun setView(){
-        gridmanager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        gridmanager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         adapter = SearchAdapter(mContext)
         binding.rvSearchResult.adapter = adapter
         binding.rvSearchResult.layoutManager = gridmanager
@@ -113,7 +113,7 @@ class SearchFragment : Fragment() {
                     }else{
                         for(i in youtubeList.indices){
                             val title = youtubeList.get(i).snippet.title
-                            val thumbnail = youtubeList.get(i).snippet.thumbnails.default.url
+                            val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             Log.d("title","$title")
                             Log.d("url","$thumbnail")
                             youDatas.add(
