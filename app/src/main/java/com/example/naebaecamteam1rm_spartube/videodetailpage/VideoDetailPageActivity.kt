@@ -2,10 +2,12 @@ package com.example.naebaecamteam1rm_spartube.videodetailpage
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import coil.load
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
@@ -47,11 +49,13 @@ class VideoDetailPageActivity : AppCompatActivity() {
     }
 
     private fun initView(){
-        Glide.with(this)
-            .load(TubeData.thumbnail)
-            .error(R.drawable.video_detail_page_img_base)
-            .fitCenter()
-            .into(binding.ivThumbnail)
+//        Glide.with(this)
+//            .load(Uri.parse(TubeData.thumbnail))
+//            .placeholder(R.drawable.video_detail_page_img_base)
+//            .error(R.drawable.video_detail_page_img_base)
+//            .fitCenter()
+//            .into(binding.ivThumbnail)
+        binding.ivThumbnail.load(Uri.parse(TubeData.thumbnail))
         binding.tvTitle.text = TubeData.title
         binding.tvDescription.text = TubeData.description
     }
@@ -69,7 +73,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
         val backgroundDrawableRes = if (TubeData.isLike) {
             R.drawable.video_detail_page_btn_shape_like // 좋아요 상태일 때 배경 drawable
         } else {
-            R.drawable.video_detail_page_btn_shape_unlike // 좋아요 상태가 아닐 때 배경 drawable
+            R.drawable.video_detail_page_btn_shape_im // 좋아요 상태가 아닐 때 배경 drawable
         }
 
         binding.btnLike.setBackgroundResource(backgroundDrawableRes)
@@ -78,7 +82,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
             if (TubeData.isLike) {
 
                 TubeData.isLike = false
-                binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_unlike)
+                binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_im)
 
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.addFavorite(

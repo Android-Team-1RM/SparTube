@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.naebaecamteam1rm_spartube.api.Contants
 import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
@@ -22,10 +23,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val MY_KEY = "AIzaSyAawNkbc1gCqUs16GXHboFL7xy_AaI93NQ" // API KEY
 
-    private var Q // 유튜브 검색값
-            : String? = null
+    private var Q : String? = null // 유튜브 검색값
     private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
     private val y_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
     private val listAdapter by lazy {
@@ -74,7 +73,7 @@ class HomeFragment : Fragment() {
 
     fun setMostPopuler() = with(binding) {
         Q = "아시안게임"
-        RetrofitInstance.api.getList(MY_KEY, "snippet", Q, "videop", MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getList(Contants.MY_KEY, "snippet", Q, "videop", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
@@ -123,7 +122,7 @@ class HomeFragment : Fragment() {
 
     fun setCategoryCannels() = with(binding) {
         Q = "아시안게임"
-        RetrofitInstance.api.getList(MY_KEY, "snippet", Q, "videop", MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getList(Contants.MY_KEY, "snippet", Q, "videop", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
