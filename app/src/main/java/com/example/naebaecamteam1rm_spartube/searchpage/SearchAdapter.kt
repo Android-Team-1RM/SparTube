@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
+import com.example.naebaecamteam1rm_spartube.databinding.ItemFragmentSearchBinding
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchAdapter.Holder>() {
@@ -27,7 +28,7 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
-            ItemRecyclerviewBinding.inflate(
+            ItemFragmentSearchBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -44,7 +45,7 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
 
     override fun getItemCount() = items.size
 
-    inner class Holder(val binding: ItemRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class Holder(val binding: ItemFragmentSearchBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
             itemView.setOnClickListener{
