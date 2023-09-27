@@ -71,8 +71,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
-        setMostPopulerVideo() // 모스트 파퓰러
-//        setMostPopulerShorts() // 쇼츠
+//        setMostPopulerVideo() // 모스트 파퓰러
+        setMostPopulerShorts() // 쇼츠
 //        setCategoryCannels() // 카테고리 채널
 
         vmanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
