@@ -14,7 +14,41 @@ interface VideoService {
         @Query("maxResults") maxResults: Int
     ): Call<VideoDTO>
 
-    companion object {
-        const val YOUTUBE_URL = "https://www.googleapis.com"
-    }
+    @GET("/youtube/v3/search")
+    fun getShortsList(
+        @Query("key") key: String?,
+        @Query("part") part: String?,
+        @Query("q") q: String?,
+        @Query("etag") etag: String?,
+        @Query("type") type: String?,
+        @Query("maxResults") maxResults: Int
+    ): Call<VideoDTO>
+
+    @GET("/youtube/v3/search")
+    fun getchannelList(
+        @Query("key") key: String?,
+        @Query("part") part: String?,
+        @Query("q") q: String?,
+        @Query("type") type: String?,
+        //@Query("channelId") channelId: String?,
+        @Query("maxResults") maxResults: Int
+    ): Call<VideoDTO>
+
+/*@GET("/youtube/v3/channels")
+fun getchannelList(
+    @Query("key") key: String?,
+    @Query("part") part: String?,
+    //@Query("q") q: String?,
+    //@Query("type") type: String?,
+    @Query("channelId") id: String?,
+    @Query("maxResults") maxResults: Int
+): Call<ChannelDTO>*/
+
+companion object {
+    const val YOUTUBE_URL = "https://www.googleapis.com"
 }
+}
+
+// GET https://www.googleapis.com/youtube/v3/videos -> 비디오
+// GET https://www.googleapis.com/youtube/v3/channels -> 채널
+// GET https://www.googleapis.com/youtube/v3/search -> 검색

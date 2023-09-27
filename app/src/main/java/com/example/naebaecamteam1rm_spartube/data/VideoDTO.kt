@@ -4,16 +4,6 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
-
-@Serializable
-data class Item(
-    val kind: String,
-    val etag: String,
-    val id: ID,
-    val snippet: Snippet
-)
-
-
 @Serializable
 data class VideoDTO(
     val kind: String,
@@ -25,11 +15,19 @@ data class VideoDTO(
 )
 
 @Serializable
+data class Item(
+    val kind: String,
+    val etag: String,
+    val id: ID,
+    val snippet: Snippet
+)
+
+@Serializable
 data class ID(
     val kind: String,
 
     @SerialName("videoId")
-    val videoID: String
+    val videoId: String
 )
 
 @Serializable
@@ -37,7 +35,7 @@ data class Snippet(
     val publishedAt: String,
 
     @SerialName("channelId")
-    val channelID: String,
+    val channelId: String,
 
     val title: String,
     val description: String,

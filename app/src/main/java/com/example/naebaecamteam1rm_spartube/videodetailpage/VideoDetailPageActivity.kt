@@ -8,9 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import coil.load
+
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
+import com.example.naebaecamteam1rm_spartube.Utils
+import com.example.naebaecamteam1rm_spartube.data.toMyPageModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityVideoDetailPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
@@ -21,12 +24,12 @@ class VideoDetailPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityVideoDetailPageBinding
 
     // VideoDetailPage Intent 생성하기
-    companion object{
+    companion object {
         //나중에 위치 받아서 값 설정하기
         // 위치 사용될 변수
-        lateinit var TubeData : TubeDataModel
-        fun VideoDetailPageNewIntent(context: Context?, tubeData : TubeDataModel) =
-            Intent(context, VideoDetailPageActivity::class.java).apply{
+        lateinit var TubeData: TubeDataModel
+        fun VideoDetailPageNewIntent(context: Context?, tubeData: TubeDataModel) =
+            Intent(context, VideoDetailPageActivity::class.java).apply {
                 TubeData = tubeData
             }
 
@@ -48,6 +51,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
     }
 
+
     private fun initView(){
 //        Glide.with(this)
 //            .load(Uri.parse(TubeData.thumbnail))
@@ -56,11 +60,12 @@ class VideoDetailPageActivity : AppCompatActivity() {
 //            .fitCenter()
 //            .into(binding.ivThumbnail)
         binding.ivThumbnail.load(Uri.parse(TubeData.thumbnail))
+
         binding.tvTitle.text = TubeData.title
         binding.tvDescription.text = TubeData.description
     }
 
-    private fun btnSet(){
+    private fun btnSet() {
 
         val leftPadding = resources.getDimensionPixelSize(R.dimen.left_padding) // 리소스에서 패딩 값을 가져옴
         val topPadding = resources.getDimensionPixelSize(R.dimen.top_padding)
@@ -78,26 +83,18 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
         binding.btnLike.setBackgroundResource(backgroundDrawableRes)
 
-        binding.btnLike.setOnClickListener{
+        binding.btnLike.setOnClickListener {
             if (TubeData.isLike) {
 
                 TubeData.isLike = false
                 binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_im)
 
                 val mainActivity = MainActivity.newInstence()
-                mainActivity!!.addFavorite(
-                    MyPageModel(
-                        TubeData.title,
-                        TubeData.thumbnail,
-                        TubeData.description,
-                        TubeData.url,
-                        TubeData.isLike
-                    )
-
-                )
-                Toast.makeText(this@VideoDetailPageActivity, "좋아요", Toast.LENGTH_SHORT).show()
-            }
-            else{
+                mainActivity!!.removeFavoriteToMyPage(TubeData.toMyPageModel())
+                mainActivity!!.modifyFavoriteToHome(TubeData)
+                Utils.deletePrefItem(this, TubeData.thumbnail!!)
+                Toast.makeText(this@VideoDetailPageActivity, "좋아요 해제", Toast.LENGTH_SHORT).show()
+            } else {
 
                 TubeData.isLike = true
                 binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_like)
@@ -108,45 +105,48 @@ class VideoDetailPageActivity : AppCompatActivity() {
                         TubeData.title,
                         TubeData.thumbnail,
                         TubeData.description,
+                        TubeData.videoId,
                         TubeData.url,
                         TubeData.isLike
                     )
 
                 )
+                mainActivity!!.modifyFavoriteToHome(TubeData)
+                Utils.addPrefItem(this, TubeData.toMyPageModel())
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요", Toast.LENGTH_SHORT).show()
             }
-            //좋아요의 값을 갖고가는 함수를 만든다.      -> TubeData.isLike를 넘겨주면 된다.
 
-        }
 
-        binding.btnShare.setOnClickListener{
-            val sharedIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(
-                    Intent.EXTRA_TEXT,
-                    // 전달하려는 Data(Value)
-                    TubeData.url
-                )
-                type = "text/plain"
+
+            binding.btnShare.setOnClickListener {
+                val sharedIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        // 전달하려는 Data(Value)
+                        TubeData.url
+                    )
+                    type = "text/plain"
+                }
+                startActivity(Intent.createChooser(sharedIntent, null))
             }
-            startActivity(Intent.createChooser(sharedIntent, null))
+
+            binding.btnPlayList.setOnClickListener {
+
+                //재생 목록에서 값을 갖고가는 함수를 만든다.      -> TubeData를 넘겨주면 된다.
+
+            }
+
+            binding.icBtnDown.setOnClickListener {
+
+                finish()
+                overridePendingTransition(
+                    R.anim.activity_video_detail_page_none,
+                    R.anim.activity_video_detail_page_slide_down
+                )
+            }
         }
 
-        binding.btnPlayList.setOnClickListener {
 
-            //재생 목록에서 값을 갖고가는 함수를 만든다.      -> TubeData를 넘겨주면 된다.
-
-        }
-
-        binding.icBtnDown.setOnClickListener{
-
-            finish()
-            overridePendingTransition(
-                R.anim.activity_video_detail_page_none,
-                R.anim.activity_video_detail_page_slide_down
-            )
-        }
     }
-
-
 }

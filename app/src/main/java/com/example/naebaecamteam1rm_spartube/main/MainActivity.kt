@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityMainBinding
-import com.example.naebaecamteam1rm_spartube.mypage.MyPageFragment
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -51,6 +50,14 @@ class MainActivity : AppCompatActivity() {
     fun addFavorite(item: MyPageModel?){
         val myPageFragment = viewPagerAdapter.getMyPageFragment()
         myPageFragment.addItem(item)
+    }
+    fun modifyFavoriteToHome(item:TubeDataModel){
+        val homeFragment =viewPagerAdapter.getHomeFragment()
+        homeFragment.modifyItemToAddFavorite(item)
+    }
+    fun removeFavoriteToMyPage(item:MyPageModel?){
+        val myPageFragment = viewPagerAdapter.getMyPageFragment()
+        myPageFragment.removeItem(item)
     }
 
 //    fun addPlayList(item: TubeDataModel?){
