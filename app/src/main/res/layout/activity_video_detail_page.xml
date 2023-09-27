@@ -63,90 +63,109 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/iv_card_view_thumbnail"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_margin="8dp"-->
-<!--                app:cardCornerRadius="16dp"-->
-<!--                app:cardElevation="8dp">-->
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iv_card_view_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp">
 
             <ImageView
-                android:layout_margin="8dp"
                 android:id="@+id/iv_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="225dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/video_detail_page_img_base" />
+                android:src="@drawable/video_detail_page_img_base"
+                android:adjustViewBounds="true"/>
 
-<!--    </androidx.cardview.widget.CardView>-->
-
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:text="@string/tv_title" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:padding="8dp"
-                    android:id="@+id/btn_like"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="4dp"
-                    android:text="@string/btn_like"
-                    android:drawableLeft="@drawable/video_detail_page_btn_ic_like"
-                    android:background="@drawable/video_detail_page_btn_shape"
-                    android:elevation="4dp"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:padding="8dp"
-                    android:id="@+id/btn_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="4dp"
-                    android:text="@string/btn_share"
-                    android:drawableLeft="@drawable/video_detail_page_btn_ic_share"
-                    android:background="@drawable/video_detail_page_btn_shape"
-                    android:elevation="4dp"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:padding="8dp"
-                    android:id="@+id/btn_play_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="4dp"
-                    android:text="@string/btn_play_list"
-                    android:drawableLeft="@drawable/video_detail_page_btn_ic_checklist"
-                    android:background="@drawable/video_detail_page_btn_shape"
-                    android:elevation="4dp"/>
-
-            </LinearLayout>
-            <androidx.cardview.widget.CardView
-                android:layout_margin="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp">
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:text="@string/tv_description"
-                />
             </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_like"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+
+                        android:background="@drawable/video_detail_page_btn_shape_im"
+                        android:drawableEnd="@drawable/video_detail_page_btn_ic_like"
+                        android:elevation="8dp"
+                        android:padding="8dp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_share"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+
+                        android:background="@drawable/video_detail_page_btn_shape_im"
+                        android:drawableEnd="@drawable/video_detail_page_btn_ic_share"
+                        android:elevation="8dp"
+                        android:padding="8dp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_play_list"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/video_detail_page_btn_shape_im"
+                        android:drawableEnd="@drawable/video_detail_page_btn_ic_checklist"
+                        android:elevation="8dp"
+                        android:padding="8dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:text="@string/tv_title" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="12dp"
+                            android:text="@string/tv_description" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

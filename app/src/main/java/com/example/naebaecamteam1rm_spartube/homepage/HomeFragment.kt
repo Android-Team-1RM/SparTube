@@ -22,6 +22,7 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
     private var Q // 유튜브 검색값
             : String? = null
     private var etag // Shorts의 id값
@@ -108,6 +109,7 @@ class HomeFragment : Fragment() {
 
     }
 
+
     // Most populer video 부분
     fun setMostPopulerVideo() = with(binding) {
 
@@ -167,6 +169,7 @@ class HomeFragment : Fragment() {
         Q = "항저우 아시안게임"
         etag = "TxVSfGoUyT7CJ7h7ebjg4vhIt6g"
         RetrofitInstance.api.getShortsList(Contants.MY_KEY, "snippet", Q, etag, "video", MAX_RESULTS)?.enqueue(object :
+
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
@@ -217,6 +220,7 @@ class HomeFragment : Fragment() {
 
     //Cannels by category 부분
     fun setCategoryCannels() = with(binding) {
+
         Q = "항저우 아시안게임"
         //channelId = "UCnXNukjRxXGD8aeZGRV-lYg" //스포타임 채널 ID
         RetrofitInstance.api.getchannelList(Contants.MY_KEY, "snippet", Q, "channel", /*channelId,*/MAX_RESULTS)?.enqueue(object :
@@ -234,6 +238,7 @@ class HomeFragment : Fragment() {
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
+
 //                            val url = data.etag
                                 Log.d("title", "$title")
                                 Log.d("thumbnail", "$thumbnail")
