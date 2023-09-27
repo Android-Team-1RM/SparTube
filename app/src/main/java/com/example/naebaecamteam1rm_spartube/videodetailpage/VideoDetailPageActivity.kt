@@ -3,13 +3,12 @@ package com.example.naebaecamteam1rm_spartube.videodetailpage
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
+import com.example.naebaecamteam1rm_spartube.Utils
 import com.example.naebaecamteam1rm_spartube.data.toMyPageModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityVideoDetailPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
@@ -85,6 +84,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.removeFavoriteToMyPage(TubeData.toMyPageModel())
                 mainActivity!!.modifyFavoriteToHome(TubeData)
+                Utils.deletePrefItem(this, TubeData.thumbnail!!)
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요 해제", Toast.LENGTH_SHORT).show()
             } else {
 
@@ -103,6 +103,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
                 )
                 mainActivity!!.modifyFavoriteToHome(TubeData)
+                Utils.addPrefItem(this, TubeData.toMyPageModel())
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요", Toast.LENGTH_SHORT).show()
             }
 

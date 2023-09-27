@@ -1,14 +1,20 @@
 package com.example.naebaecamteam1rm_spartube.mypage
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.naebaecamteam1rm_spartube.Utils
 
 class MyPageViewModel:ViewModel() {
     private val _list: MutableLiveData<List<MyPageModel>> = MutableLiveData()
     val list: LiveData<List<MyPageModel>> get() = _list
 
     init{
+
+    }
+    fun getLikeItems(context:Context){
+        _list.value = Utils.getPrefBookmarkItems(context)
     }
     fun addItem(item:MyPageModel?){//라이브데이터에 아이템 추가하는 기능
         if(item == null) return
