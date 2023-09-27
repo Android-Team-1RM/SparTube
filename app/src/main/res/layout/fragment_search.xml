@@ -9,10 +9,9 @@
     <RelativeLayout
         android:id="@+id/rl_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#01AEF0"
+        android:layout_height="80dp"
+        android:background="@color/basic_blue"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,15 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:fontFamily="@font/font"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_toStartOf="@+id/tv_search"
-            android:background="@color/white"
+            android:background="@drawable/search_random_btn"
             android:hint="검색어를 입력해주세요."
             android:paddingStart="10dp"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:textSize="16sp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/tv_search"
@@ -39,7 +40,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
-            android:background="@color/white"
+            android:background="@drawable/search_random_btn"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
@@ -48,6 +49,7 @@
             android:paddingRight="15dp"
             android:paddingBottom="5dp"
             android:text="검색"
+            android:fontFamily="@font/font"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -56,7 +58,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/basic_blue"
         app:layout_constraintBottom_toTopOf="@+id/rv_searchResult"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -122,9 +125,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_searchResult"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_height="0dp"
         android:scrollbars="vertical"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
