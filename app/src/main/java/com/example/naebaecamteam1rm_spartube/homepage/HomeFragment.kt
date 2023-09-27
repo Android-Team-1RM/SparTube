@@ -165,7 +165,7 @@ class HomeFragment : Fragment() {
 
     // Most populer shorts 부분
     fun setMostPopulerShorts() = with(binding) {
-        Q = "아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/
+        Q = "아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/ -> 모든 쇼츠는 이 url을 가지고 잇어서 url제한을 하면 나올지도?
         //videoCategoryId = "19" // videoDuration에서 short로 하고 필터로 시간 줄이기
         RetrofitInstance.api.getShortsList(Contants.MY_KEY, "snippet", Q, videoDuration, "video", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {

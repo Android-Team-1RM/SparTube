@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         // 2. TabLayout과 ViewPager2를 연결하고, TabItem의 메뉴명을 설정
         TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain, {tab, position -> tab.text = tabTitles[position]}).attach()
 
+        //9.27 21:43 1차 PR
+
 
     }
 
