@@ -25,8 +25,7 @@ class HomeFragment : Fragment() {
 
     private var Q // 유튜브 검색값
             : String? = null
-    private var etag // Shorts의 id값
-            : String? = null
+    private var videoDuration = "short" // 영상 길이
     private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
 
     private val y_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
@@ -166,10 +165,9 @@ class HomeFragment : Fragment() {
 
     // Most populer shorts 부분
     fun setMostPopulerShorts() = with(binding) {
-        Q = "항저우 아시안게임"
-        etag = "TxVSfGoUyT7CJ7h7ebjg4vhIt6g"
-        RetrofitInstance.api.getShortsList(Contants.MY_KEY, "snippet", Q, etag, "video", MAX_RESULTS)?.enqueue(object :
-
+        Q = "아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/
+        //videoCategoryId = "19" // videoDuration에서 short로 하고 필터로 시간 줄이기
+        RetrofitInstance.api.getShortsList(Contants.MY_KEY, "snippet", Q, videoDuration, "video", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
@@ -188,9 +186,10 @@ class HomeFragment : Fragment() {
                             Log.d("title", "$title")
                             Log.d("thumbnail", "$thumbnail")
                             Log.d("description", "$description")
+                            Log.d("shorts", "$videoID")
 //                            Log.d("url","$url")
 
-                            y_datas.add(
+                            s_datas.add(
                                 TubeDataModel(
 // y_data에
                                     title = title,

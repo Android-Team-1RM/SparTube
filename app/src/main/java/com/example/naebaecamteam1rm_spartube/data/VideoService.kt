@@ -19,7 +19,7 @@ interface VideoService {
         @Query("key") key: String?,
         @Query("part") part: String?,
         @Query("q") q: String?,
-        @Query("etag") etag: String?,
+        @Query("videoDuration") videoDuration: String?,
         @Query("type") type: String?,
         @Query("maxResults") maxResults: Int
     ): Call<VideoDTO>
@@ -34,19 +34,19 @@ interface VideoService {
         @Query("maxResults") maxResults: Int
     ): Call<VideoDTO>
 
-/*@GET("/youtube/v3/channels")
-fun getchannelList(
-    @Query("key") key: String?,
-    @Query("part") part: String?,
-    //@Query("q") q: String?,
-    //@Query("type") type: String?,
-    @Query("channelId") id: String?,
-    @Query("maxResults") maxResults: Int
-): Call<ChannelDTO>*/
+    /*@GET("/youtube/v3/channels")
+    fun getchannelList(
+        @Query("key") key: String?,
+        @Query("part") part: String?,
+        //@Query("q") q: String?,
+        //@Query("type") type: String?,
+        @Query("channelId") id: String?,
+        @Query("maxResults") maxResults: Int
+    ): Call<ChannelDTO>*/
 
-companion object {
-    const val YOUTUBE_URL = "https://www.googleapis.com"
-}
+    companion object {
+        const val YOUTUBE_URL = "https://www.googleapis.com"
+    }
 }
 
 // GET https://www.googleapis.com/youtube/v3/videos -> 비디오
