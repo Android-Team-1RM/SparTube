@@ -25,6 +25,7 @@ import java.nio.channels.Channel
 
 class MyPageAdapter(context : Context,
                     private val onClickItem: (MyPageModel) -> Unit,
+                    private val onClickFav:(MyPageModel) ->Unit,
 ): ListAdapter<MyPageModel,MyPageAdapter.ViewHolder>(
     object:DiffUtil.ItemCallback<MyPageModel>(){
         override fun areContentsTheSame(oldItem: MyPageModel, newItem: MyPageModel): Boolean {
@@ -39,7 +40,7 @@ class MyPageAdapter(context : Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemMyPageRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-        onClickItem)
+        onClickItem,onClickFav)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -49,6 +50,7 @@ class MyPageAdapter(context : Context,
     inner class ViewHolder(
         private val binding: ItemMyPageRecyclerviewBinding,
         private val onClickItem: (MyPageModel) -> Unit,
+        private val onClickFav:(MyPageModel) ->Unit,
     ):RecyclerView.ViewHolder(binding.root){
 
         fun bind(item:MyPageModel) = with(binding){
@@ -58,11 +60,14 @@ class MyPageAdapter(context : Context,
                     call: retrofit2.Call<ChannelDTO>,
                     response: Response<ChannelDTO>
                 ) {
-                    Log.d("test", "Response")
-                    val data = response.body()
-                    Log.d("test1","$data")
-                    ivChannelThumbnail.load(Uri.parse(data?.items!!.get(0).snippet.thumbnails.medium.url))
-                    tvChannel.text = data?.items!!.get(0).snippet.title
+                    if(response.isSuccessful){
+                            Log.d("test", "Response")
+                            val data = response.body()
+                            Log.d("test1","$data")
+                            ivChannelThumbnail.load(Uri.parse(data?.items!!.get(0).snippet.thumbnails.medium.url))
+                            tvChannel.text = data?.items!!.get(0).snippet.title
+
+                        }
 
                 }
 
@@ -70,12 +75,19 @@ class MyPageAdapter(context : Context,
                     Log.d("test", "fail")
                 }
             })
-
+            ivFavBtn.setOnClickListener{
+                Log.d("test","delete")
+                item.isLike = false
+                onClickFav(
+                    item
+                )
+            }
             container.setOnClickListener{
                 onClickItem(
                     item
                 )
             }
+
             Glide.with(mContext)
                 .load(item.thumbnail)
                 .error(R.drawable.video_detail_page_img_base)

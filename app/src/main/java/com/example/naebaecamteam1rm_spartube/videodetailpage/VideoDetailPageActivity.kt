@@ -155,6 +155,10 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 R.anim.activity_video_detail_page_slide_down
             )
         }
+        binding.ivThumbnail.setOnClickListener{
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("${TubeData.url}"))
+            startActivity(intent)
+        }
 
     }
 }
