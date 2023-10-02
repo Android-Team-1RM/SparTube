@@ -1,5 +1,6 @@
 package com.example.naebaecamteam1rm_spartube.mypage
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.naebaecamteam1rm_spartube.Utils
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
+import com.example.naebaecamteam1rm_spartube.main.MainActivity
 import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 
 class MyPageFragment: Fragment() {
@@ -19,6 +22,7 @@ class MyPageFragment: Fragment() {
     }
     private var _binding : FragmentMyPageBinding? =null
     private val binding get() = _binding!!
+    private val mainActivity = MainActivity.newInstence()
 
 
     private val viewModel: MyPageViewModel by lazy{
@@ -32,7 +36,23 @@ class MyPageFragment: Fragment() {
         MyPageAdapter(mContext,
             onClickItem = {item ->
                 startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(mContext,item.toTubeData()))
-            }
+            },
+//            onLongClickItem = {item ->
+//                AlertDialog.Builder(mContext).apply {
+//                    setMessage("즐겨찾기를 해제하시겠습니까?")
+//                    setPositiveButton(
+//                        "삭제"
+//                    ){_,_ ->
+//                        mainActivity!!.removeFavoriteToMyPage(item)
+//                        mainActivity.modifyFavoriteToHome(item.toTubeData())
+//                        Utils.deletePrefItem(mContext, item.toTubeData().thumbnail!!)
+//                    }
+//                    setNegativeButton(
+//                        "취소"
+//                    ){_,_ ->}
+//                }.create().show()
+//                removeItem(item)
+//            }
         )
     }
 

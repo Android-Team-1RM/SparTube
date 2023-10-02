@@ -9,6 +9,7 @@ data class TubeDataModel(
     val description: String?= null,
     val videoId: String? = null,
     val url: String? = null,
+    val channelId: String? = null,
     var isLike: Boolean = false,
     var channelName : String? = null
     )
@@ -19,6 +20,7 @@ fun TubeDataModel.toMyPageModel():MyPageModel{//MyPageModel로 모델 변환함�
         description = description,
         videoId = videoId,
         url = url,
+        channelId = channelId,
         isLike =  isLike
     )
 }

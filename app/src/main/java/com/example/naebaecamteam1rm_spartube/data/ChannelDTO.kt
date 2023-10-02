@@ -27,7 +27,7 @@ data class ChannelSnippet (
     val description: String,
 
     @SerialName("customUrl")
-    val customURL: String,
+    val customUrl: String,
 
     val publishedAt: String,
     val thumbnails: ChannelThumbnails,

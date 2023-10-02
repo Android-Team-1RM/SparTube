@@ -128,6 +128,7 @@ class HomeFragment : Fragment() {
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
+                                val channelID = youtubeList.get(i).snippet.channelId
                                 var url = "https://www.youtube.com/watch?v=" + videoID
 //                            val url = data.etag
                                 Log.d("title", "$title")
@@ -142,7 +143,8 @@ class HomeFragment : Fragment() {
                                         thumbnail = thumbnail,
                                         description = description,
                                         videoId = videoID,
-                                        url = url
+                                        url = url,
+                                        channelId = channelID
                                         )
                                 )
                                 Log.d("y_datas", "$y_datas")
@@ -182,12 +184,13 @@ class HomeFragment : Fragment() {
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
+                            val channelID = youtubeList.get(i).snippet.channelId
 //                            val url = data.etag
                             Log.d("title", "$title")
                             Log.d("thumbnail", "$thumbnail")
                             Log.d("description", "$description")
                             Log.d("shorts", "$videoID")
-//                            Log.d("url","$url")
+                            var url = "https://www.youtube.com/watch?v=" + videoID
 
                             s_datas.add(
                                 TubeDataModel(
@@ -195,7 +198,9 @@ class HomeFragment : Fragment() {
                                     title = title,
                                     thumbnail = thumbnail,
                                     description = description,
-                                    videoId = videoID
+                                    videoId = videoID,
+                                    url = url,
+                                    channelId = channelID
 
                                 )
                             )
@@ -237,12 +242,13 @@ class HomeFragment : Fragment() {
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
-
+                                val channelID = youtubeList.get(i).snippet.channelId
 //                            val url = data.etag
                                 Log.d("title", "$title")
                                 Log.d("thumbnail", "$thumbnail")
                                 Log.d("description", "$description")
-//                            Log.d("url","$url")
+                                Log.d("shorts", "$videoID")
+                                var url = "https://www.youtube.com/watch?v=" + videoID
 
                                 c_datas.add(
                                     TubeDataModel(
@@ -250,7 +256,9 @@ class HomeFragment : Fragment() {
                                         title = title,
                                         thumbnail = thumbnail,
                                         description = description,
-                                        videoId = videoID
+                                        videoId = videoID,
+                                        url = url,
+                                        channelId = channelID
 
                                     )
                                 )
