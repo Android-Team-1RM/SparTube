@@ -9,24 +9,50 @@
     <ImageView
         android:id="@+id/iv_thumbnails"
         android:layout_width="130dp"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/iv_fav_btn" />
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:textSize="15sp"
-        android:maxLines="1"
+        android:maxLines="2"
         android:text="테스트용 제목으로 길게 한번 써볼게요"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_fav_btn"
         app:layout_constraintStart_toEndOf="@id/iv_thumbnails"
         app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:id="@+id/iv_fav_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/video_detail_page_ic_like"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:id="@+id/iv_channel_thumbnail"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@id/iv_thumbnails"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        />
+    <TextView
+        android:id="@+id/tv_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="10dp"
+        android:text="테테스트"
+        app:layout_constraintStart_toEndOf="@id/iv_channel_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        />
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="0dp"
@@ -39,6 +65,6 @@
         android:layout_marginStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_thumbnails"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"/>
+        app:layout_constraintTop_toBottomOf="@id/iv_channel_thumbnail"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

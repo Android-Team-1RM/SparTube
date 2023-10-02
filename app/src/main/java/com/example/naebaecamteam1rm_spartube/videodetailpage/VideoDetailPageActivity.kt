@@ -10,11 +10,16 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.Utils
+import com.example.naebaecamteam1rm_spartube.api.Contants
+import com.example.naebaecamteam1rm_spartube.data.ChannelDTO
+import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.toMyPageModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityVideoDetailPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class VideoDetailPageActivity : AppCompatActivity() {
@@ -82,6 +87,9 @@ class VideoDetailPageActivity : AppCompatActivity() {
 //        binding.btnLike.setBackgroundResource(backgroundDrawableRes)
 
         binding.btnLike.setOnClickListener {
+
+
+
             Log.d("btnLike","btnLikeOk")
             if (TubeData.isLike) {
 
@@ -97,6 +105,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
                 TubeData.isLike = true
                 binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_like)
+
 
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.addFavorite(

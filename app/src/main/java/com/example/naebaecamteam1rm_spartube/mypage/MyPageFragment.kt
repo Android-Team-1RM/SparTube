@@ -37,22 +37,22 @@ class MyPageFragment: Fragment() {
             onClickItem = {item ->
                 startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(mContext,item.toTubeData()))
             },
-            onLongClickItem = {item ->
-                AlertDialog.Builder(mContext).apply {
-                    setMessage("즐겨찾기를 해제하시겠습니까?")
-                    setPositiveButton(
-                        "삭제"
-                    ){_,_ ->
-                        mainActivity!!.removeFavoriteToMyPage(item)
-                        mainActivity.modifyFavoriteToHome(item.toTubeData())
-                        Utils.deletePrefItem(mContext, item.toTubeData().thumbnail!!)
-                    }
-                    setNegativeButton(
-                        "취소"
-                    ){_,_ ->}
-                }.create().show()
+//            onLongClickItem = {item ->
+//                AlertDialog.Builder(mContext).apply {
+//                    setMessage("즐겨찾기를 해제하시겠습니까?")
+//                    setPositiveButton(
+//                        "삭제"
+//                    ){_,_ ->
+//                        mainActivity!!.removeFavoriteToMyPage(item)
+//                        mainActivity.modifyFavoriteToHome(item.toTubeData())
+//                        Utils.deletePrefItem(mContext, item.toTubeData().thumbnail!!)
+//                    }
+//                    setNegativeButton(
+//                        "취소"
+//                    ){_,_ ->}
+//                }.create().show()
 //                removeItem(item)
-            }
+//            }
         )
     }
 
