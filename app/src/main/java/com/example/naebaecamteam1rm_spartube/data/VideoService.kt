@@ -34,15 +34,15 @@ interface VideoService {
         @Query("maxResults") maxResults: Int
     ): Call<VideoDTO>
 
-    /*@GET("/youtube/v3/channels")
-    fun getchannelList(
+    @GET("/youtube/v3/channels")
+    fun getChannelThumbnail(
         @Query("key") key: String?,
         @Query("part") part: String?,
         //@Query("q") q: String?,
         //@Query("type") type: String?,
-        @Query("channelId") id: String?,
-        @Query("maxResults") maxResults: Int
-    ): Call<ChannelDTO>*/
+        @Query("id") id: String?,
+//        @Query("maxResults") maxResults: Int
+    ): Call<ChannelDTO>
 
     companion object {
         const val YOUTUBE_URL = "https://www.googleapis.com"
