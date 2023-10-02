@@ -65,21 +65,21 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
     private fun btnSet() {
 
-//        val leftPadding = resources.getDimensionPixelSize(R.dimen.left_padding) // 리소스에서 패딩 값을 가져옴
-//        val topPadding = resources.getDimensionPixelSize(R.dimen.top_padding)
-//        val rightPadding = resources.getDimensionPixelSize(R.dimen.right_padding)
-//        val bottomPadding = resources.getDimensionPixelSize(R.dimen.bottom_padding)
-//
-//        binding.btnLike.setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
-//
-//
-//        val backgroundDrawableRes = if (TubeData.isLike) {
-//            R.drawable.video_detail_page_btn_shape_like // 좋아요 상태일 때 배경 drawable
-//        } else {
-//            R.drawable.video_detail_page_btn_shape_im // 좋아요 상태가 아닐 때 배경 drawable
-//        }
-//
-//        binding.btnLike.setBackgroundResource(backgroundDrawableRes)
+        val leftPadding = resources.getDimensionPixelSize(R.dimen.left_padding)
+        val topPadding = resources.getDimensionPixelSize(R.dimen.top_padding)
+        val rightPadding = resources.getDimensionPixelSize(R.dimen.right_padding)
+        val bottomPadding = resources.getDimensionPixelSize(R.dimen.bottom_padding)
+
+        binding.btnLike.setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
+
+
+        val backgroundDrawableRes = if (TubeData.isLike) {
+            R.drawable.video_detail_page_btn_shape_like // 좋아요 상태일 때 배경 drawable
+        } else {
+            R.drawable.video_detail_page_btn_shape_im // 좋아요 상태가 아닐 때 배경 drawable
+        }
+
+        binding.btnLike.setBackgroundResource(backgroundDrawableRes)
 
         binding.btnLike.setOnClickListener {
             Log.d("btnLike","btnLikeOk")
