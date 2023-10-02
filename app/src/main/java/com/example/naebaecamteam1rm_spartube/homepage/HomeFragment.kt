@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.naebaecamteam1rm_spartube.api.Contants
+import com.example.naebaecamteam1rm_spartube.data.ChannelDTO
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
@@ -75,9 +76,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
-        setMostPopulerVideo() // 모스트 파퓰러
+//        setMostPopulerVideo() // 모스트 파퓰러
 //        setMostPopulerShorts() // 쇼츠
-//        setCategoryCannels() // 카테고리 채널
+        setCategoryCannels() // 카테고리 채널
 
         vmanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerMpVideo.layoutManager = vmanager
@@ -345,7 +346,7 @@ class HomeFragment : Fragment() {
                             Log.d("thumbnail", "$thumbnail")
                             Log.d("description", "$description")
                             Log.d("shorts", "$videoID")
-                            var url = "https://www.youtube.com/watch?v=" + videoID
+                            var url = "https://www.youtube.com/shorts/" + videoID
 
                             s_datas.add(
                                 TubeDataModel(
@@ -376,13 +377,89 @@ class HomeFragment : Fragment() {
         })
 
     }
+//    fun setCategoryCannels() = with(binding) {
+//
+//        Q = "항저우 아시안게임"
+//        RetrofitInstance.api.getchannelList(Contants.MY_KEY, "snippet", Q, "channel", /*channelId,*/MAX_RESULTS)?.enqueue(object :
+//            Callback<VideoDTO> {
+//            override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
+//                if (response.isSuccessful) {//응답 성공시 실행
+//                    Log.d("test", "Response")
+//                    val data = response.body()
+//                    val youtubeList = data?.items
+//                    if (youtubeList == null) {// 가져온 데이터 없으면 리턴
+//                        return
+//                    } else {
+//                        for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
+//                            val title = youtubeList.get(i).snippet.title
+//                            val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
+//                            val description = youtubeList.get(i).snippet.description
+//                            val videoID = youtubeList.get(i).id.videoId
+//                            val channelID = youtubeList.get(i).snippet.channelId
+//                            var channelTag:String? = ""
+//                            RetrofitInstance.api.getChannelThumbnail(Contants.MY_KEY,"snippet",channelID)?.enqueue(object :
+//                                Callback<ChannelDTO> {
+//                                override fun onResponse(
+//                                    call: retrofit2.Call<ChannelDTO>,
+//                                    response: Response<ChannelDTO>
+//                                ) {
+//                                    if(response.isSuccessful){
+//                                        Log.d("test", "Response")
+//                                        val data = response.body()
+//                                        Log.d("test1","$data")
+//                                        channelTag = data?.items!!.get(0).snippet.customUrl
+//                                        Log.d("test2","$channelTag")
+//
+//                                    }
+//
+//                                }
+//                                override fun onFailure(call: retrofit2.Call<ChannelDTO>, t: Throwable) {
+//                                    Log.d("test", "fail")
+//                                }
+//                            })
+//// val url = data.etag
+//                            Log.d("title", "$title")
+//                            Log.d("thumbnail", "$thumbnail")
+//                            Log.d("description", "$description")
+//                            Log.d("shorts", "$videoID")
+//                            var url = "https://www.youtube.com/" + channelTag
+//
+//                            c_datas.add(
+//                                TubeDataModel(
+//// y_data에
+//                                    title = title,
+//                                    thumbnail = thumbnail,
+//                                    description = description,
+//                                    videoId = videoID,
+//                                    url = url,
+//                                    channelId = channelID
+//
+//                                )
+//                            )
+//                            Log.d("c_datas", "$c_datas")
+//                            listChannelAdapter.list = c_datas //리스트를 어댑터에 적용
+//                            listChannelAdapter.notifyDataSetChanged()// notity
+//
+//                        }
+//                    }
+//
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<VideoDTO>, t: Throwable) {//실패시 찍히는 로그
+//                Log.d("Channeltest", "Channelfail")
+//            }
+//
+//        })
+//
+//    }
 
     //Cannels by category 부분
     fun setCategoryCannels() = with(binding) {
 
         Q = "항저우 아시안게임"
         //channelId = "UCnXNukjRxXGD8aeZGRV-lYg" //스포타임 채널 ID
-        RetrofitInstance.api.getchannelList(Contants.MY_KEY, "snippet", Q, "channel", /*channelId,*/MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getchannelList(Contants.MY_KEY, "snippet", Q, "channel", MAX_RESULTS)?.enqueue(object :
                 Callback<VideoDTO> {
                 override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                     if (response.isSuccessful) {//응답 성공시 실행
@@ -403,7 +480,7 @@ class HomeFragment : Fragment() {
                                 Log.d("thumbnail", "$thumbnail")
                                 Log.d("description", "$description")
                                 Log.d("shorts", "$videoID")
-                                var url = "https://www.youtube.com/watch?v=" + videoID
+                                var url = "https://www.youtube.com/" + videoID
 
                                 c_datas.add(
                                     TubeDataModel(
