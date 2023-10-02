@@ -76,6 +76,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
+
         setMostPopulerVideo() // 모스트 파퓰러
         setMostPopulerShorts() // 쇼츠
         setCategoryCannels() // 카테고리 채널
@@ -113,13 +114,16 @@ class HomeFragment : Fragment() {
         }
 
     }
+    //  scrolling banner
+    // viewPager쪽으로 하는게 더 편하다(처음 부터 미리 만들어진다) ++++      -> recyclerView 는 과부하가 없다
+    // 이 방법은 끊기는 느낌을 느낀다
+    // progressBarㄹ
 
     private fun infiniteScrollSet(){
         if (y_datas.isNotEmpty()) {
             binding.recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    view?.post {
 
                         if (!recyclerView.canScrollHorizontally(1)) {
                             // 처음
@@ -155,15 +159,13 @@ class HomeFragment : Fragment() {
                             listAdapter.notifyDataSetChanged()
                         }
                     }
-                }
             })
         }
         if (s_datas.isNotEmpty()) {
-            Log.d("Top", "s_datas")
+            Log.d("set", "s_datas")
             binding.recyclerMpShorts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    view?.post {
 //                if(!recyclerView.canScrollHorizontally(1)){
 //                    // 끝에 도달
 //                    for(i in 0 until s_datas.size){
@@ -181,7 +183,7 @@ class HomeFragment : Fragment() {
 
                         if (!recyclerView.canScrollHorizontally(1)) {
                             // 끝에 도달
-                            Log.d("Top", "Bottom")
+                            Log.d("set", "Bottom")
                             var changeDatas = s_datas
                             //처음꺼를 끝에 붙이기
                             for (i in 0 until 5) {
@@ -197,7 +199,7 @@ class HomeFragment : Fragment() {
                             listShortsAdapter.notifyDataSetChanged()
                         } else if (!recyclerView.canScrollHorizontally(-1)) {
                             //처음
-                            Log.d("Top", "Top")
+                            Log.d("set", "Top")
                             var changeDatas = s_datas
                             //끝에 있는거를 처음에 붙이기
                             for (i in 0 until 5) {
@@ -214,16 +216,15 @@ class HomeFragment : Fragment() {
                             listShortsAdapter.notifyDataSetChanged()
                         }
                     }
-                }
             })
         }
-        if (s_datas.isNotEmpty()) {
+        if (c_datas.isNotEmpty()) {
             binding.recyclerCategoryCannels.addOnScrollListener(object :
                 RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
-                    view?.post {
+
 
                         if (!recyclerView.canScrollHorizontally(1)) {
                             // 처음
@@ -259,7 +260,6 @@ class HomeFragment : Fragment() {
                             listChannelAdapter.notifyDataSetChanged()
                         }
                     }
-                }
             })
         }
     }
