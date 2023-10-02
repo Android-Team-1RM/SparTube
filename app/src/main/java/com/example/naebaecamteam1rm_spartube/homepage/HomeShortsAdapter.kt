@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
+import com.example.naebaecamteam1rm_spartube.databinding.ItemHomefragmentShortsBinding
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class HomeShortsAdapter(context: Context) : RecyclerView.Adapter<HomeShortsAdapter.Holder>() {
@@ -26,7 +27,7 @@ class HomeShortsAdapter(context: Context) : RecyclerView.Adapter<HomeShortsAdapt
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
-            ItemRecyclerviewBinding.inflate(
+            ItemHomefragmentShortsBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -51,7 +52,7 @@ class HomeShortsAdapter(context: Context) : RecyclerView.Adapter<HomeShortsAdapt
         return list.size
     }
 
-    inner class Holder(val binding: ItemRecyclerviewBinding) :
+    inner class Holder(val binding: ItemHomefragmentShortsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         //        val thumbnails = binding.ivThumbnails
         //        val title = binding.tvTitle

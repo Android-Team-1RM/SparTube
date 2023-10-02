@@ -5,78 +5,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".homepage.HomeFragment">
+
     <RelativeLayout
-        android:id="@+id/relative_appbar"
+        android:id="@+id/rl_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/basic_blue"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:elevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Video Detail" />
+            android:text="Spartube"
+            android:textColor="@color/deep_blue"
+            android:textSize="26sp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_mpVideo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Most Populer Videos"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relative_appbar"
-         />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_mpVideo"
+    <ScrollView
+        android:id="@+id/scroll_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginHorizontal="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mpVideo" />
+        app:layout_constraintTop_toBottomOf="@+id/rl_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <TextView
-        android:id="@+id/tv_mpShorts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Most Populer Shorts"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_mpVideo" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_mpVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Most Populer Videos"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_mpShorts"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mpShorts" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_mpVideo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mpVideo" />
 
-    <TextView
-        android:id="@+id/tv_categoryCannels"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Channels by Category"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_mpShorts" />
+            <TextView
+                android:id="@+id/tv_mpShorts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Most Populer Shorts"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_mpVideo" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_categoryCannels"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_categoryCannels" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_mpShorts"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mpShorts" />
+
+            <TextView
+                android:id="@+id/tv_categoryCannels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Channels by Category"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_mpShorts" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_categoryCannels"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_categoryCannels" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
