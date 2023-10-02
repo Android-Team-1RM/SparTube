@@ -2,17 +2,17 @@ package com.example.naebaecamteam1rm_spartube.playlistpage
 
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 
-data class PlayListModel(
+data class VideoListModel(
     val title: String?,
     val thumbnail: String?,
     val description: String?,
 )
 
-fun PlayListModel.TubeDataModel(): TubeDataModel {
+fun VideoListModel.TubeDataModel(): TubeDataModel {
     return TubeDataModel(
         title = title,
         thumbnail = thumbnail,
         description = description,
 
-    )
+        )
 }

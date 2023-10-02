@@ -56,7 +56,6 @@ class PlaylistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 화면 초기화 함수 호출
         initView()
     }
 
@@ -76,13 +75,13 @@ class PlaylistFragment : Fragment() {
         playlistRecyclerView.adapter = playlistAdapter
 
         // Videos RecyclerView 초기화
-        VideosRecyclerView = binding.VideosRecyclerView
+        VideosRecyclerView = binding.VideolistRecyclerView
         VideosRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val playlistVideosAdapter = VideosAdapter() // 적절한 어댑터 클래스로 대체
+        val playlistVideosAdapter = VideoListAdapter() // 적절한 어댑터 클래스로 대체
         VideosRecyclerView.adapter = playlistVideosAdapter
 
         // 현재 뷰 반환
-        return view
+       // return view
     }
 
     fun setPlayList() = with(binding) {

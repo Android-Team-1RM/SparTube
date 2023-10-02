@@ -1,48 +1,30 @@
-package com.example.naebaecamteam1rm_spartube.playlistpage
-
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
-import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
-import com.example.naebaecamteam1rm_spartube.homepage.HomeAdapter
-import com.example.naebaecamteam1rm_spartube.searchpage.SearchAdapter
+import com.example.naebaecamteam1rm_spartube.R
+import com.example.naebaecamteam1rm_spartube.playlistpage.PlayListModel
 
-class PlayListAdapter(context: Context) : RecyclerView.Adapter<PlayListAdapter.Holder>() {
+class PlaylistAdapter(private val context: Context, private val playlistItems: ArrayList<PlayListModel>) :
+    RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
 
-    var list = ArrayList<TubeDataModel>()
-
-    var mContext = context
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistAdapter.Holder {
-        return HomeAdapter.Holder(
-            ItemRecyclerviewBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_playlist, parent, false)
+        return PlaylistViewHolder(view)
     }
 
-    interface ItemClick {
-        fun onClick(view : View, tubeData : TubeDataModel)
-    }
-
-    override fun onBindViewHolder(holder: HomeAdapter.Holder, position: Int) {
-        var currentItem = items[position]
-        holder.bind(currentItem)
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+    override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
+        val item = playlistItems[position]
+        holder.titleTextView.text = item.title
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return playlistItems.size
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+    inner class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val titleTextView: TextView = itemView.findViewById(R.id.fragment_playlist)
     }
-
 }
