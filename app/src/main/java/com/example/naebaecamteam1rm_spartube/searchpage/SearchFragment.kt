@@ -127,13 +127,16 @@ class SearchFragment : Fragment() {
                     }else{
                         for(i in youtubeList.indices){
                             val title = youtubeList.get(i).snippet.title
+                            val channelId = youtubeList.get(i).snippet.channelId
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
+                            val channeltitle = youtubeList.get(i).snippet.channelTitle
                             Log.d("title","$title")
                             Log.d("url","$thumbnail")
                             youDatas.add(
                                 TubeDataModel(
                                 title = title,
-                                thumbnail = thumbnail, description = null)
+                                thumbnail = thumbnail, channelName = channeltitle,
+                                    channelId = channelId)
                             )
                             Log.d("y_datas","$youDatas")
 //                            listAdapter.list = y_datas

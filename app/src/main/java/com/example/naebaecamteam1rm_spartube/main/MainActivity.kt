@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         // TabLayout과 ViewPager2를 연결
         // 1. 탭메뉴의 이름을 리스트로 생성
-        val tabTitles = listOf<String>("홈", "검색", "재생목록", "마이페이지")
+        val tabTitles = listOf<String>("홈", "검색", "재생목록", "즐겨찾기")
 
         // 2. TabLayout과 ViewPager2를 연결하고, TabItem의 메뉴명을 설정
         TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain, {tab, position -> tab.text = tabTitles[position]}).attach()

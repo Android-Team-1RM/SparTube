@@ -10,11 +10,16 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.Utils
+import com.example.naebaecamteam1rm_spartube.api.Contants
+import com.example.naebaecamteam1rm_spartube.data.ChannelDTO
+import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.toMyPageModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityVideoDetailPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class VideoDetailPageActivity : AppCompatActivity() {
@@ -65,23 +70,26 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
     private fun btnSet() {
 
-//        val leftPadding = resources.getDimensionPixelSize(R.dimen.left_padding) // 리소스에서 패딩 값을 가져옴
-//        val topPadding = resources.getDimensionPixelSize(R.dimen.top_padding)
-//        val rightPadding = resources.getDimensionPixelSize(R.dimen.right_padding)
-//        val bottomPadding = resources.getDimensionPixelSize(R.dimen.bottom_padding)
-//
-//        binding.btnLike.setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
-//
-//
-//        val backgroundDrawableRes = if (TubeData.isLike) {
-//            R.drawable.video_detail_page_btn_shape_like // 좋아요 상태일 때 배경 drawable
-//        } else {
-//            R.drawable.video_detail_page_btn_shape_im // 좋아요 상태가 아닐 때 배경 drawable
-//        }
-//
-//        binding.btnLike.setBackgroundResource(backgroundDrawableRes)
+        val leftPadding = resources.getDimensionPixelSize(R.dimen.left_padding)
+        val topPadding = resources.getDimensionPixelSize(R.dimen.top_padding)
+        val rightPadding = resources.getDimensionPixelSize(R.dimen.right_padding)
+        val bottomPadding = resources.getDimensionPixelSize(R.dimen.bottom_padding)
+
+        binding.btnLike.setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
+
+
+        val backgroundDrawableRes = if (TubeData.isLike) {
+            R.drawable.video_detail_page_btn_shape_like // 좋아요 상태일 때 배경 drawable
+        } else {
+            R.drawable.video_detail_page_btn_shape_im // 좋아요 상태가 아닐 때 배경 drawable
+        }
+
+        binding.btnLike.setBackgroundResource(backgroundDrawableRes)
 
         binding.btnLike.setOnClickListener {
+
+
+
             Log.d("btnLike","btnLikeOk")
             if (TubeData.isLike) {
 
@@ -98,6 +106,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 TubeData.isLike = true
                 binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_like)
 
+
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.addFavorite(
                     MyPageModel(
@@ -106,6 +115,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
                         TubeData.description,
                         TubeData.videoId,
                         TubeData.url,
+                        TubeData.channelId,
                         TubeData.isLike
                     )
 
@@ -144,6 +154,10 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 R.anim.activity_video_detail_page_none,
                 R.anim.activity_video_detail_page_slide_down
             )
+        }
+        binding.ivThumbnail.setOnClickListener{
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("${TubeData.url}"))
+            startActivity(intent)
         }
 
     }

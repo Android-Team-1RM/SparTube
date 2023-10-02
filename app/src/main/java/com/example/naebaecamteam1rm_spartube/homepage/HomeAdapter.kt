@@ -6,10 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
-import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 
 class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>() {
 
@@ -65,8 +63,6 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
                 .load(item.thumbnail)
                 .into(ivThumbnails)
             tvTitle.text = item.title
-
-
         }
     }
 
@@ -86,4 +82,6 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
         list[findPosition] = item
         notifyDataSetChanged()
     }
+
+
 }
