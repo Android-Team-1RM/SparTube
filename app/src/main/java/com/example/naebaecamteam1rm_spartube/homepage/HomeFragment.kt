@@ -71,9 +71,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
-//        setMostPopulerVideo() // 모스트 파퓰러
+        setMostPopulerVideo() // 모스트 파퓰러
         setMostPopulerShorts() // 쇼츠
-//        setCategoryCannels() // 카테고리 채널
+        setCategoryCannels() // 카테고리 채널
 
         vmanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerMpVideo.layoutManager = vmanager
@@ -244,7 +244,7 @@ class HomeFragment : Fragment() {
                                 Log.d("description", "$description")
 //                            Log.d("url","$url")
 
-                                y_datas.add(
+                                c_datas.add(
                                     TubeDataModel(
 // y_data에
                                         title = title,
