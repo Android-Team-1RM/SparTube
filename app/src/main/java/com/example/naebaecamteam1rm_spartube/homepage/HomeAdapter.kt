@@ -34,6 +34,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
     override fun onBindViewHolder(holder: Holder, position: Int) {
         var item = list[position]
         holder.bind(item)
+        //20번째 가되면 추가로 아이템을 넣는 형식을 설정
 
 //        holder.itemView.setOnClickListener {  //클릭이벤트추가부분
 //            itemClick?.onClick(it, position)

@@ -40,12 +40,12 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_toEndOf="@+id/ic_btn_down"
             android:text="Video Detail"
-            android:textSize="16sp"
+            android:textSize="26sp"
             android:textColor="@color/light_blue"/>
 
     </RelativeLayout>
@@ -97,7 +97,6 @@
                         android:text="@string/tv_title"
                         android:textStyle="bold"
                         android:textSize="16sp"
-                        android:textColor="@color/light_blue"
                         android:gravity="center"/>
 
 
@@ -114,7 +113,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="12dp"
-                            android:textColor="@color/light_blue"
                             android:text="@string/tv_description" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
