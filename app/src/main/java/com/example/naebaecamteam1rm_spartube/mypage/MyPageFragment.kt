@@ -3,9 +3,11 @@ package com.example.naebaecamteam1rm_spartube.mypage
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
@@ -37,6 +39,12 @@ class MyPageFragment: Fragment() {
             onClickItem = {item ->
                 startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(mContext,item.toTubeData()))
             },
+            onClickFav = {item ->
+                Toast.makeText(mContext, "좋아요 해제", Toast.LENGTH_SHORT).show()
+                mainActivity!!.removeFavoriteToMyPage(item)
+                mainActivity.modifyFavoriteToHome(item.toTubeData())
+                Utils.deletePrefItem(mContext, item.toTubeData().thumbnail!!)
+            }
 //            onLongClickItem = {item ->
 //                AlertDialog.Builder(mContext).apply {
 //                    setMessage("즐겨찾기를 해제하시겠습니까?")
