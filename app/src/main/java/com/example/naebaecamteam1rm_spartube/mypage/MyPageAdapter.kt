@@ -2,7 +2,6 @@ package com.example.naebaecamteam1rm_spartube.mypage
 
 import android.content.Context
 import android.net.Uri
-import android.telecom.Call
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,16 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.R
-import com.example.naebaecamteam1rm_spartube.api.Contants
 import com.example.naebaecamteam1rm_spartube.data.ChannelDTO
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
-import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemMyPageRecyclerviewBinding
-import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
-import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import retrofit2.Callback
 import retrofit2.Response
-import java.nio.channels.Channel
 
 class MyPageAdapter(context : Context,
                     private val onClickItem: (MyPageModel) -> Unit,

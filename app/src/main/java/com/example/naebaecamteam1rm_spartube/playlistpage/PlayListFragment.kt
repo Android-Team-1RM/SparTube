@@ -10,8 +10,6 @@ import android.view.ViewGroup
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.naebaecamteam1rm_spartube.api.Contants
-import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
