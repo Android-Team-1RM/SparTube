@@ -71,9 +71,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
-//        setMostPopulerVideo() // 모스트 파퓰러
+        setMostPopulerVideo() // 모스트 파퓰러
         setMostPopulerShorts() // 쇼츠
-//        setCategoryCannels() // 카테고리 채널
+        setCategoryCannels() // 카테고리 채널
 
         vmanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerMpVideo.layoutManager = vmanager
@@ -165,8 +165,8 @@ class HomeFragment : Fragment() {
 
     // Most populer shorts 부분
     fun setMostPopulerShorts() = with(binding) {
-        Q = "아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/ -> 모든 쇼츠는 이 url을 가지고 잇어서 url제한을 하면 나올지도?
-        //videoCategoryId = "19" // videoDuration에서 short로 하고 필터로 시간 줄이기
+        Q = "항저우 아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/ -> 모든 쇼츠는 이 url을 가지고 잇어서 url제한을 하면 나올지도?
+        //videoCategoryId = "42" // videoDuration에서 short로 하고 필터로 시간 줄이기 -> 문제점: 1분 미만의 비디오는?
         RetrofitInstance.api.getShortsList(Contants.MY_KEY, "snippet", Q, videoDuration, "video", MAX_RESULTS)?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
@@ -244,7 +244,7 @@ class HomeFragment : Fragment() {
                                 Log.d("description", "$description")
 //                            Log.d("url","$url")
 
-                                y_datas.add(
+                                c_datas.add(
                                     TubeDataModel(
 // y_data에
                                         title = title,
