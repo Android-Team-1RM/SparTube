@@ -14,7 +14,6 @@ import com.example.naebaecamteam1rm_spartube.data.ChannelDTO
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ItemFragmentSearchBinding
-import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 import retrofit2.Callback
 import retrofit2.Response
 
@@ -62,10 +61,12 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
                     call: retrofit2.Call<ChannelDTO>,
                     response: Response<ChannelDTO>
                 ) {
-                    Log.d("test", "Response")
-                    val data = response.body()
-                    Log.d("test1","$data")
-//                    ivChannelThumbnail.load(Uri.parse(data?.items!!.get(0).snippet.thumbnails.medium.url)) << Iv 지정
+                    if(response.isSuccessful) {
+                        Log.d("test", "Response")
+                        val data = response.body()
+                        Log.d("test1", "$data")
+                        ivChannelThumb.load(Uri.parse(data?.items!!.get(0).snippet.thumbnails.medium.url))
+                    }
 
                 }
 
