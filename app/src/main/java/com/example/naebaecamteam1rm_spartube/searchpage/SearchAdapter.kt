@@ -56,6 +56,7 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
                 .load(Uri.parse(item.thumbnail))
                 .into(ivThumbnails)
             tvTitle.text = item.title
+            tvChannel.text = item.channelName
         }
     }
 }

@@ -10,6 +10,7 @@ data class TubeDataModel(
     val videoId: String? = null,
     val url: String? = null,
     var isLike: Boolean = false,
+    var channelName : String? = null
     )
 fun TubeDataModel.toMyPageModel():MyPageModel{//MyPageModel로 모델 변환함수 작성
     return MyPageModel(
