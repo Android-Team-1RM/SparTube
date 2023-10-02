@@ -106,6 +106,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
                         TubeData.description,
                         TubeData.videoId,
                         TubeData.url,
+                        TubeData.channelId,
                         TubeData.isLike
                     )
 

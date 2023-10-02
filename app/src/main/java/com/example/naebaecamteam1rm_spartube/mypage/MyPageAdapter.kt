@@ -12,7 +12,8 @@ import com.example.naebaecamteam1rm_spartube.databinding.ItemMyPageRecyclerviewB
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class MyPageAdapter(context : Context,
-                    private val onClickItem: (MyPageModel) -> Unit
+                    private val onClickItem: (MyPageModel) -> Unit,
+                    private val onLongClickItem: (MyPageModel) -> Unit
 ): ListAdapter<MyPageModel,MyPageAdapter.ViewHolder>(
     object:DiffUtil.ItemCallback<MyPageModel>(){
         override fun areContentsTheSame(oldItem: MyPageModel, newItem: MyPageModel): Boolean {
@@ -27,7 +28,7 @@ class MyPageAdapter(context : Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemMyPageRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false),
-        onClickItem)
+        onClickItem, onLongClickItem)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -36,7 +37,8 @@ class MyPageAdapter(context : Context,
     }
     inner class ViewHolder(
         private val binding: ItemMyPageRecyclerviewBinding,
-        private val onClickItem: (MyPageModel) -> Unit
+        private val onClickItem: (MyPageModel) -> Unit,
+        private val onLongClickItem: (MyPageModel) -> Unit
     ):RecyclerView.ViewHolder(binding.root){
 
         fun bind(item:MyPageModel) = with(binding){
@@ -45,11 +47,18 @@ class MyPageAdapter(context : Context,
                     item
                 )
             }
+            container.setOnLongClickListener{
+                onLongClickItem(
+                    item
+                )
+                false
+            }
             Glide.with(mContext)
                 .load(item.thumbnail)
                 .error(R.drawable.video_detail_page_img_base)
                 .into(ivThumbnails)
             tvTitle.text = item.title
+            tvDescription.text= item.description
         }
 
     }

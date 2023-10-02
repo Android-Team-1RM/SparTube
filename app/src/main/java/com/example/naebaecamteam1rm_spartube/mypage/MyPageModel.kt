@@ -8,6 +8,7 @@ data class MyPageModel(
     val description: String?,
     val url: String?,
     val videoId:String?,
+    val channelId:String?,
     val isLike: Boolean = true
 )
 fun MyPageModel.toTubeData():TubeDataModel{

@@ -8,23 +8,37 @@
 
     <ImageView
         android:id="@+id/iv_thumbnails"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="130dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:textSize="20sp"
-        android:maxLines="2"
+        android:textSize="15sp"
+        android:maxLines="1"
         android:text="테스트용 제목으로 길게 한번 써볼게요"
         android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_thumbnails"/>
+        app:layout_constraintStart_toEndOf="@id/iv_thumbnails"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textSize="12sp"
+        android:maxLines="2"
+        android:text="테스트용 제목으로 길게 한번 써볼게요"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_thumbnails"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
