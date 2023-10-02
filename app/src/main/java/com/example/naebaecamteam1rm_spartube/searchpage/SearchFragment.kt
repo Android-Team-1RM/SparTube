@@ -6,11 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.SearchView.OnCloseListener
 import android.widget.SearchView.OnQueryTextListener
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.api.Contants
@@ -47,34 +43,14 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.svSearch.setOnQueryTextListener(object : OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                adapter.clearItem()
-                settest(query.toString())
-
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-        binding.svSearch.setOnSearchClickListener {
-            binding.tvSearch.visibility = View.INVISIBLE
-        }
-        binding.svSearch.setOnCloseListener {
-            binding.tvSearch.visibility = View.VISIBLE
-            false
-        }
-
-        setView()
-//        searchInEdit()
+        setSearchView()
+        setRv()
         updateBtn()
         binding.ivRefresh.setOnClickListener { updateBtn() }
-
     }
 
 
+    //키워드 버튼을 눌렀을 때 각 키워드로 검색
     private fun updateBtn(){
         val btnRandomWord = searchWordList.shuffled().take(3)
         val firstBtn = binding.btnRandomFirst
@@ -98,19 +74,32 @@ class SearchFragment : Fragment() {
         }
     }
 
-//    private fun searchInEdit(){
-//        binding.tvSearch.setOnClickListener {
-//            val search = binding.etSearch.text.toString()
-//            if (search.isNotEmpty()){
-//                adapter.clearItem()
-//                settest(search)
-//            }
-//        }
-//    }
+    //서치뷰
+    fun setSearchView(){
+        binding.svSearch.setOnQueryTextListener(object : OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.clearItem()
+                settest(query.toString())
 
+                return true
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+        binding.svSearch.setOnSearchClickListener {
+            binding.tvSearch.visibility = View.INVISIBLE
+        }
+        binding.svSearch.setOnCloseListener {
+            binding.tvSearch.visibility = View.VISIBLE
+            false
+        }
 
-    fun setView(){
+    }
+
+    //리사이클러뷰
+    fun setRv(){
         gridmanager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         adapter = SearchAdapter(mContext)
         binding.rvSearchResult.adapter = adapter

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="Search"
         android:textSize="26sp"
-        android:textColor="#0076D8"
+        android:textColor="@color/deep_blue"
         app:layout_constraintBottom_toBottomOf="@+id/sv_search"
         app:layout_constraintEnd_toEndOf="@+id/sv_search"
         app:layout_constraintStart_toStartOf="@+id/sv_search"
