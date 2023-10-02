@@ -21,7 +21,7 @@ interface VideoService {
         @Query("q") q: String?,
         @Query("videoDuration") videoDuration: String?,
         @Query("type") type: String?,
-        @Query("maxResults") maxResults: Int
+        @Query("maxResults") maxResults: Int,
     ): Call<VideoDTO>
 
     @GET("/youtube/v3/search")

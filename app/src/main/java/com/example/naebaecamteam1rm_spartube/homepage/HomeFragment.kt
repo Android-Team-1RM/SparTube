@@ -3,18 +3,18 @@ package com.example.naebaecamteam1rm_spartube.homepage
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.naebaecamteam1rm_spartube.api.Contants
-import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentHomeBinding
+import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,16 +28,18 @@ class HomeFragment : Fragment() {
     private var videoDuration = "short" // 영상 길이
     private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
 
-    private val y_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
-    private val s_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
-    private val c_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
+    private var y_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
+    private var s_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
+    private var c_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
 
     private val listAdapter by lazy {
         HomeAdapter(mContext)
     }
+
     private val listShortsAdapter by lazy {
         HomeShortsAdapter(mContext)
     }
+
     private val listChannelAdapter by lazy {
         HomeCannelAdapter(mContext)
     }
@@ -62,6 +64,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        infiniteScrollSet()
 
     }
 
@@ -88,6 +92,7 @@ class HomeFragment : Fragment() {
         recyclerCategoryCannels.adapter = listChannelAdapter
 
 
+
         listAdapter.itemClick = object : HomeAdapter.ItemClick {
             override fun onClick(view: View, tubeData: TubeDataModel) {
                 startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context, tubeData))
@@ -106,6 +111,156 @@ class HomeFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun infiniteScrollSet(){
+        if (y_datas.isNotEmpty()) {
+            binding.recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    view?.post {
+
+                        if (!recyclerView.canScrollHorizontally(1)) {
+                            // 처음
+
+                            var changeDatas = y_datas
+
+                            for(i in 0 until 5){
+                                changeDatas[y_datas.size - 6 + i] = y_datas[i]
+                            }
+
+                            for(i in 5 until y_datas.size){
+                                changeDatas[i-5] = y_datas[i]
+                            }
+
+                            y_datas.clear()
+                            y_datas.addAll(changeDatas)
+                            listAdapter.notifyDataSetChanged()
+                        } else if (!recyclerView.canScrollHorizontally(-1)) {
+                            // 끝에 도달
+
+                            var changeDatas = y_datas
+
+                            for(i in 0 until 5){
+                                changeDatas[i] = y_datas[y_datas.size - 6 + i]
+                            }
+
+                            for(i in 5 until y_datas.size){
+                                changeDatas[i] = y_datas[i - 5]
+                            }
+
+                            y_datas.clear()
+                            y_datas.addAll(changeDatas)
+                            listAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            })
+        }
+        if (s_datas.isNotEmpty()) {
+            Log.d("Top", "s_datas")
+            binding.recyclerMpShorts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    view?.post {
+//                if(!recyclerView.canScrollHorizontally(1)){
+//                    // 끝에 도달
+//                    for(i in 0 until s_datas.size){
+//                        s_datas.add(s_datas[i])
+//                    }
+//                    listShortsAdapter.notifyDataSetChanged()
+//                }else if(!recyclerView.canScrollHorizontally(-1)){
+//                    //처음
+//                    for(i in 0 until 5){
+//                        s_datas.add(s_datas[i+5])
+//                    }
+//                    listShortsAdapter.notifyDataSetChanged()
+//                }
+
+
+                        if (!recyclerView.canScrollHorizontally(1)) {
+                            // 끝에 도달
+                            Log.d("Top", "Bottom")
+                            var changeDatas = s_datas
+                            //처음꺼를 끝에 붙이기
+                            for (i in 0 until 5) {
+                                changeDatas[s_datas.size - 6 + i] = s_datas[i]
+                            }
+
+                            for (i in 5 until s_datas.size) {
+                                changeDatas[i - 5] = s_datas[i]
+                            }
+
+                            s_datas.clear()
+                            s_datas.addAll(changeDatas)
+                            listShortsAdapter.notifyDataSetChanged()
+                        } else if (!recyclerView.canScrollHorizontally(-1)) {
+                            //처음
+                            Log.d("Top", "Top")
+                            var changeDatas = s_datas
+                            //끝에 있는거를 처음에 붙이기
+                            for (i in 0 until 5) {
+                                changeDatas[i] = s_datas[s_datas.size - 6 + i]
+                            }
+
+                            for (i in 5 until s_datas.size) {
+                                changeDatas[i] = s_datas[i - 5]
+                            }
+
+
+                            s_datas.clear()
+                            s_datas.addAll(changeDatas)
+                            listShortsAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            })
+        }
+        if (s_datas.isNotEmpty()) {
+            binding.recyclerCategoryCannels.addOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    view?.post {
+
+                        if (!recyclerView.canScrollHorizontally(1)) {
+                            // 처음
+
+                            var changeDatas = c_datas
+
+                            for (i in 0 until 5) {
+                                changeDatas[c_datas.size - 6 + i] = c_datas[i]
+                            }
+
+                            for (i in 5 until c_datas.size) {
+                                changeDatas[i - 5] = c_datas[i]
+                            }
+
+                            c_datas.clear()
+                            c_datas.addAll(changeDatas)
+                            listChannelAdapter.notifyDataSetChanged()
+                        } else if (!recyclerView.canScrollHorizontally(-1)) {
+                            // 끝에 도달
+
+                            var changeDatas = c_datas
+
+                            for (i in 0 until 5) {
+                                changeDatas[i] = c_datas[c_datas.size - 6 + i]
+                            }
+
+                            for (i in 5 until c_datas.size) {
+                                changeDatas[i] = c_datas[i - 5]
+                            }
+
+                            c_datas.clear()
+                            c_datas.addAll(changeDatas)
+                            listChannelAdapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+            })
+        }
     }
 
 
@@ -284,3 +439,5 @@ class HomeFragment : Fragment() {
         listAdapter.modifyItemToAddFavorite(item)
     }
 }
+
+
