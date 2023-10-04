@@ -13,6 +13,15 @@ interface VideoService {
         @Query("type") type: String?,
         @Query("maxResults") maxResults: Int
     ): Call<VideoDTO>
+    @GET("/youtube/v3/search")
+    fun getNextList(
+        @Query("key") key: String?,
+        @Query("part") part: String?,
+        @Query("q") q: String?,
+        @Query("type") type: String?,
+        @Query("pageToken") pageToken: String?,
+        @Query("maxResults") maxResults: Int
+    ): Call<VideoDTO>
 
     @GET("/youtube/v3/search")
     fun getShortsList(
