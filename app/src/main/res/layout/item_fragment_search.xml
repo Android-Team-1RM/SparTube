@@ -9,10 +9,10 @@
         android:id="@+id/cv_thumbnails"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/search_edge"
-        app:cardCornerRadius="20dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/search_edge"
+        android:scaleType="centerCrop"
+        app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -33,7 +33,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,7 +49,7 @@
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
-            android:text="테스트용 제목으로 길게 한번 써볼게요"
+            android:text="@string/tv_testTitle"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -78,7 +77,7 @@
             android:paddingTop="5dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:text="채널명"
+            android:text="@string/tv_testchannelsTitle"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -86,9 +85,6 @@
             app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="@id/iv_channel_thumb"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

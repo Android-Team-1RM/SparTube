@@ -5,7 +5,7 @@
     <string name="tv_homeTitle"> Spartube </string>
     <string name="tv_mpVideo"> 인기 동영상 </string>
     <string name="tv_mpShorts"> 인기 쇼츠 </string>
-    <string name="tv_categoryCannels"> 관련 채널 </string>
+    <string name="tv_categoryChannels"> 관련 채널 </string>
 
     <!-- Search -->
     <string name="tv_searchTitle"> Search </string>
@@ -21,5 +21,9 @@
     <string name="btn_share"> 공유하기 </string>
     <string name="btn_play_list"> 재생목록 추가하기 </string>
 
+    <!-- Playlist -->
 
+    <!-- public -->
+    <string name="tv_testTitle"> 테스트용 제목으로 길게 한번 써볼게요 </string>
+    <string name="tv_testchannelsTitle"> 채널 테스트 </string>
 </resources>

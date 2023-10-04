@@ -20,12 +20,12 @@
             android:id="@+id/tv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:text="@string/tv_homeTitle"
-            android:textStyle="bold"
             android:textColor="@color/deep_blue"
             android:textSize="26sp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -34,14 +34,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rl_toolbar"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/rl_toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/tv_mpVideo"
                 android:layout_width="match_parent"
@@ -84,7 +85,7 @@
                 android:id="@+id/tv_categoryCannels"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_categoryCannels"
+                android:text="@string/tv_categoryChannels"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -100,6 +101,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_categoryCannels" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
