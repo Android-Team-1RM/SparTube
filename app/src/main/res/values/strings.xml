@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">NaebaecamTeam1RM-SparTube</string>
 
+    <!-- Home -->
+    <string name="tv_homeTitle"> Spartube </string>
+    <string name="tv_mpVideo"> 인기 동영상 </string>
+    <string name="tv_mpShorts"> 인기 쇼츠 </string>
+    <string name="tv_categoryCannels"> 관련 채널 </string>
+
     <string name="btn_like"> 좋아요 </string>
     <string name="btn_share"> 공유하기 </string>
     <string name="btn_play_list"> 재생목록 추가하기 </string>
