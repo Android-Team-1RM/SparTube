@@ -61,12 +61,13 @@ class MyPageAdapter(context : Context,
                     response: Response<ChannelDTO>
                 ) {
                     if(response.isSuccessful){
-                            Log.d("test", "Response")
-                            val data = response.body()
-                            Log.d("test1","$data")
+                        Log.d("test", "Response")
+                        val data = response.body()
+                        Log.d("test1","$data")
+                        val channelTag = data?.items!!.get(0).snippet.customUrl
+                        Log.d("test2","$channelTag")
                             ivChannelThumbnail.load(Uri.parse(data?.items!!.get(0).snippet.thumbnails.medium.url))
                             tvChannel.text = data?.items!!.get(0).snippet.title
-
                         }
 
                 }
