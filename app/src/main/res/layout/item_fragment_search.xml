@@ -8,8 +8,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_thumbnails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="20dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/search_edge"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
