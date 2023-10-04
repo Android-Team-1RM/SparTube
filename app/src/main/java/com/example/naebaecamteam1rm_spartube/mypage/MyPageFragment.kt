@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.Utils
@@ -18,32 +20,38 @@ import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
 import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 
-class MyPageFragment: Fragment() {
-    companion object{
+class MyPageFragment : Fragment() {
+    companion object {
         fun newInstance() = MyPageFragment
     }
-    private var _binding : FragmentMyPageBinding? =null
+
+    private var _binding: FragmentMyPageBinding? = null
     private val binding get() = _binding!!
     private val mainActivity = MainActivity.newInstence()
 
 
-    private val viewModel: MyPageViewModel by lazy{
-        ViewModelProvider(this)[MyPageViewModel::class.java]
+    private val viewModel: MyPageViewModel by lazy {//튜터님 보여드리기
+        ViewModelProvider(
+            this,
+            MyPageModelFactory(requireContext())
+        )[MyPageViewModel::class.java]
     }
 
-    private lateinit var gridmanager:StaggeredGridLayoutManager
-    private lateinit var mContext: Context
-
-    private val listAdapter by lazy{
-        MyPageAdapter(mContext,
-            onClickItem = {item ->
-                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(mContext,item.toTubeData()))
+    private val listAdapter by lazy {
+        MyPageAdapter(requireContext(),
+            onClickItem = { item ->
+                startActivity(
+                    VideoDetailPageActivity.VideoDetailPageNewIntent(
+                        requireContext(),
+                        item.toTubeData()
+                    )
+                )
             },
-            onClickFav = {item ->
-                Toast.makeText(mContext, "좋아요 해제", Toast.LENGTH_SHORT).show()
+            onClickFav = { item ->
+                Toast.makeText(requireContext(), "좋아요 해제", Toast.LENGTH_SHORT).show()
                 mainActivity!!.removeFavoriteToMyPage(item)
                 mainActivity.modifyFavoriteToHome(item.toTubeData())
-                Utils.deletePrefItem(mContext, item.toTubeData().thumbnail!!)
+                Utils.deletePrefItem(requireContext(), item.toTubeData().thumbnail!!)
             }
 //            onLongClickItem = {item ->
 //                AlertDialog.Builder(mContext).apply {
@@ -64,16 +72,12 @@ class MyPageFragment: Fragment() {
         )
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMyPageBinding.inflate(inflater,container,false)
+        _binding = FragmentMyPageBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -88,25 +92,49 @@ class MyPageFragment: Fragment() {
         super.onDestroyView()
     }
 
-    private fun initView() = with(binding){
+    private fun initView() = with(binding) {
 //        gridmanager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 //        recyclerview.layoutManager =gridmanager
         recyclerview.adapter = listAdapter
-
+//        recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            //리사이클러뷰가 스크롤이 될 때 실행
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                val lastVisibleItemPosition =
+//                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+//                val itemCount = listAdapter!!.itemCount - 1
+//                Log.d("test5", "$lastVisibleItemPosition")
+//                Log.d("test5", "$itemCount")
+//
+//                if (lastVisibleItemPosition == itemCount) {
+//                    val item = viewModel.getViewModelList()
+//                    addItems(item)
+//                }
+//
+//
+//            }
+//        })
     }
-    private fun initViewModel(){
-        with(viewModel){
-            viewModel.getLikeItems(mContext)
-            list.observe(viewLifecycleOwner){
+
+    private fun initViewModel() {
+        with(viewModel) {
+            viewModel.getLikeItems()
+            list.observe(viewLifecycleOwner) {
                 listAdapter.submitList(it)
             }
         }
     }
-    fun addItem(item:MyPageModel?){
+
+    fun addItem(item: MyPageModel?) {
         viewModel.addItem(item)
     }
-    fun removeItem(item:MyPageModel?){
+
+    fun removeItem(item: MyPageModel?) {
         viewModel.removeItem(item)
+    }
+
+    fun addItems(items: MutableList<MyPageModel>) {
+        viewModel.addItems(items)
     }
 
 }
