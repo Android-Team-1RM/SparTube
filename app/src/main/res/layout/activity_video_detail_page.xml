@@ -44,7 +44,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@+id/ic_btn_down"
-            android:text="Video Detail"
+            android:text="@string/tv_detailTitle"
+            android:textStyle="bold"
             android:textSize="26sp"
             android:textColor="@color/light_blue"/>
 
