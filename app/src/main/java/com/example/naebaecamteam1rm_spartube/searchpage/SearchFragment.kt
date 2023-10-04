@@ -130,13 +130,17 @@ class SearchFragment : Fragment() {
                             val channelId = youtubeList.get(i).snippet.channelId
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val channeltitle = youtubeList.get(i).snippet.channelTitle
+                            val videoID = youtubeList.get(i).id.videoId
+                            var url = "https://www.youtube.com/watch?v=" + videoID
                             Log.d("title","$title")
                             Log.d("url","$thumbnail")
                             youDatas.add(
                                 TubeDataModel(
                                 title = title,
-                                thumbnail = thumbnail, channelName = channeltitle,
-                                    channelId = channelId)
+                                thumbnail = thumbnail,
+                                channelName = channeltitle,
+                                url = url,
+                                channelId = channelId)
                             )
                             Log.d("y_datas","$youDatas")
 //                            listAdapter.list = y_datas
