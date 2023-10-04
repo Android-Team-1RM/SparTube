@@ -110,13 +110,13 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.addFavorite(
                     MyPageModel(
-                        TubeData.title,
-                        TubeData.thumbnail,
-                        TubeData.description,
-                        TubeData.videoId,
-                        TubeData.url,
-                        TubeData.channelId,
-                        TubeData.isLike
+                        title = TubeData.title,
+                        thumbnail = TubeData.thumbnail,
+                        description = TubeData.description,
+                        videoId = TubeData.videoId,
+                        url = TubeData.url,
+                        channelId = TubeData.channelId,
+                        isLike = TubeData.isLike
                     )
 
                 )
