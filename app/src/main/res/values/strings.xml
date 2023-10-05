@@ -1,9 +1,33 @@
 <resources>
     <string name="app_name">NaebaecamTeam1RM-SparTube</string>
 
+    <!-- Home -->
+    <string name="tv_homeTitle"> AsianGame Clip </string>
+    <string name="tv_mpVideo"> 인기 동영상 </string>
+    <string name="tv_mpShorts"> 인기 쇼츠 </string>
+    <string name="tv_categoryChannels"> 관련 채널 </string>
+
+    <!-- Search -->
+    <string name="tv_searchTitle"> Search </string>
+
+    <!-- MyPage -->
+    <string name="tv_mypageTitle"> Favorites </string>
+
+    <!-- Detail -->
+    <string name="tv_detailTitle"> Video Detail </string>
     <string name="btn_like"> 좋아요 </string>
-    <string name="btn_share"> 공유하기 </string>
+    <string name="btn_share"> Share </string>
     <string name="btn_play_list"> 재생목록 추가하기 </string>
-    <string name="tv_title"> 항저우 아시안 게임 </string>
-    <string name ="tv_description"> 항저우 2022 아시안게임 남자 축구 종목에서 대회 3연속 우승을 노리는 대한민국 축구 대표팀 </string>
+
+
+    <!-- Playlist -->
+    <string name="tv_playlistTitle"> PlayList </string>
+    <string name="et_playlistHint"> 재생 목록 제목을 입력하세요 </string>
+    <string name="btn_playlistEdit"> 수 정 </string>
+    <string name="btn_playlistDelete"> 삭 제 </string>
+
+    <!-- public -->
+    <string name="tv_testShortDescription"> 항저우 아시안 게임 </string>
+    <string name ="tv_testLongDescription"> 항저우 2022 아시안게임 남자 축구 종목에서 대회 3연속 우승을 노리는 대한민국 축구 대표팀 </string>
+
 </resources>

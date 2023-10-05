@@ -5,21 +5,30 @@ import android.content.Context
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 import com.google.gson.GsonBuilder
 
-object Utils {
-    fun addPrefItem(context: Context, item: MyPageModel) {
+interface Utils{
+    fun addPrefItem(item: MyPageModel)
+    fun deletePrefItem(thumbnail: String)
+    fun getPrefBookmarkItems(): ArrayList<MyPageModel>
+}
+
+class UtilsImpl(private val context:Context): Utils {
+    companion object{
+
+    }
+    override fun addPrefItem(item: MyPageModel) {
         val prefs = context.getSharedPreferences("pref", Activity.MODE_PRIVATE)
         val editor = prefs.edit()
         val gson = GsonBuilder().create()
         editor.putString(item.thumbnail, gson.toJson(item))
         editor.apply()
     }
-    fun deletePrefItem(context: Context, thumbnail: String) {
+    override fun deletePrefItem(thumbnail: String) {
         val prefs = context.getSharedPreferences("pref", Activity.MODE_PRIVATE)
         val editor = prefs.edit()
         editor.remove(thumbnail)
         editor.apply()
     }
-    fun getPrefBookmarkItems(context: Context): ArrayList<MyPageModel> {
+    override fun getPrefBookmarkItems(): ArrayList<MyPageModel> {
         val prefs = context.getSharedPreferences("pref", Activity.MODE_PRIVATE)
         val allEntries: Map<String, *> = prefs.all
         val bookmarkItems = ArrayList<MyPageModel>()

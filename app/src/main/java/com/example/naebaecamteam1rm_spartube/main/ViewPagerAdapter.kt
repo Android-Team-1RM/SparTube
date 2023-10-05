@@ -4,8 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.naebaecamteam1rm_spartube.homepage.HomeFragment
-import com.example.naebaecamteam1rm_spartube.playlistpage.PlayListFragment
+
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageFragment
+import com.example.naebaecamteam1rm_spartube.playlistpage.PlayListFragment
 import com.example.naebaecamteam1rm_spartube.searchpage.SearchFragment
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
@@ -32,5 +33,8 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     }
     fun getPlayListFragment():PlayListFragment{
         return fragmentList[2] as PlayListFragment
+    }
+    fun getSearchFragment():SearchFragment{
+        return fragmentList[1] as SearchFragment
     }
 }
