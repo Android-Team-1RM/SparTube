@@ -15,6 +15,16 @@ interface VideoService {
     ): Call<VideoDTO>
 
     @GET("/youtube/v3/search")
+    fun getNextList(
+        @Query("key") key: String?,
+        @Query("part") part: String?,
+        @Query("q") q: String?,
+        @Query("type") type: String?,
+        @Query("pageToken") pageToken: String?,
+        @Query("maxResults") maxResults: Int
+    ): Call<VideoDTO>
+
+    @GET("/youtube/v3/search")
     fun getShortsList(
         @Query("key") key: String?,
         @Query("part") part: String?,
@@ -25,12 +35,34 @@ interface VideoService {
     ): Call<VideoDTO>
 
     @GET("/youtube/v3/search")
+    fun getNextShortsList(
+        @Query("key") key: String?,
+        @Query("part") part: String?,
+        @Query("q") q: String?,
+        @Query("videoDuration") videoDuration: String?,
+        @Query("type") type: String?,
+        @Query("pageToken") pageToken: String?,
+        @Query("maxResults") maxResults: Int,
+    ): Call<VideoDTO>
+
+    @GET("/youtube/v3/search")
     fun getchannelList(
         @Query("key") key: String?,
         @Query("part") part: String?,
         @Query("q") q: String?,
         @Query("type") type: String?,
         //@Query("channelId") channelId: String?,
+        @Query("maxResults") maxResults: Int
+    ): Call<VideoDTO>
+
+    @GET("/youtube/v3/search")
+    fun getNextChannelList(
+        @Query("key") key: String?,
+        @Query("part") part: String?,
+        @Query("q") q: String?,
+        @Query("type") type: String?,
+        //@Query("channelId") channelId: String?,
+        @Query("pageToken") pageToken: String?,
         @Query("maxResults") maxResults: Int
     ): Call<VideoDTO>
 

@@ -67,7 +67,6 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
                         Log.d("test1", "$data")
                         ivChannelThumb.load(Uri.parse(data?.items!!.get(0).snippet.thumbnails.medium.url))
                     }
-
                 }
 
                 override fun onFailure(call: retrofit2.Call<ChannelDTO>, t: Throwable) {
