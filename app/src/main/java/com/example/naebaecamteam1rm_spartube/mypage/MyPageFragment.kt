@@ -1,23 +1,14 @@
 package com.example.naebaecamteam1rm_spartube.mypage
 
-import android.app.AlertDialog
-import android.content.Context
-import android.icu.util.UniversalTimeScale
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.Utils
 import com.example.naebaecamteam1rm_spartube.UtilsImpl
-import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
 import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
@@ -30,12 +21,11 @@ class MyPageFragment : Fragment() {
     private var _binding: FragmentMyPageBinding? = null
     private val binding get() = _binding!!
     private val mainActivity = MainActivity.newInstence()
-    private val utils:Utils by lazy{
+    private val utils: Utils by lazy {
         UtilsImpl(requireContext())
     }
 
-
-    private val viewModel: MyPageViewModel by lazy {//튜터님 보여드리기
+    private val viewModel: MyPageViewModel by lazy {
         ViewModelProvider(
             this,
             MyPageModelFactory(requireContext())
@@ -116,7 +106,6 @@ class MyPageFragment : Fragment() {
 //                    val item = viewModel.getViewModelList()
 //                    addItems(item)
 //                }
-//
 //
 //            }
 //        })

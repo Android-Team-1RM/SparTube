@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.naebaecamteam1rm_spartube.Utils
 import com.example.naebaecamteam1rm_spartube.UtilsImpl
 
 class MyPageViewModel(private val Utils: UtilsImpl) : ViewModel() {
@@ -82,7 +81,6 @@ class MyPageViewModel(private val Utils: UtilsImpl) : ViewModel() {
         currentList[findPosition] = item
         _list.value = currentList
     }
-
 
 }
 //팩토리를 만들고, Context를 파라미터로 받고 여기서 Sharedpreference instance 추가

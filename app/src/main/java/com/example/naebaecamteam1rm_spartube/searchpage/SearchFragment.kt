@@ -1,7 +1,6 @@
 package com.example.naebaecamteam1rm_spartube.searchpage
 
 import android.content.Context
-import android.os.Build.VERSION_CODES.Q
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,16 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.api.Contants
 import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
-import com.example.naebaecamteam1rm_spartube.databinding.FragmentHomeBinding
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentSearchBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -116,7 +112,8 @@ class SearchFragment : Fragment() {
     fun setRv() {
         adapter = SearchAdapter(mContext)
         binding.rvSearchResult.adapter = adapter
-        binding.rvSearchResult.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvSearchResult.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         adapter.itemClick = object : SearchAdapter.ItemClick {
             override fun onClick(view: View, tubeData: TubeDataModel) {
@@ -149,7 +146,7 @@ class SearchFragment : Fragment() {
                             for (i in youtubeList.indices) {
                                 var title = youtubeList.get(i).snippet.title
                                 title = title.replace("&#39;", "'")
-                                title = title.replace("&quot;","\"")
+                                title = title.replace("&quot;", "\"")
                                 val channelId = youtubeList.get(i).snippet.channelId
                                 val description = youtubeList.get(i).snippet.description
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
@@ -184,70 +181,67 @@ class SearchFragment : Fragment() {
             })
         }
 
-
     }
 
     fun setNextTest(search: String) = with(binding) {
         CoroutineScope(Dispatchers.IO).launch {
-                RetrofitInstance.api.getNextList(
-                    Contants.MY_KEY,
-                    "snippet",
-                    search,
-                    "video",
-                    nextPageToken,
-                    MAX_RESULTS
-                )?.enqueue(object :
-                    Callback<VideoDTO> {
-                    override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
-                        if (response.isSuccessful) {
-                            Log.d("test", "Response")
-                            val data = response.body()
-                            val youtubeList = data?.items
-                            if (youtubeList == null) {
-                                return
-                            } else {
-                                nextPageToken = data?.nextPageToken
-                                for (i in youtubeList.indices) {
-                                    var title = youtubeList.get(i).snippet.title
-                                    title = title.replace("&#39;", "'")
-                                    title = title.replace("&quot;", "\"")
-                                    val channelId = youtubeList.get(i).snippet.channelId
-                                    val description = youtubeList.get(i).snippet.description
-                                    val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
-                                    val channeltitle = youtubeList.get(i).snippet.channelTitle
-                                    val videoID = youtubeList.get(i).id.videoId
-                                    var url = "https://www.youtube.com/watch?v=" + videoID
-                                    Log.d("title", "$title")
-                                    Log.d("url", "$thumbnail")
-                                    youDatas.add(
-                                        TubeDataModel(
-                                            title = title,
-                                            thumbnail = thumbnail,
-                                            description = description,
-                                            channelName = channeltitle,
-                                            url = url,
-                                            channelId = channelId
-                                        )
+            RetrofitInstance.api.getNextList(
+                Contants.MY_KEY,
+                "snippet",
+                search,
+                "video",
+                nextPageToken,
+                MAX_RESULTS
+            )?.enqueue(object :
+                Callback<VideoDTO> {
+                override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
+                    if (response.isSuccessful) {
+                        Log.d("test", "Response")
+                        val data = response.body()
+                        val youtubeList = data?.items
+                        if (youtubeList == null) {
+                            return
+                        } else {
+                            nextPageToken = data?.nextPageToken
+                            for (i in youtubeList.indices) {
+                                var title = youtubeList.get(i).snippet.title
+                                title = title.replace("&#39;", "'")
+                                title = title.replace("&quot;", "\"")
+                                val channelId = youtubeList.get(i).snippet.channelId
+                                val description = youtubeList.get(i).snippet.description
+                                val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
+                                val channeltitle = youtubeList.get(i).snippet.channelTitle
+                                val videoID = youtubeList.get(i).id.videoId
+                                var url = "https://www.youtube.com/watch?v=" + videoID
+                                Log.d("title", "$title")
+                                Log.d("url", "$thumbnail")
+                                youDatas.add(
+                                    TubeDataModel(
+                                        title = title,
+                                        thumbnail = thumbnail,
+                                        description = description,
+                                        channelName = channeltitle,
+                                        url = url,
+                                        channelId = channelId
                                     )
-                                    Log.d("y_datas", "$youDatas")
-                                    adapter.items = youDatas
-                                    adapter.notifyDataSetChanged()
-                                }
+                                )
+                                Log.d("y_datas", "$youDatas")
+                                adapter.items = youDatas
+                                adapter.notifyDataSetChanged()
                             }
                         }
-
                     }
 
-                    override fun onFailure(call: Call<VideoDTO>, t: Throwable) {
-                        Log.d("test1", "fail")
-                    }
+                }
 
-                })
-            }
+                override fun onFailure(call: Call<VideoDTO>, t: Throwable) {
+                    Log.d("test1", "fail")
+                }
 
+            })
+        }
 
     }
-
 
     private fun infiniteScroll(search: String) {
         binding.rvSearchResult.addOnScrollListener(object : RecyclerView.OnScrollListener() {

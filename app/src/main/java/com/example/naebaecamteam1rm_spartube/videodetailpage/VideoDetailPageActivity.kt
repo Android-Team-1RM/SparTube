@@ -37,7 +37,6 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoDetailPageBinding.inflate(layoutInflater)
@@ -52,7 +51,6 @@ class VideoDetailPageActivity : AppCompatActivity() {
         btnSet()
 
     }
-
 
     private fun initView() {
 //        Glide.with(this)
@@ -101,8 +99,6 @@ class VideoDetailPageActivity : AppCompatActivity() {
         )
 
         binding.btnLike.setBackgroundResource(backgroundDrawableRes)
-
-
 
         binding.btnLike.setOnClickListener {
 
@@ -155,7 +151,6 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요", Toast.LENGTH_SHORT).show()
             }
         }
-
 
         binding.btnShare.setOnClickListener {
             Log.d("btnShare", "btnShareOk")

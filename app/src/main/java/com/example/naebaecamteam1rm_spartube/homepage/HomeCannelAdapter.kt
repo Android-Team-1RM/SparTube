@@ -28,15 +28,16 @@ class HomeCannelAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.Vi
     var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            VIEW_TYPE_ITEM ->{
+        return when (viewType) {
+            VIEW_TYPE_ITEM -> {
                 return Holder(
                     ItemRecyclerviewBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     )
                 )
             }
-            else ->{
+
+            else -> {
                 return LoadingViewHolder(
                     ItemLoadingVerticalBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
@@ -121,7 +122,8 @@ class HomeCannelAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.Vi
         list[findPosition] = item
         notifyDataSetChanged()
     }
-    fun deleteLoading(){
+
+    fun deleteLoading() {
         list.removeAt(list.lastIndex)
     }
 
