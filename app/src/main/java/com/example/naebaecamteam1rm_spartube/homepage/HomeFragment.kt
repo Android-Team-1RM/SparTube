@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.naebaecamteam1rm_spartube.api.Contants
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
@@ -68,7 +69,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        infiniteScrollSet()
+//        infiniteScrollSet()
 
     }
 
@@ -130,6 +131,9 @@ class HomeFragment : Fragment() {
         vmanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerMpVideo.layoutManager = vmanager
         recyclerMpVideo.adapter = listAdapter
+        val pagerSnapHelper = PagerSnapHelper()
+        pagerSnapHelper.attachToRecyclerView(recyclerMpVideo)
+
 
         smanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerMpShorts.layoutManager = smanager
@@ -162,155 +166,6 @@ class HomeFragment : Fragment() {
     }
 
 
-    //  scrolling banner
-    // viewPager쪽으로 하는게 더 편하다(처음 부터 미리 만들어진다) ++++      -> recyclerView 는 과부하가 없다
-    // 이 방법은 끊기는 느낌을 느낀다
-    // progressBarㄹ
-
-    private fun infiniteScrollSet(){
-        if (y_datas.isNotEmpty()) {
-            binding.recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                        if (!recyclerView.canScrollHorizontally(1)) {
-                            // 처음
-
-                            var changeDatas = y_datas
-
-                            for(i in 0 until 5){
-                                changeDatas[y_datas.size - 6 + i] = y_datas[i]
-                            }
-
-                            for(i in 5 until y_datas.size){
-                                changeDatas[i-5] = y_datas[i]
-                            }
-
-                            y_datas.clear()
-                            y_datas.addAll(changeDatas)
-                            listAdapter.notifyDataSetChanged()
-                        } else if (!recyclerView.canScrollHorizontally(-1)) {
-                            // 끝에 도달
-
-                            var changeDatas = y_datas
-
-                            for(i in 0 until 5){
-                                changeDatas[i] = y_datas[y_datas.size - 6 + i]
-                            }
-
-                            for(i in 5 until y_datas.size){
-                                changeDatas[i] = y_datas[i - 5]
-                            }
-
-                            y_datas.clear()
-                            y_datas.addAll(changeDatas)
-                            listAdapter.notifyDataSetChanged()
-                        }
-                    }
-            })
-        }
-        if (s_datas.isNotEmpty()) {
-            Log.d("set", "s_datas")
-            binding.recyclerMpShorts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-//                if(!recyclerView.canScrollHorizontally(1)){
-//                    // 끝에 도달
-//                    for(i in 0 until s_datas.size){
-//                        s_datas.add(s_datas[i])
-//                    }
-//                    listShortsAdapter.notifyDataSetChanged()
-//                }else if(!recyclerView.canScrollHorizontally(-1)){
-//                    //처음
-//                    for(i in 0 until 5){
-//                        s_datas.add(s_datas[i+5])
-//                    }
-//                    listShortsAdapter.notifyDataSetChanged()
-//                }
-
-
-                        if (!recyclerView.canScrollHorizontally(1)) {
-                            // 끝에 도달
-                            Log.d("set", "Bottom")
-                            var changeDatas = s_datas
-                            //처음꺼를 끝에 붙이기
-                            for (i in 0 until 5) {
-                                changeDatas[s_datas.size - 6 + i] = s_datas[i]
-                            }
-
-                            for (i in 5 until s_datas.size) {
-                                changeDatas[i - 5] = s_datas[i]
-                            }
-
-                            s_datas.clear()
-                            s_datas.addAll(changeDatas)
-                            listShortsAdapter.notifyDataSetChanged()
-                        } else if (!recyclerView.canScrollHorizontally(-1)) {
-                            //처음
-                            Log.d("set", "Top")
-                            var changeDatas = s_datas
-                            //끝에 있는거를 처음에 붙이기
-                            for (i in 0 until 5) {
-                                changeDatas[i] = s_datas[s_datas.size - 6 + i]
-                            }
-
-                            for (i in 5 until s_datas.size) {
-                                changeDatas[i] = s_datas[i - 5]
-                            }
-
-
-                            s_datas.clear()
-                            s_datas.addAll(changeDatas)
-                            listShortsAdapter.notifyDataSetChanged()
-                        }
-                    }
-            })
-        }
-        if (c_datas.isNotEmpty()) {
-            binding.recyclerCategoryCannels.addOnScrollListener(object :
-                RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-
-
-                        if (!recyclerView.canScrollHorizontally(1)) {
-                            // 처음
-
-                            var changeDatas = c_datas
-
-                            for (i in 0 until 5) {
-                                changeDatas[c_datas.size - 6 + i] = c_datas[i]
-                            }
-
-                            for (i in 5 until c_datas.size) {
-                                changeDatas[i - 5] = c_datas[i]
-                            }
-
-                            c_datas.clear()
-                            c_datas.addAll(changeDatas)
-                            listChannelAdapter.notifyDataSetChanged()
-                        } else if (!recyclerView.canScrollHorizontally(-1)) {
-                            // 끝에 도달
-
-                            var changeDatas = c_datas
-
-                            for (i in 0 until 5) {
-                                changeDatas[i] = c_datas[c_datas.size - 6 + i]
-                            }
-
-                            for (i in 5 until c_datas.size) {
-                                changeDatas[i] = c_datas[i - 5]
-                            }
-
-                            c_datas.clear()
-                            c_datas.addAll(changeDatas)
-                            listChannelAdapter.notifyDataSetChanged()
-                        }
-                    }
-            })
-        }
-    }
 
 
     // Most populer video 부분
@@ -354,11 +209,13 @@ class HomeFragment : Fragment() {
                                         channelId = channelID
                                         )
                                 )
+
                                 Log.d("y_datas", "$y_datas")
                                 listAdapter.list = y_datas //리스트를 어댑터에 적용
                                 listAdapter.notifyDataSetChanged()// notity
 
                             }
+
                         }
 
                     }
@@ -369,7 +226,6 @@ class HomeFragment : Fragment() {
                 }
 
             })
-
     }
 
     // Most populer shorts 부분
