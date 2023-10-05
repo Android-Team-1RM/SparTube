@@ -66,14 +66,32 @@
             android:orientation="vertical">
 
 
-
-            <ImageView
-                android:id="@+id/iv_thumbnail"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/video_detail_page_img_base"
-                android:adjustViewBounds="true"/>
+                android:layout_height="250dp">
+                <ImageView
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/video_detail_page_img_base"
+                    android:adjustViewBounds="true" />
+
+                <ImageView
+                    android:id="@+id/iv_btn_play"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="171dp"
+                    android:layout_marginTop="110dp"
+                    android:layout_marginEnd="210dp"
+                    android:layout_marginBottom="110dp"
+                    android:src="@drawable/video_detail_page_ic_play"
+                    app:tint="#dfffffff" />
+            </FrameLayout>
+
+
+
+
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -134,21 +152,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_like"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_margin="4dp"
             android:background="@drawable/video_detail_page_btn_shape_im"
-            android:drawableEnd="@drawable/video_detail_page_btn_ic_like"
             android:elevation="8dp"
             android:padding="8dp"
+            android:drawableStart="@drawable/video_detail_page_btn_ic_like_im"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_share"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.appcompat.widget.AppCompatButton>
+        </Button>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_share"

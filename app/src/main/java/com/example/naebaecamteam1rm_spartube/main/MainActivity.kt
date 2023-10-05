@@ -1,7 +1,8 @@
 package com.example.naebaecamteam1rm_spartube.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityMainBinding
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
@@ -39,10 +40,15 @@ class MainActivity : AppCompatActivity() {
 
         // TabLayout과 ViewPager2를 연결
         // 1. 탭메뉴의 이름을 리스트로 생성
-        val tabTitles = listOf<String>("홈", "검색", "재생목록", "즐겨찾기")
-
+//        val tabTitles = listOf<String>("HOME", "SEARCH", "PLAYLIST", "FAVORITE")
+        val tabIcons = listOf<Int>(R.drawable.tab_item_btn_ic_home,R.drawable.tab_item_btn_ic_search,R.drawable.tab_item_btn_ic_playlist,R.drawable.tab_item_btn_ic_thumb_up)
         // 2. TabLayout과 ViewPager2를 연결하고, TabItem의 메뉴명을 설정
-        TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain, {tab, position -> tab.text = tabTitles[position]}).attach()
+//        TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain, {tab, position -> tab.text = tabTitles[position]}).attach()
+        TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain) { tab, position ->
+            tab.setIcon(
+                tabIcons[position]
+            )
+        }.attach()
 
         //9.27 21:43 1차 PR
 
