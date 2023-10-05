@@ -3,7 +3,6 @@ package com.example.naebaecamteam1rm_spartube.playlistpage
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.naebaecamteam1rm_spartube.databinding.FragmentPlaylistBinding
 import com.example.naebaecamteam1rm_spartube.databinding.ItemPlaylistBinding
 
 
@@ -36,19 +35,19 @@ class PlayListAdapter : RecyclerView.Adapter<Holder>() {
 // RecyclerView의 각 항목을 나타내는 ViewHolder 클래스를 정의합니다.
 class Holder(val binding: ItemPlaylistBinding) : RecyclerView.ViewHolder(binding.root){
 
-    private val playlistFragment = PlaylistFragment.getInstance()
+    private val playlistFragment = PlayListFragment.getInstance()
     var mMember: PlayListModel? = null
     var mPosition: Int? = null
 
     // ViewHolder가 초기화될 때 호출되는 초기화 블록
     init {
         // 삭제 버튼이 클릭되면 해당 항목을 삭제하는 동작
-        binding.btnDelete.setOnClickListener {
+        binding.btnPlDelete.setOnClickListener {
             playlistFragment?.deleteMember(mMember!!)
         }
 
         // 편집 버튼이 클릭되면 해당 항목을 편집하는 동작
-        binding.btnEdit.setOnClickListener {
+        binding.btnPlEdit.setOnClickListener {
             playlistFragment?.editMember(mPosition!!, mMember!!)
         }
     }
@@ -56,7 +55,7 @@ class Holder(val binding: ItemPlaylistBinding) : RecyclerView.ViewHolder(binding
     // ViewHolder의 데이터를 설정하는 메서드
     fun setData(member: PlayListModel, position: Int){
         // ViewHolder의 TextView에 회원 이름을 설정
-        binding.textView.text = member.name
+        binding.tvPlTitle.text = member.name
         this.mMember = member
         this.mPosition = position
     }

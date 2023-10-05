@@ -37,6 +37,7 @@ class SearchFragment : Fragment() {
         super.onAttach(context)
         mContext = context
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -57,14 +58,14 @@ class SearchFragment : Fragment() {
 
 
     //키워드 버튼을 눌렀을 때 각 키워드로 검색
-    private fun updateBtn(){
+    private fun updateBtn() {
         val btnRandomWord = searchWordList.shuffled().take(3)
         val firstBtn = binding.btnRandomFirst
         val secondBtn = binding.btnRandomSecond
-        val thirdBtn  =binding.btnRandomThird
-        firstBtn.text = btnRandomWord.getOrElse(0){""}
-        secondBtn.text = btnRandomWord.getOrElse(1){""}
-        thirdBtn.text = btnRandomWord.getOrElse(2){""}
+        val thirdBtn = binding.btnRandomThird
+        firstBtn.text = btnRandomWord.getOrElse(0) { "" }
+        secondBtn.text = btnRandomWord.getOrElse(1) { "" }
+        thirdBtn.text = btnRandomWord.getOrElse(2) { "" }
 
         firstBtn.setOnClickListener {
             adapter.clearItem()
@@ -81,8 +82,8 @@ class SearchFragment : Fragment() {
     }
 
     //서치뷰
-    fun setSearchView(){
-        binding.svSearch.setOnQueryTextListener(object : OnQueryTextListener{
+    fun setSearchView() {
+        binding.svSearch.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 adapter.clearItem()
                 settest(query.toString())
@@ -105,51 +106,62 @@ class SearchFragment : Fragment() {
     }
 
     //리사이클러뷰
-    fun setRv(){
+    fun setRv() {
         gridmanager = StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
         adapter = SearchAdapter(mContext)
         binding.rvSearchResult.adapter = adapter
         binding.rvSearchResult.layoutManager = gridmanager
 
-        adapter.itemClick = object : SearchAdapter.ItemClick{
-            override fun onClick(view: View, tubeData : TubeDataModel) {
-                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context,tubeData))
+        adapter.itemClick = object : SearchAdapter.ItemClick {
+            override fun onClick(view: View, tubeData: TubeDataModel) {
+                startActivity(VideoDetailPageActivity.VideoDetailPageNewIntent(context, tubeData))
             }
         }
 
     }
 
 
-    fun settest(search: String) =with(binding){
+    fun settest(search: String) = with(binding) {
         CoroutineScope(Dispatchers.IO).launch {
-            RetrofitInstance.api.getList(Contants.MY_KEY,"snippet","아시안게임 $search","videop", MAX_RESULTS)?.enqueue( object :
+            RetrofitInstance.api.getList(
+                Contants.MY_KEY,
+                "snippet",
+                "아시안게임 $search",
+                "videop",
+                MAX_RESULTS
+            )?.enqueue(object :
                 Callback<VideoDTO> {
                 override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
-                    if(response.isSuccessful){
-                        Log.d("test","Response")
+                    if (response.isSuccessful) {
+                        Log.d("test", "Response")
                         val data = response.body()
                         val youtubeList = data?.items
-                        if(youtubeList == null){
+                        if (youtubeList == null) {
                             return
-                        }else{
-                            for(i in youtubeList.indices){
-                                val title = youtubeList.get(i).snippet.title
+                        } else {
+                            for (i in youtubeList.indices) {
+                                var title = youtubeList.get(i).snippet.title
+                                title = title.replace("&#39;", "'")
+                                title = title.replace("&quot;","\"")
                                 val channelId = youtubeList.get(i).snippet.channelId
+                                val description = youtubeList.get(i).snippet.description
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val channeltitle = youtubeList.get(i).snippet.channelTitle
                                 val videoID = youtubeList.get(i).id.videoId
                                 var url = "https://www.youtube.com/watch?v=" + videoID
-                                Log.d("title","$title")
-                                Log.d("url","$thumbnail")
+                                Log.d("title", "$title")
+                                Log.d("url", "$thumbnail")
                                 youDatas.add(
                                     TubeDataModel(
                                         title = title,
                                         thumbnail = thumbnail,
+                                        description = description,
                                         channelName = channeltitle,
                                         url = url,
-                                        channelId = channelId)
+                                        channelId = channelId
+                                    )
                                 )
-                                Log.d("y_datas","$youDatas")
+                                Log.d("y_datas", "$youDatas")
                                 adapter.items = youDatas
                                 adapter.notifyDataSetChanged()
                             }
@@ -160,7 +172,7 @@ class SearchFragment : Fragment() {
 
 
                 override fun onFailure(call: Call<VideoDTO>, t: Throwable) {
-                    Log.d("test1","fail")
+                    Log.d("test1", "fail")
                 }
 
             })
@@ -168,15 +180,20 @@ class SearchFragment : Fragment() {
 
     }
 
-    fun setRecyclerViewScrollListener(){
-        binding.rvSearchResult.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+    fun setRecyclerViewScrollListener() {
+        binding.rvSearchResult.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                if (recyclerView.canScrollVertically(-1)){
-                   Log.d("infinite scroll","hi")
+                if (recyclerView.canScrollVertically(-1)) {
+                    Log.d("infinite scroll", "hi")
                 }
             }
         })
     }
+    fun modifyItemToAddFavorite(item: TubeDataModel) {
+        adapter.modifyItemToAddFavorite(item)
+    }
+
+
 }
 

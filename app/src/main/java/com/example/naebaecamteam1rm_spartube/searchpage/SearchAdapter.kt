@@ -85,4 +85,20 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
             tvChannel.text = item.channelName
         }
     }
+    fun modifyItemToAddFavorite(item: TubeDataModel) {//좋아요 바꾸기 위한 함수
+        if (item == null) return
+        fun findIndex(item: TubeDataModel): Int {
+            val findPosition = items.find {
+                it.thumbnail == item?.thumbnail
+            }
+            return items.indexOf(findPosition)
+        }
+
+        val findPosition = findIndex(item)
+        if (findPosition < 0) {
+            return
+        }
+        items[findPosition] = item
+        notifyDataSetChanged()
+    }
 }

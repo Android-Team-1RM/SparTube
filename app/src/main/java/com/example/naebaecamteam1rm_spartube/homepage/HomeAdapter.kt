@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
+import com.example.naebaecamteam1rm_spartube.databinding.ItemLoadingBinding
+import com.example.naebaecamteam1rm_spartube.databinding.ItemLoadingVerticalBinding
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
-class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>() {
+class HomeAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list = ArrayList<TubeDataModel>()
+    private val VIEW_TYPE_ITEM = 0
+    private val VIEW_TYPE_LOADING = 1
 
     var mContext = context
 
@@ -23,17 +27,38 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
 
     var itemClick: ItemClick? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        return Holder(
-            ItemRecyclerviewBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when(viewType){
+            VIEW_TYPE_ITEM ->{
+                return Holder(
+                    ItemRecyclerviewBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+            }
+            else ->{
+                return LoadingViewHolder(
+                    ItemLoadingVerticalBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+            }
+        }
+//        return Holder(
+//            ItemRecyclerviewBinding.inflate(
+//                LayoutInflater.from(parent.context), parent, false
+//            )
+//        )
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var item = list[position]
-        holder.bind(item)
+        if (holder is Holder) {
+            holder.bind(item)
+        } else {
+
+        }
+
         //20번째 가되면 추가로 아이템을 넣는 형식을 설정
 
 //        holder.itemView.setOnClickListener {  //클릭이벤트추가부분
@@ -49,6 +74,18 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (list[position].title) {
+            " " -> VIEW_TYPE_LOADING
+            else -> VIEW_TYPE_ITEM
+        }
+    }
+
+    inner class LoadingViewHolder(private val binding: ItemLoadingVerticalBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
     }
 
     inner class Holder(val binding: ItemRecyclerviewBinding) :
@@ -67,6 +104,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
         }
     }
 
+
     fun modifyItemToAddFavorite(item: TubeDataModel) {//좋아요 바꾸기 위한 함수
         if (item == null) return
         fun findIndex(item: TubeDataModel): Int {
@@ -82,6 +120,9 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
         }
         list[findPosition] = item
         notifyDataSetChanged()
+    }
+    fun deleteLoading(){
+        list.removeAt(list.lastIndex)
     }
 
 
