@@ -9,6 +9,7 @@ import kotlinx.serialization.encoding.*
 data class ChannelDTO (
     val kind: String,
     val etag: String,
+    val nextPageToken: String,
     val pageInfo: ChannelPageInfo,
     val items: List<ChannelItem>
 )

@@ -1,5 +1,6 @@
 package com.example.naebaecamteam1rm_spartube.videodetailpage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -63,6 +64,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
         binding.tvDescription.text = TubeData.description
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun btnSet() {
 
         val leftPadding = resources.getDimensionPixelSize(R.dimen.left_padding)
@@ -79,10 +81,19 @@ class VideoDetailPageActivity : AppCompatActivity() {
             R.drawable.video_detail_page_btn_shape_im // 좋아요 상태가 아닐 때 배경 drawable
         }
 
+        val thumbUpDrawableRes = if (TubeData.isLike) {
+            resources.getDrawable(R.drawable.video_detail_page_btn_ic_like) // 좋아요 상태일 때 Drawable 리소스
+        } else {
+            resources.getDrawable(R.drawable.video_detail_page_btn_ic_like_im) // 좋아요 상태가 아닐 때 Drawable 리소스
+        }
+
+        binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(thumbUpDrawableRes, null, null, null)
+
         binding.btnLike.setBackgroundResource(backgroundDrawableRes)
 
-        binding.btnLike.setOnClickListener {
 
+
+        binding.btnLike.setOnClickListener {
 
 
             Log.d("btnLike","btnLikeOk")
@@ -90,6 +101,8 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
                 TubeData.isLike = false
                 binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_im)
+
+                binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(resources.getDrawable(R.drawable.video_detail_page_btn_ic_like_im), null, null, null)
 
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.removeFavoriteToMyPage(TubeData.toMyPageModel())
@@ -101,17 +114,18 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 TubeData.isLike = true
                 binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_like)
 
+                binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(resources.getDrawable(R.drawable.video_detail_page_btn_ic_like), null, null, null)
 
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.addFavorite(
                     MyPageModel(
-                        TubeData.title,
-                        TubeData.thumbnail,
-                        TubeData.description,
-                        TubeData.videoId,
-                        TubeData.url,
-                        TubeData.channelId,
-                        TubeData.isLike
+                        title = TubeData.title,
+                        thumbnail = TubeData.thumbnail,
+                        description = TubeData.description,
+                        videoId = TubeData.videoId,
+                        url = TubeData.url,
+                        channelId = TubeData.channelId,
+                        isLike = TubeData.isLike
                     )
 
                 )

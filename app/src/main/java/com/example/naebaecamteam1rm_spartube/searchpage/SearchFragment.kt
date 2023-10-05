@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.api.Contants
 import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActivity
@@ -15,6 +17,9 @@ import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentSearchBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +27,7 @@ import retrofit2.Response
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private val tag = "SearchFragment"
-    private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
+    private var MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
     private lateinit var mContext: Context
     private lateinit var adapter: SearchAdapter
     private val youDatas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
@@ -47,6 +52,7 @@ class SearchFragment : Fragment() {
         setRv()
         updateBtn()
         binding.ivRefresh.setOnClickListener { updateBtn() }
+        setRecyclerViewScrollListener()
     }
 
 
@@ -115,46 +121,62 @@ class SearchFragment : Fragment() {
 
 
     fun settest(search: String) =with(binding){
-        RetrofitInstance.api.getList(Contants.MY_KEY,"snippet","아시안게임 $search","videop",MAX_RESULTS)?.enqueue( object :
-            Callback<VideoDTO> {
-            override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
-                if(response.isSuccessful){
-                    Log.d("test","Response")
-                    val data = response.body()
-                    val youtubeList = data?.items
-                    if(youtubeList == null){
-                        return
-                    }else{
-                        for(i in youtubeList.indices){
-                            val title = youtubeList.get(i).snippet.title
-                            val channelId = youtubeList.get(i).snippet.channelId
-                            val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
-                            val channeltitle = youtubeList.get(i).snippet.channelTitle
-                            Log.d("title","$title")
-                            Log.d("url","$thumbnail")
-                            youDatas.add(
-                                TubeDataModel(
-                                title = title,
-                                thumbnail = thumbnail, channelName = channeltitle,
-                                    channelId = channelId)
-                            )
-                            Log.d("y_datas","$youDatas")
-//                            listAdapter.list = y_datas
-//                            listAdapter.notifyDataSetChanged() // 어뎁터 설정
+        CoroutineScope(Dispatchers.IO).launch {
+            RetrofitInstance.api.getList(Contants.MY_KEY,"snippet","아시안게임 $search","videop", MAX_RESULTS)?.enqueue( object :
+                Callback<VideoDTO> {
+                override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
+                    if(response.isSuccessful){
+                        Log.d("test","Response")
+                        val data = response.body()
+                        val youtubeList = data?.items
+                        if(youtubeList == null){
+                            return
+                        }else{
+                            for(i in youtubeList.indices){
+                                val title = youtubeList.get(i).snippet.title
+                                val channelId = youtubeList.get(i).snippet.channelId
+                                val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
+                                val channeltitle = youtubeList.get(i).snippet.channelTitle
+                                val videoID = youtubeList.get(i).id.videoId
+                                var url = "https://www.youtube.com/watch?v=" + videoID
+                                Log.d("title","$title")
+                                Log.d("url","$thumbnail")
+                                youDatas.add(
+                                    TubeDataModel(
+                                        title = title,
+                                        thumbnail = thumbnail,
+                                        channelName = channeltitle,
+                                        url = url,
+                                        channelId = channelId)
+                                )
+                                Log.d("y_datas","$youDatas")
+                                adapter.items = youDatas
+                                adapter.notifyDataSetChanged()
+                            }
                         }
                     }
+
                 }
-                adapter.items = youDatas
-                adapter.notifyDataSetChanged()
+
+
+                override fun onFailure(call: Call<VideoDTO>, t: Throwable) {
+                    Log.d("test1","fail")
+                }
+
+            })
+        }
+
+    }
+
+    fun setRecyclerViewScrollListener(){
+        binding.rvSearchResult.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (recyclerView.canScrollVertically(-1)){
+                   Log.d("infinite scroll","hi")
+                }
             }
-
-
-            override fun onFailure(call: Call<VideoDTO>, t: Throwable) {
-                Log.d("test1","fail")
-            }
-
         })
-
     }
 }
 
