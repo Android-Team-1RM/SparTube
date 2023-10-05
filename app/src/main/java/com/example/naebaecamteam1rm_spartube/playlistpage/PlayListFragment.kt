@@ -12,7 +12,7 @@ import com.example.naebaecamteam1rm_spartube.databinding.AlertdialogEdittextBind
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentPlaylistBinding
 
 
-class PlaylistFragment : Fragment() {
+class PlayListFragment : Fragment() {
 
     // ViewBinding
     private var _binding: FragmentPlaylistBinding? = null
@@ -28,13 +28,14 @@ class PlaylistFragment : Fragment() {
     }
 
     companion object{
-        private var instance:PlaylistFragment? = null
+        private var instance:PlayListFragment? = null
 
         // Singleton 패턴을 사용하여 인스턴스를 반환하는 메서드
-        fun getInstance(): PlaylistFragment? {
+        fun getInstance(): PlayListFragment? {
             return instance
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,6 +65,7 @@ class PlaylistFragment : Fragment() {
             adapter?.notifyDataSetChanged()
         }
     }
+
 
 
     // 목록 데이터를 초기화하는 함수
@@ -101,5 +103,10 @@ class PlaylistFragment : Fragment() {
             }
             show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

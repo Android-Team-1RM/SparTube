@@ -7,19 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.naebaecamteam1rm_spartube.Utils
+import com.example.naebaecamteam1rm_spartube.UtilsImpl
 
-class MyPageViewModel(context: Context) : ViewModel() {
+class MyPageViewModel(private val Utils: UtilsImpl) : ViewModel() {
     private val _list: MutableLiveData<List<MyPageModel>> = MutableLiveData()
     val list: LiveData<List<MyPageModel>> get() = _list
-    val mContext = context
-
 
     init {
 
     }
 
     fun getLikeItems() {
-        _list.value = Utils.getPrefBookmarkItems(mContext)
+        _list.value = Utils.getPrefBookmarkItems()
     }
 
     fun getViewModelList(): MutableList<MyPageModel> {
@@ -83,14 +82,16 @@ class MyPageViewModel(context: Context) : ViewModel() {
         currentList[findPosition] = item
         _list.value = currentList
     }
+
+
 }
 //팩토리를 만들고, Context를 파라미터로 받고 여기서 Sharedpreference instance 추가
 
-class MyPageModelFactory(context: Context) : ViewModelProvider.Factory {
-    val mContext = context
+class MyPageModelFactory(private val context: Context) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MyPageViewModel::class.java)) {
-            return MyPageViewModel(mContext) as T
+            return MyPageViewModel(UtilsImpl(context)) as T
         } else {
             throw IllegalArgumentException("Not found ViewModel class.")
         }
