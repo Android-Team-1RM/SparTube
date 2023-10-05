@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
+import com.example.naebaecamteam1rm_spartube.databinding.ItemLoadingBinding
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
 class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>() {
 
     var list = ArrayList<TubeDataModel>()
+    private val VIEW_TYPE_ITEM = 0
+    private val VIEW_TYPE_LOADING = 1
 
     var mContext = context
 
@@ -24,6 +27,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
     var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+
         return Holder(
             ItemRecyclerviewBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -66,6 +70,7 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<HomeAdapter.Holder>()
             tvTitle.text = item.title
         }
     }
+
 
     fun modifyItemToAddFavorite(item: TubeDataModel) {//좋아요 바꾸기 위한 함수
         if (item == null) return

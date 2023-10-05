@@ -2,18 +2,23 @@ package com.example.naebaecamteam1rm_spartube.playlistpage
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.naebaecamteam1rm_spartube.databinding.AlertdialogEdittextBinding
+import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentPlaylistBinding
 
 
 class PlaylistFragment : Fragment() {
 
     // ViewBinding
-    private lateinit var binding : FragmentPlaylistBinding
+    private var _binding: FragmentPlaylistBinding? = null
+    private val binding get() = _binding!!
 
     // RecyclerView 가 불러올 목록
     private var adapter: PlayListAdapter? = null // RecyclerView 어댑터
@@ -33,13 +38,20 @@ class PlaylistFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        // ViewBinding
-        super.onCreate(savedInstanceState)
-        binding = FragmentPlaylistBinding.inflate(layoutInflater)
-        val view = binding.root
-         // ActivityMainBinding을 사용하여 레이아웃을 설정
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+    fun initView() =with(binding){
         initialize() // data 값 초기화
         adapter = PlayListAdapter()
         adapter!!.listData = data
@@ -54,8 +66,6 @@ class PlaylistFragment : Fragment() {
             adapter?.notifyDataSetChanged()
         }
     }
-
-
 
 
     // 목록 데이터를 초기화하는 함수
