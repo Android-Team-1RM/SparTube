@@ -8,17 +8,15 @@ import com.example.naebaecamteam1rm_spartube.databinding.ItemPlaylistBinding
 
 class PlayListAdapter : RecyclerView.Adapter<Holder>() {
 
-
     var listData = mutableListOf<PlayListModel>()
 
     // ViewHolder를 생성하고 반환
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         // ViewHolder의 바인딩 객체를 생성합니다.
-        val binding = ItemPlaylistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemPlaylistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
-
-
 
     // ViewHolder와 데이터를 바인딩합니다.
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -33,7 +31,7 @@ class PlayListAdapter : RecyclerView.Adapter<Holder>() {
 }
 
 // RecyclerView의 각 항목을 나타내는 ViewHolder 클래스를 정의합니다.
-class Holder(val binding: ItemPlaylistBinding) : RecyclerView.ViewHolder(binding.root){
+class Holder(val binding: ItemPlaylistBinding) : RecyclerView.ViewHolder(binding.root) {
 
     private val playlistFragment = PlaylistFragment.getInstance()
     var mMember: PlayListModel? = null
@@ -53,7 +51,7 @@ class Holder(val binding: ItemPlaylistBinding) : RecyclerView.ViewHolder(binding
     }
 
     // ViewHolder의 데이터를 설정하는 메서드
-    fun setData(member: PlayListModel, position: Int){
+    fun setData(member: PlayListModel, position: Int) {
         // ViewHolder의 TextView에 회원 이름을 설정
         binding.tvPlTitle.text = member.name
         this.mMember = member

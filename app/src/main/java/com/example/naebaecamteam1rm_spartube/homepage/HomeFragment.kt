@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
     private lateinit var smanager: LinearLayoutManager // 쇼츠 매니저
     private lateinit var cmanager: LinearLayoutManager // 채널 매니저
     private var nextPageToken: String? = null
-    private var currentNextPageToken:String?= null
+    private var currentNextPageToken: String? = null
     private var nextPageTokenForShort: String? = null
     private var nextPageTokenForChannel: String? = null
 
@@ -95,7 +95,7 @@ class HomeFragment : Fragment() {
                 Log.d("test8", "$itemCount")
                 Log.d("test8", "$")
 
-                if (!recyclerMpVideo.canScrollHorizontally(1) &&lastVisibleItemPosition == itemCount) {
+                if (!recyclerMpVideo.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
                     infinityAddItems()
                 }
             }
@@ -112,7 +112,7 @@ class HomeFragment : Fragment() {
 //                Log.d("test8", "$itemCount")
 //                Log.d("test9", "$test")
                 if (!recyclerMpShorts.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
-                    Log.d("endScroll","endScroll")
+                    Log.d("endScroll", "endScroll")
                     infinityAddItemsShort()
 
                 }
@@ -319,7 +319,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     // Most populer video 부분
     fun setMostPopulerVideo() = with(binding) {
 
@@ -510,10 +509,10 @@ class HomeFragment : Fragment() {
 
     fun infinityAddItems() {
         Log.d("nextPageToken", "$nextPageToken")
-        Log.d("currentNextPageToken","$currentNextPageToken")
-        if(nextPageToken == currentNextPageToken){
+        Log.d("currentNextPageToken", "$currentNextPageToken")
+        if (nextPageToken == currentNextPageToken) {
             return
-        }else{
+        } else {
             RetrofitInstance.api.getNextList(
                 Contants.MY_KEY,
                 "snippet",
@@ -574,7 +573,6 @@ class HomeFragment : Fragment() {
 
             })
         }
-
 
     }
 

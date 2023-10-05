@@ -13,7 +13,6 @@ class MyPageViewModel(context: Context) : ViewModel() {
     val list: LiveData<List<MyPageModel>> get() = _list
     val mContext = context
 
-
     init {
 
     }

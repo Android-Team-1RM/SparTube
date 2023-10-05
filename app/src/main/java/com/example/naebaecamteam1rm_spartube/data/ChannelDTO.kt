@@ -6,7 +6,7 @@ import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 
 @Serializable
-data class ChannelDTO (
+data class ChannelDTO(
     val kind: String,
     val etag: String,
     val nextPageToken: String,
@@ -15,7 +15,7 @@ data class ChannelDTO (
 )
 
 @Serializable
-data class ChannelItem (
+data class ChannelItem(
     val kind: String,
     val etag: String,
     val id: String,
@@ -23,7 +23,7 @@ data class ChannelItem (
 )
 
 @Serializable
-data class ChannelSnippet (
+data class ChannelSnippet(
     val title: String,
     val description: String,
 
@@ -37,27 +37,27 @@ data class ChannelSnippet (
 )
 
 @Serializable
-data class ChannelLocalized (
+data class ChannelLocalized(
     val title: String,
     val description: String
 )
 
 @Serializable
-data class ChannelThumbnails (
+data class ChannelThumbnails(
     val default: ChannelDefault,
     val medium: ChannelDefault,
     val high: ChannelDefault
 )
 
 @Serializable
-data class ChannelDefault (
+data class ChannelDefault(
     val url: String,
     val width: Long,
     val height: Long
 )
 
 @Serializable
-data class ChannelPageInfo (
+data class ChannelPageInfo(
     val totalResults: Long,
     val resultsPerPage: Long
 )

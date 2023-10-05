@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit
 object VideoData {
     private const val VIDEO_BASE_URL = "https://www.googleapis.com"
 
-
     private fun createOkHttpClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
 
