@@ -68,12 +68,12 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="wrap_content">
                 <ImageView
                     android:id="@+id/iv_thumbnail"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:scaleType="fitXY"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/video_detail_page_img_base"
                     android:adjustViewBounds="true" />
 
@@ -82,7 +82,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="171dp"
-                    android:layout_marginTop="110dp"
+                    android:layout_marginTop="80dp"
                     android:layout_marginEnd="210dp"
                     android:layout_marginBottom="110dp"
                     android:src="@drawable/video_detail_page_ic_play"
@@ -120,6 +120,7 @@
 
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"

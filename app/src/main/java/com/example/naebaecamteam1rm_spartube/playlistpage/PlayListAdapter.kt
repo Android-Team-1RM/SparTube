@@ -35,7 +35,7 @@ class PlayListAdapter : RecyclerView.Adapter<Holder>() {
 // RecyclerView의 각 항목을 나타내는 ViewHolder 클래스를 정의합니다.
 class Holder(val binding: ItemPlaylistBinding) : RecyclerView.ViewHolder(binding.root){
 
-    private val playlistFragment = PlaylistFragment.getInstance()
+    private val playlistFragment = PlayListFragment.getInstance()
     var mMember: PlayListModel? = null
     var mPosition: Int? = null
 
