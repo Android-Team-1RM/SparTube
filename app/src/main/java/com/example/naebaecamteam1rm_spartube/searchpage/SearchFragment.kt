@@ -16,6 +16,7 @@ import com.example.naebaecamteam1rm_spartube.videodetailpage.VideoDetailPageActi
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.VideoDTO
+import com.example.naebaecamteam1rm_spartube.databinding.FragmentHomeBinding
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentSearchBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SearchFragment : Fragment() {
-    private lateinit var binding: FragmentSearchBinding
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
+
     private val tag = "SearchFragment"
     private var MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
     private lateinit var mContext: Context
@@ -43,7 +46,7 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -55,7 +58,6 @@ class SearchFragment : Fragment() {
         binding.ivRefresh.setOnClickListener { updateBtn() }
         setRecyclerViewScrollListener()
     }
-
 
     //키워드 버튼을 눌렀을 때 각 키워드로 검색
     private fun updateBtn() {
@@ -120,7 +122,6 @@ class SearchFragment : Fragment() {
 
     }
 
-
     fun settest(search: String) = with(binding) {
         CoroutineScope(Dispatchers.IO).launch {
             RetrofitInstance.api.getList(
@@ -170,7 +171,6 @@ class SearchFragment : Fragment() {
 
                 }
 
-
                 override fun onFailure(call: Call<VideoDTO>, t: Throwable) {
                     Log.d("test1", "fail")
                 }
@@ -194,6 +194,10 @@ class SearchFragment : Fragment() {
         adapter.modifyItemToAddFavorite(item)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
 

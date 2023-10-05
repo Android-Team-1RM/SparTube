@@ -78,9 +78,10 @@ class HomeFragment : Fragment() {
 
     private fun initView() = with(binding) {
 
-//        setMostPopulerVideo() // 모스트 파퓰러
-//        setMostPopulerShorts() // 쇼츠
-//        setCategoryCannels() // 카테고리 채널
+        setMostPopulerVideo() // 모스트 파퓰러
+        setMostPopulerShorts() // 쇼츠
+        setCategoryCannels() // 카테고리 채널
+
         //모스트비디오 인피니티스크롤 적용
         recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -92,7 +93,7 @@ class HomeFragment : Fragment() {
                 Log.d("test8", "$itemCount")
                 Log.d("test8", "$")
 
-                if(!recyclerMpVideo.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
+                if (!recyclerMpVideo.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
                     listAdapter.deleteLoading()
                     infinityAddItems()
                 }
@@ -168,7 +169,6 @@ class HomeFragment : Fragment() {
 
     }
 
-
     // Most populer video 부분
     fun setMostPopulerVideo() = with(binding) {
 
@@ -190,7 +190,7 @@ class HomeFragment : Fragment() {
                             for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 var title = youtubeList.get(i).snippet.title
                                 title = title.replace("&#39;", "'")
-                                title = title.replace("&quot;","\"")
+                                title = title.replace("&quot;", "\"")
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
@@ -217,7 +217,6 @@ class HomeFragment : Fragment() {
 //                                Log.d("y_datas", "$y_datas")
 //                                listAdapter.list = y_datas //리스트를 어댑터에 적용
 //                                listAdapter.notifyDataSetChanged()// notity
-
 
                             }
                             y_datas.add(TubeDataModel(" "))
@@ -263,7 +262,7 @@ class HomeFragment : Fragment() {
                         for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
                             title = title.replace("&#39;", "'")
-                            title = title.replace("&quot;","\"")
+                            title = title.replace("&quot;", "\"")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
@@ -287,7 +286,6 @@ class HomeFragment : Fragment() {
 
                                 )
                             )
-
 
                         }
 
@@ -327,7 +325,7 @@ class HomeFragment : Fragment() {
                             for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 var title = youtubeList.get(i).snippet.title
                                 title = title.replace("&#39;", "'")
-                                title = title.replace("&quot;","\"")
+                                title = title.replace("&quot;", "\"")
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
@@ -397,7 +395,7 @@ class HomeFragment : Fragment() {
                             for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 var title = youtubeList.get(i).snippet.title
                                 title = title.replace("&#39;", "'")
-                                title = title.replace("&quot;","\"")
+                                title = title.replace("&quot;", "\"")
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
@@ -421,7 +419,6 @@ class HomeFragment : Fragment() {
                                     )
                                 )
 
-
                             }
                             Log.d("y_datas", "$y_datas")
                             y_datas.add(TubeDataModel(" "))
@@ -438,7 +435,6 @@ class HomeFragment : Fragment() {
 
             })
         }
-
 
     }
 
@@ -469,7 +465,7 @@ class HomeFragment : Fragment() {
                         for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
                             title = title.replace("&#39;", "'")
-                            title = title.replace("&quot;","\"")
+                            title = title.replace("&quot;", "\"")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
@@ -535,7 +531,7 @@ class HomeFragment : Fragment() {
                         for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
                             title = title.replace("&#39;", "'")
-                            title = title.replace("&quot;","\"")
+                            title = title.replace("&quot;", "\"")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
@@ -558,7 +554,6 @@ class HomeFragment : Fragment() {
                                     channelId = channelID
                                 )
                             )
-
 
                         }
 
