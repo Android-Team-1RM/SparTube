@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
-import com.example.naebaecamteam1rm_spartube.databinding.ItemLoadingBinding
 import com.example.naebaecamteam1rm_spartube.databinding.ItemLoadingVerticalBinding
 import com.example.naebaecamteam1rm_spartube.databinding.ItemRecyclerviewBinding
 
@@ -28,15 +27,16 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHold
     var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            VIEW_TYPE_ITEM ->{
+        return when (viewType) {
+            VIEW_TYPE_ITEM -> {
                 return Holder(
                     ItemRecyclerviewBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     )
                 )
             }
-            else ->{
+
+            else -> {
                 return LoadingViewHolder(
                     ItemLoadingVerticalBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
@@ -121,9 +121,9 @@ class HomeAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHold
         list[findPosition] = item
         notifyDataSetChanged()
     }
-    fun deleteLoading(){
+
+    fun deleteLoading() {
         list.removeAt(list.lastIndex)
     }
-
 
 }

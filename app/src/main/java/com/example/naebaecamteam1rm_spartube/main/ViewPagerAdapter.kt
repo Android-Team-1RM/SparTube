@@ -13,8 +13,8 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
     // 1. ViewPager2에 연결할 Fragment 들을 생성
-    val fragmentList = listOf<Fragment>(HomeFragment(), SearchFragment(), PlayListFragment(), MyPageFragment())
-
+    val fragmentList =
+        listOf<Fragment>(HomeFragment(), SearchFragment(), PlayListFragment(), MyPageFragment())
 
     // 2. ViesPager2에서 노출시킬 Fragment 의 갯수 설정
     override fun getItemCount(): Int {
@@ -25,16 +25,20 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     override fun createFragment(position: Int): Fragment {
         return fragmentList[position]
     }
-    fun getMyPageFragment():MyPageFragment{
+
+    fun getMyPageFragment(): MyPageFragment {
         return fragmentList[3] as MyPageFragment
     }
-    fun getHomeFragment():HomeFragment{
+
+    fun getHomeFragment(): HomeFragment {
         return fragmentList[0] as HomeFragment
     }
-    fun getPlayListFragment():PlayListFragment{
+
+    fun getPlayListFragment(): PlayListFragment {
         return fragmentList[2] as PlayListFragment
     }
-    fun getSearchFragment():SearchFragment{
+
+    fun getSearchFragment(): SearchFragment {
         return fragmentList[1] as SearchFragment
     }
 }

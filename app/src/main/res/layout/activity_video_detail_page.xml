@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/video_detail_page_panel_layout"
@@ -34,8 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/tv_detailTitle"
             android:fontFamily="@font/asian_font"
+            android:text="@string/tv_detailTitle"
             android:textColor="@color/deep_blue"
             android:textSize="26sp" />
 
@@ -60,13 +59,14 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/iv_thumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/video_detail_page_img_base"
-                    android:adjustViewBounds="true" />
+                    android:src="@drawable/video_detail_page_img_base" />
 
                 <ImageView
                     android:id="@+id/iv_btn_play"
@@ -80,15 +80,9 @@
                     app:tint="#dfffffff" />
             </FrameLayout>
 
-
-
-
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -106,8 +100,7 @@
                         android:text="@string/tv_testShortDescription"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:textStyle="bold"/>
-
+                        android:textStyle="bold" />
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cv_description"
@@ -126,9 +119,6 @@
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
         </LinearLayout>
     </ScrollView>
@@ -167,11 +157,11 @@
             android:background="@drawable/video_detail_page_btn_shape_im"
             android:drawableStart="@drawable/video_detail_page_btn_ic_share"
             android:elevation="8dp"
+            android:fontFamily="@font/asian_font"
             android:padding="6dp"
             android:text="@string/btn_share"
-            android:textSize="20sp"
-            android:fontFamily="@font/asian_font"
             android:textColor="@color/white"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

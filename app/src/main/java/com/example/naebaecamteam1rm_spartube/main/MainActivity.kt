@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-
         // ViewPager2의 adapter 설정
 
         binding.viewPagerMain.adapter = viewPagerAdapter
@@ -74,7 +73,8 @@ class MainActivity : AppCompatActivity() {
         val myPageFragment = viewPagerAdapter.getMyPageFragment()
         myPageFragment.removeItem(item)
     }
-    fun modifyFavoriteToSearch(item:TubeDataModel){
+
+    fun modifyFavoriteToSearch(item: TubeDataModel) {
         val searchFragment = viewPagerAdapter.getSearchFragment()
         searchFragment.modifyItemToAddFavorite(item)
     }

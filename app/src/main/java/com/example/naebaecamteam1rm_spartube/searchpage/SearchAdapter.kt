@@ -85,6 +85,7 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
             tvChannel.text = item.channelName
         }
     }
+
     fun modifyItemToAddFavorite(item: TubeDataModel) {//좋아요 바꾸기 위한 함수
         if (item == null) return
         fun findIndex(item: TubeDataModel): Int {
