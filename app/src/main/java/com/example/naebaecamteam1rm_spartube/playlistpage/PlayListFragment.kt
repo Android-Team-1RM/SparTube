@@ -1,181 +1,97 @@
 package com.example.naebaecamteam1rm_spartube.playlistpage
 
-import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
+import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
-import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
-import com.example.naebaecamteam1rm_spartube.data.VideoDTO
+import com.example.naebaecamteam1rm_spartube.databinding.AlertdialogEdittextBinding
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentPlaylistBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class PlaylistFragment : Fragment() {
 
+    // ViewBinding
+    private lateinit var binding : FragmentPlaylistBinding
+
+    // RecyclerView 가 불러올 목록
+    private var adapter: PlayListAdapter? = null // RecyclerView 어댑터
+    private val data:MutableList<PlayListModel> = mutableListOf() // 목록 데이터를 담을 리스트
+    var i = 4
+
+    init{
+        instance = this
+    }
+
     companion object{
-        fun newInstance() = PlaylistFragment
-    }
-    private var _binding : FragmentPlaylistBinding? =null
-    private val binding get() = _binding!!
-    private var Q
-            : String? = null
-    private val MAX_RESULTS = 20
-    private val t_datas: ArrayList<TubeDataModel> = ArrayList()
-    private lateinit var playlistRecyclerView: RecyclerView
-    private lateinit var VideosRecyclerView: RecyclerView
-    private lateinit var mContext: Context
-    private val listAdapter by lazy {
-        PlayListAdapter(mContext)
+        private var instance:PlaylistFragment? = null
+
+        // Singleton 패턴을 사용하여 인스턴스를 반환하는 메서드
+        fun getInstance(): PlaylistFragment? {
+            return instance
+        }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mContext = context
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // ViewBinding
+        super.onCreate(savedInstanceState)
+        binding = FragmentPlaylistBinding.inflate(layoutInflater)
+        val view = binding.root
+         // ActivityMainBinding을 사용하여 레이아웃을 설정
+
+        initialize() // data 값 초기화
+        adapter = PlayListAdapter()
+        adapter!!.listData = data
+        binding.recyclerView.adapter = adapter // RecyclerView에 어댑터 설정
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext()) // // RecyclerView 레이아웃 매니저 설정
+
+        // FAB 을 누르면 Member + 숫자의 문자열이 data 배열에 추가됨
+        binding.fab.setOnClickListener {
+            val string = "Member$i"
+            i++
+            data.add(PlayListModel(string))
+            adapter?.notifyDataSetChanged()
+        }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
-        return binding.root
+
+
+
+    // 목록 데이터를 초기화하는 함수
+    private fun initialize(){
+        with(data){
+            add(PlayListModel("title"))
+            add(PlayListModel("thumbnail"))
+            add(PlayListModel("description"))
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initView()
+    // 삭제
+    fun deleteMember(member: PlayListModel){
+        data.remove(member)
+        adapter?.notifyDataSetChanged()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    // 수정
+    fun editMember(position: Int, member: PlayListModel){
 
-    private fun initView() = with(binding) {
-        setPlayList()
-        setListVideo()
+        val builder = AlertDialog.Builder(requireContext())
+        val builderItem = AlertdialogEdittextBinding.inflate(layoutInflater)
+        val editText = builderItem.editText
 
-        // RecyclerView 초기화
-        playlistRecyclerView = binding.playlistRecyclerView
-        playlistRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val playlistAdapter = PlayListAdapter() // 적절한 어댑터 클래스로 대체
-        playlistRecyclerView.adapter = playlistAdapter
-
-        // Videos RecyclerView 초기화
-        VideosRecyclerView = binding.VideolistRecyclerView
-        VideosRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val playlistVideosAdapter = VideoListAdapter() // 적절한 어댑터 클래스로 대체
-        VideosRecyclerView.adapter = playlistVideosAdapter
-
-        // 현재 뷰 반환
-       // return view
-    }
-
-    fun setPlayList() = with(binding) {
-
-        Q = "항저우 아시안게임"
-        RetrofitInstance.api.getList(Contants.MY_KEY, "snippet", Q, "video", MAX_RESULTS)?.enqueue(object :
-            Callback<VideoDTO> {
-            override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
-                if (response.isSuccessful) {//응답 성공시 실행
-                    Log.d("test", "Response")
-                    val data = response.body()
-                    val youtubeList = data?.items
-                    if (youtubeList == null) {// 가져온 데이터 없으면 리턴
-                        return
-                    } else {
-                        for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
-                            val title = youtubeList.get(i).snippet.title
-                            val thumbnail = youtubeList.get(i).snippet.thumbnails.default.url
-                            val description = youtubeList.get(i).snippet.description
-
-                            Log.d("title", "$title")
-                            Log.d("thumbnail", "$thumbnail")
-                            Log.d("description", "$description")
-
-                            t_datas.add(
-                                TubeDataModel(
-
-                                    title = title,
-                                    thumbnail = thumbnail,
-                                    description = description,
-
-                                    )
-                            )
-                            Log.d("y_datas", "$t_datas")
-                            listAdapter.list = t_datas //리스트를 어댑터에 적용
-                            listAdapter.notifyDataSetChanged()// 어댑터에 데이터 변경 알림
-
-                        }
-                    }
-
+        with(builder){
+            setTitle("Input Name")
+            setMessage("이름을 입력 하세요")
+            setView(builderItem.root)
+            setPositiveButton("OK"){ _: DialogInterface, _: Int ->
+                if(editText.text.toString() != null){
+                    member.name = editText.text.toString()
+                    data[position] = member
+                    adapter?.notifyDataSetChanged()
                 }
             }
-
-            override fun onFailure(call: Call<VideoDTO>, t: Throwable) {//실패시 찍히는 로그
-                Log.d("test1", "fail")
-            }
-
-        })
-
-    }
-
-    fun setListVideo() = with(binding) {
-
-        Q = "항저우 아시안게임"
-        RetrofitInstance.api.getList(Contants.MY_KEY, "snippet", Q, "video", MAX_RESULTS)?.enqueue(object :
-            Callback<VideoDTO> {
-            override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
-                if (response.isSuccessful) {//응답 성공시 실행
-                    Log.d("test", "Response")
-                    val data = response.body()
-                    val youtubeList = data?.items
-                    if (youtubeList == null) {// 가져온 데이터 없으면 리턴
-                        return
-                    } else {
-                        for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
-                            val title = youtubeList.get(i).snippet.title
-                            val thumbnail = youtubeList.get(i).snippet.thumbnails.default.url
-                            val description = youtubeList.get(i).snippet.description
-
-                            Log.d("title", "$title")
-                            Log.d("thumbnail", "$thumbnail")
-                            Log.d("description", "$description")
-
-                            t_datas.add(
-                                TubeDataModel(
-
-                                    title = title,
-                                    thumbnail = thumbnail,
-                                    description = description,
-
-                                    )
-                            )
-                            Log.d("y_datas", "$t_datas")
-                            listAdapter.list = t_datas //리스트를 어댑터에 적용
-                            listAdapter.notifyDataSetChanged()// 어댑터에 데이터 변경 알림
-
-                        }
-                    }
-
-                }
-            }
-
-            override fun onFailure(call: Call<VideoDTO>, t: Throwable) {//실패시 찍히는 로그
-                Log.d("test1", "fail")
-            }
-
-        })
+            show()
+        }
     }
 }
