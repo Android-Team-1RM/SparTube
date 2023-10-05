@@ -20,7 +20,7 @@
             android:id="@+id/tv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Spartube"
+            android:text="@string/tv_homeTitle"
             android:textColor="@color/deep_blue"
             android:textSize="26sp"
             android:layout_centerHorizontal="true"
@@ -40,12 +40,12 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv_mpVideo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Most Populer Videos"
+                android:text="@string/tv_mpVideo"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
                 android:id="@+id/tv_mpShorts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Most Populer Shorts"
+                android:text="@string/tv_mpShorts"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,10 +80,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_mpShorts" />
 
             <TextView
-                android:id="@+id/tv_categoryCannels"
+                android:id="@+id/tv_categoryChannels"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Channels by Category"
+                android:text="@string/tv_categoryChannels"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +96,7 @@
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_categoryCannels" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_categoryChannels" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
