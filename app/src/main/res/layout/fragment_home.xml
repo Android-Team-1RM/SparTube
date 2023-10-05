@@ -21,10 +21,9 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/tv_homeTitle"
-            android:fontFamily="@font/nanumsquareroundb"
+            android:fontFamily="@font/asian_font"
             android:textColor="@color/deep_blue"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:textSize="26sp" />
 
     </RelativeLayout>
 
