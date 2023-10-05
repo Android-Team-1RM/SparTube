@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.Utils
+import com.example.naebaecamteam1rm_spartube.UtilsImpl
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.toMyPageModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityVideoDetailPageBinding
@@ -21,6 +22,7 @@ import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 class VideoDetailPageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityVideoDetailPageBinding
+    private val utils:Utils =UtilsImpl(this)
 
     // VideoDetailPage Intent 생성하기
     companion object {
@@ -107,7 +109,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.removeFavoriteToMyPage(TubeData.toMyPageModel())
                 mainActivity.modifyFavoriteToHome(TubeData)
-                Utils.deletePrefItem(this, TubeData.thumbnail!!)
+                utils.deletePrefItem(TubeData.thumbnail!!)
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요 해제", Toast.LENGTH_SHORT).show()
             } else {
 
@@ -130,7 +132,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
                 )
                 mainActivity.modifyFavoriteToHome(TubeData)
-                Utils.addPrefItem(this, TubeData.toMyPageModel())
+                utils.addPrefItem(TubeData.toMyPageModel())
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요", Toast.LENGTH_SHORT).show()
             }
         }

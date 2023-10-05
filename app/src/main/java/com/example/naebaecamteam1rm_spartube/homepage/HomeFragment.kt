@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
     private lateinit var smanager: LinearLayoutManager // 쇼츠 매니저
     private lateinit var cmanager: LinearLayoutManager // 채널 매니저
     private var nextPageToken: String? = null
-    private var currentNextPageToken:String?= null
+    private var currentNextPageToken: String? = null
     private var nextPageTokenForShort: String? = null
     private var nextPageTokenForChannel: String? = null
 
@@ -82,20 +82,21 @@ class HomeFragment : Fragment() {
     private fun initView() = with(binding) {
 
         setMostPopulerVideo() // 모스트 파퓰러
-        setMostPopulerShorts() // 쇼츠
-        setCategoryCannels() // 카테고리 채널
+//        setMostPopulerShorts() // 쇼츠
+//        setCategoryCannels() // 카테고리 채널
         //모스트비디오 인피니티스크롤 적용
         recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val lastVisibleItemPosition =
                     (recyclerMpVideo.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
-                val itemCount = listAdapter!!.itemCount - 1
+                val itemCount = listAdapter!!.itemCount - 10
                 Log.d("test7", "$lastVisibleItemPosition")
                 Log.d("test8", "$itemCount")
                 Log.d("test8", "$")
 
-                if (!recyclerMpVideo.canScrollHorizontally(1) &&lastVisibleItemPosition == itemCount) {
+                if(!recyclerMpVideo.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
+                    listAdapter.deleteLoading()
                     infinityAddItems()
                 }
             }
@@ -112,7 +113,8 @@ class HomeFragment : Fragment() {
 //                Log.d("test8", "$itemCount")
 //                Log.d("test9", "$test")
                 if (!recyclerMpShorts.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
-                    Log.d("endScroll","endScroll")
+                    Log.d("endScroll", "endScroll")
+                    listShortsAdapter.deleteLoading()
                     infinityAddItemsShort()
 
                 }
@@ -128,6 +130,7 @@ class HomeFragment : Fragment() {
                 Log.d("test7", "$lastVisibleItemPosition")
                 Log.d("test8", "$itemCount")
                 if (!recyclerCategoryCannels.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
+                    listChannelAdapter.deleteLoading()
                     infinityAddItemsChannel()
                 }
             }
@@ -363,12 +366,17 @@ class HomeFragment : Fragment() {
                                         channelId = channelID
                                     )
                                 )
-                                Log.d("y_datas", "$y_datas")
-                                listAdapter.list = y_datas //리스트를 어댑터에 적용
-                                listAdapter.notifyDataSetChanged()// notity
+//                                y_datas.add(TubeDataModel(" "))
+//                                Log.d("y_datas", "$y_datas")
+//                                listAdapter.list = y_datas //리스트를 어댑터에 적용
+//                                listAdapter.notifyDataSetChanged()// notity
 
 
                             }
+                            y_datas.add(TubeDataModel(" "))
+                            Log.d("y_datas", "$y_datas")
+                            listAdapter.list = y_datas //리스트를 어댑터에 적용
+                            listAdapter.notifyDataSetChanged()// notity
                         }
 
                     }
@@ -510,10 +518,10 @@ class HomeFragment : Fragment() {
 
     fun infinityAddItems() {
         Log.d("nextPageToken", "$nextPageToken")
-        Log.d("currentNextPageToken","$currentNextPageToken")
-        if(nextPageToken == currentNextPageToken){
+        Log.d("currentNextPageToken", "$currentNextPageToken")
+        if (nextPageToken == currentNextPageToken) {
             return
-        }else{
+        } else {
             RetrofitInstance.api.getNextList(
                 Contants.MY_KEY,
                 "snippet",
@@ -558,11 +566,13 @@ class HomeFragment : Fragment() {
                                         channelId = channelID
                                     )
                                 )
-                                Log.d("y_datas", "$y_datas")
-                                listAdapter.list = y_datas //리스트를 어댑터에 적용
-                                listAdapter.notifyDataSetChanged()// notity
+
 
                             }
+                            Log.d("y_datas", "$y_datas")
+                            y_datas.add(TubeDataModel(" "))
+                            listAdapter.list = y_datas //리스트를 어댑터에 적용
+                            listAdapter.notifyDataSetChanged()// notity
                         }
 
                     }
@@ -627,11 +637,12 @@ class HomeFragment : Fragment() {
                                     channelId = channelID
                                 )
                             )
-                            Log.d("s_datas", "$s_datas")
-                            listShortsAdapter.list = s_datas //리스트를 어댑터에 적용
-                            listShortsAdapter.notifyDataSetChanged()// notity
 
                         }
+                        Log.d("s_datas", "$s_datas")
+                        s_datas.add(TubeDataModel(" "))
+                        listShortsAdapter.list = s_datas //리스트를 어댑터에 적용
+                        listShortsAdapter.notifyDataSetChanged()// notity
                     }
 
                 }
@@ -691,11 +702,13 @@ class HomeFragment : Fragment() {
                                     channelId = channelID
                                 )
                             )
-                            Log.d("c_datas", "$c_datas")
-                            listChannelAdapter.list = c_datas //리스트를 어댑터에 적용
-                            listChannelAdapter.notifyDataSetChanged()// notity
+
 
                         }
+                        Log.d("y_datas", "$c_datas")
+                        c_datas.add(TubeDataModel(" "))
+                        listChannelAdapter.list = c_datas //리스트를 어댑터에 적용
+                        listChannelAdapter.notifyDataSetChanged()// notity
                     }
 
                 }

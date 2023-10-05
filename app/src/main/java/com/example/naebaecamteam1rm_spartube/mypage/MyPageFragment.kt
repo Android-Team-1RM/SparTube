@@ -2,6 +2,7 @@ package com.example.naebaecamteam1rm_spartube.mypage
 
 import android.app.AlertDialog
 import android.content.Context
+import android.icu.util.UniversalTimeScale
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.naebaecamteam1rm_spartube.Utils
+import com.example.naebaecamteam1rm_spartube.UtilsImpl
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.databinding.FragmentMyPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
@@ -28,6 +30,9 @@ class MyPageFragment : Fragment() {
     private var _binding: FragmentMyPageBinding? = null
     private val binding get() = _binding!!
     private val mainActivity = MainActivity.newInstence()
+    private val utils:Utils by lazy{
+        UtilsImpl(requireContext())
+    }
 
 
     private val viewModel: MyPageViewModel by lazy {//튜터님 보여드리기
@@ -51,7 +56,7 @@ class MyPageFragment : Fragment() {
                 Toast.makeText(requireContext(), "좋아요 해제", Toast.LENGTH_SHORT).show()
                 mainActivity!!.removeFavoriteToMyPage(item)
                 mainActivity.modifyFavoriteToHome(item.toTubeData())
-                Utils.deletePrefItem(requireContext(), item.toTubeData().thumbnail!!)
+                utils.deletePrefItem(item.toTubeData().thumbnail!!)
             }
 //            onLongClickItem = {item ->
 //                AlertDialog.Builder(mContext).apply {
