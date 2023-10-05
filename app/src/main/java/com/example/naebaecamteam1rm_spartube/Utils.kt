@@ -5,6 +5,7 @@ import android.content.Context
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 import com.google.gson.GsonBuilder
 
+
 object Utils {
     fun addPrefItem(context: Context, item: MyPageModel) {
         val prefs = context.getSharedPreferences("pref", Activity.MODE_PRIVATE)
