@@ -34,4 +34,7 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     fun getPlayListFragment():PlayListFragment{
         return fragmentList[2] as PlayListFragment
     }
+    fun getSearchFragment():SearchFragment{
+        return fragmentList[1] as SearchFragment
+    }
 }

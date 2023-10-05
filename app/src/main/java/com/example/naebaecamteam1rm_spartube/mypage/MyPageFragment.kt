@@ -56,6 +56,7 @@ class MyPageFragment : Fragment() {
                 Toast.makeText(requireContext(), "좋아요 해제", Toast.LENGTH_SHORT).show()
                 mainActivity!!.removeFavoriteToMyPage(item)
                 mainActivity.modifyFavoriteToHome(item.toTubeData())
+                mainActivity.modifyFavoriteToSearch(item.toTubeData())
                 utils.deletePrefItem(item.toTubeData().thumbnail!!)
             }
 //            onLongClickItem = {item ->

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
@@ -22,7 +23,7 @@ import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 class VideoDetailPageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityVideoDetailPageBinding
-    private val utils:Utils =UtilsImpl(this)
+    private val utils: Utils = UtilsImpl(this)
 
     // VideoDetailPage Intent 생성하기
     companion object {
@@ -53,7 +54,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
     }
 
 
-    private fun initView(){
+    private fun initView() {
 //        Glide.with(this)
 //            .load(Uri.parse(TubeData.thumbnail))
 //            .placeholder(R.drawable.video_detail_page_img_base)
@@ -64,6 +65,9 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
         binding.tvTitle.text = TubeData.title
         binding.tvDescription.text = TubeData.description
+        if (TubeData.description == "" || TubeData.description == " "|| TubeData.description == null) {
+            binding.cvDescription.visibility = View.INVISIBLE
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -89,7 +93,12 @@ class VideoDetailPageActivity : AppCompatActivity() {
             resources.getDrawable(R.drawable.video_detail_page_btn_ic_like_im) // 좋아요 상태가 아닐 때 Drawable 리소스
         }
 
-        binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(thumbUpDrawableRes, null, null, null)
+        binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            thumbUpDrawableRes,
+            null,
+            null,
+            null
+        )
 
         binding.btnLike.setBackgroundResource(backgroundDrawableRes)
 
@@ -98,17 +107,22 @@ class VideoDetailPageActivity : AppCompatActivity() {
         binding.btnLike.setOnClickListener {
 
 
-            Log.d("btnLike","btnLikeOk")
+            Log.d("btnLike", "btnLikeOk")
             if (TubeData.isLike) {
 
                 TubeData.isLike = false
                 binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_im)
 
-                binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(resources.getDrawable(R.drawable.video_detail_page_btn_ic_like_im), null, null, null)
+                binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    resources.getDrawable(
+                        R.drawable.video_detail_page_btn_ic_like_im
+                    ), null, null, null
+                )
 
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.removeFavoriteToMyPage(TubeData.toMyPageModel())
                 mainActivity.modifyFavoriteToHome(TubeData)
+                mainActivity.modifyFavoriteToSearch(TubeData)
                 utils.deletePrefItem(TubeData.thumbnail!!)
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요 해제", Toast.LENGTH_SHORT).show()
             } else {
@@ -116,7 +130,11 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 TubeData.isLike = true
                 binding.btnLike.setBackgroundResource(R.drawable.video_detail_page_btn_shape_like)
 
-                binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(resources.getDrawable(R.drawable.video_detail_page_btn_ic_like), null, null, null)
+                binding.btnLike.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    resources.getDrawable(
+                        R.drawable.video_detail_page_btn_ic_like
+                    ), null, null, null
+                )
 
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.addFavorite(
@@ -132,6 +150,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
                 )
                 mainActivity.modifyFavoriteToHome(TubeData)
+                mainActivity.modifyFavoriteToSearch(TubeData)
                 utils.addPrefItem(TubeData.toMyPageModel())
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요", Toast.LENGTH_SHORT).show()
             }
@@ -139,7 +158,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
 
         binding.btnShare.setOnClickListener {
-            Log.d("btnShare","btnShareOk")
+            Log.d("btnShare", "btnShareOk")
             val sharedIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(
@@ -153,7 +172,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
         }
 
         binding.btnPlayList.setOnClickListener {
-            Log.d("btnPlayList","btnPlayList")
+            Log.d("btnPlayList", "btnPlayList")
             //재생 목록에서 값을 갖고가는 함수를 만든다.      -> TubeData를 넘겨주면 된다.
 
         }
@@ -166,7 +185,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 R.anim.activity_video_detail_page_slide_down
             )
         }
-        binding.ivThumbnail.setOnClickListener{
+        binding.ivThumbnail.setOnClickListener {
             var intent = Intent(Intent.ACTION_VIEW, Uri.parse("${TubeData.url}"))
             startActivity(intent)
         }

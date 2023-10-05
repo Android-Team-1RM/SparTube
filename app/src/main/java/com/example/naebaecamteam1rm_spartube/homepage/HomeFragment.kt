@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
     private var Q // 유튜브 검색값
             : String? = null
     private var videoDuration = "short" // 영상 길이
-    private val MAX_RESULTS = 20 // 받아올 유튜브 리스트의 최대값
+    private val MAX_RESULTS = 50 // 받아올 유튜브 리스트의 최대값
 
     private var y_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
     private var s_datas: ArrayList<TubeDataModel> = ArrayList() // 출력 데이터를 담을 배열
@@ -69,9 +69,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        infiniteScrollSet()
-
     }
 
     override fun onDestroyView() {
@@ -81,7 +78,7 @@ class HomeFragment : Fragment() {
 
     private fun initView() = with(binding) {
 
-        setMostPopulerVideo() // 모스트 파퓰러
+//        setMostPopulerVideo() // 모스트 파퓰러
 //        setMostPopulerShorts() // 쇼츠
 //        setCategoryCannels() // 카테고리 채널
         //모스트비디오 인피니티스크롤 적용
@@ -90,7 +87,7 @@ class HomeFragment : Fragment() {
                 super.onScrollStateChanged(recyclerView, newState)
                 val lastVisibleItemPosition =
                     (recyclerMpVideo.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
-                val itemCount = listAdapter!!.itemCount - 10
+                val itemCount = listAdapter!!.itemCount - 1
                 Log.d("test7", "$lastVisibleItemPosition")
                 Log.d("test8", "$itemCount")
                 Log.d("test8", "$")
@@ -172,157 +169,6 @@ class HomeFragment : Fragment() {
     }
 
 
-    //  scrolling banner
-    // viewPager쪽으로 하는게 더 편하다(처음 부터 미리 만들어진다) ++++      -> recyclerView 는 과부하가 없다
-    // 이 방법은 끊기는 느낌을 느낀다
-    // progressBarㄹ
-
-    private fun infiniteScrollSet() {
-        if (y_datas.isNotEmpty()) {
-            binding.recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    if (!recyclerView.canScrollHorizontally(1)) {
-                        // 처음
-
-                        var changeDatas = y_datas
-
-                        for (i in 0 until 5) {
-                            changeDatas[y_datas.size - 6 + i] = y_datas[i]
-                        }
-
-                        for (i in 5 until y_datas.size) {
-                            changeDatas[i - 5] = y_datas[i]
-                        }
-
-                        y_datas.clear()
-                        y_datas.addAll(changeDatas)
-                        listAdapter.notifyDataSetChanged()
-                    } else if (!recyclerView.canScrollHorizontally(-1)) {
-                        // 끝에 도달
-
-                        var changeDatas = y_datas
-
-                        for (i in 0 until 5) {
-                            changeDatas[i] = y_datas[y_datas.size - 6 + i]
-                        }
-
-                        for (i in 5 until y_datas.size) {
-                            changeDatas[i] = y_datas[i - 5]
-                        }
-
-                        y_datas.clear()
-                        y_datas.addAll(changeDatas)
-                        listAdapter.notifyDataSetChanged()
-                    }
-                }
-            })
-        }
-        if (s_datas.isNotEmpty()) {
-            Log.d("set", "s_datas")
-            binding.recyclerMpShorts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-//                if(!recyclerView.canScrollHorizontally(1)){
-//                    // 끝에 도달
-//                    for(i in 0 until s_datas.size){
-//                        s_datas.add(s_datas[i])
-//                    }
-//                    listShortsAdapter.notifyDataSetChanged()
-//                }else if(!recyclerView.canScrollHorizontally(-1)){
-//                    //처음
-//                    for(i in 0 until 5){
-//                        s_datas.add(s_datas[i+5])
-//                    }
-//                    listShortsAdapter.notifyDataSetChanged()
-//                }
-
-
-                    if (!recyclerView.canScrollHorizontally(1)) {
-                        // 끝에 도달
-                        Log.d("set", "Bottom")
-                        var changeDatas = s_datas
-                        //처음꺼를 끝에 붙이기
-                        for (i in 0 until 5) {
-                            changeDatas[s_datas.size - 6 + i] = s_datas[i]
-                        }
-
-                        for (i in 5 until s_datas.size) {
-                            changeDatas[i - 5] = s_datas[i]
-                        }
-
-                        s_datas.clear()
-                        s_datas.addAll(changeDatas)
-                        listShortsAdapter.notifyDataSetChanged()
-                    } else if (!recyclerView.canScrollHorizontally(-1)) {
-                        //처음
-                        Log.d("set", "Top")
-                        var changeDatas = s_datas
-                        //끝에 있는거를 처음에 붙이기
-                        for (i in 0 until 5) {
-                            changeDatas[i] = s_datas[s_datas.size - 6 + i]
-                        }
-
-                        for (i in 5 until s_datas.size) {
-                            changeDatas[i] = s_datas[i - 5]
-                        }
-
-
-                        s_datas.clear()
-                        s_datas.addAll(changeDatas)
-                        listShortsAdapter.notifyDataSetChanged()
-                    }
-                }
-            })
-        }
-        if (c_datas.isNotEmpty()) {
-            binding.recyclerCategoryCannels.addOnScrollListener(object :
-                RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-
-
-                    if (!recyclerView.canScrollHorizontally(1)) {
-                        // 처음
-
-                        var changeDatas = c_datas
-
-                        for (i in 0 until 5) {
-                            changeDatas[c_datas.size - 6 + i] = c_datas[i]
-                        }
-
-                        for (i in 5 until c_datas.size) {
-                            changeDatas[i - 5] = c_datas[i]
-                        }
-
-                        c_datas.clear()
-                        c_datas.addAll(changeDatas)
-                        listChannelAdapter.notifyDataSetChanged()
-                    } else if (!recyclerView.canScrollHorizontally(-1)) {
-                        // 끝에 도달
-
-                        var changeDatas = c_datas
-
-                        for (i in 0 until 5) {
-                            changeDatas[i] = c_datas[c_datas.size - 6 + i]
-                        }
-
-                        for (i in 5 until c_datas.size) {
-                            changeDatas[i] = c_datas[i - 5]
-                        }
-
-                        c_datas.clear()
-                        c_datas.addAll(changeDatas)
-                        listChannelAdapter.notifyDataSetChanged()
-                    }
-                }
-            })
-        }
-    }
-
-
     // Most populer video 부분
     fun setMostPopulerVideo() = with(binding) {
 
@@ -344,6 +190,7 @@ class HomeFragment : Fragment() {
                             for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 var title = youtubeList.get(i).snippet.title
                                 title = title.replace("&#39;", "'")
+                                title = title.replace("&quot;","\"")
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
@@ -416,6 +263,7 @@ class HomeFragment : Fragment() {
                         for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
                             title = title.replace("&#39;", "'")
+                            title = title.replace("&quot;","\"")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
@@ -439,13 +287,15 @@ class HomeFragment : Fragment() {
 
                                 )
                             )
-                            Log.d("s_datas", "$s_datas")
-                            listShortsAdapter.list = s_datas //리스트를 어댑터에 적용
-                            listShortsAdapter.notifyDataSetChanged()// notity
+
 
                         }
-                    }
 
+                    }
+                    Log.d("s_datas", "$s_datas")
+                    s_datas.add(TubeDataModel(" "))
+                    listShortsAdapter.list = s_datas //리스트를 어댑터에 적용
+                    listShortsAdapter.notifyDataSetChanged()// notity
                 }
             }
 
@@ -477,6 +327,7 @@ class HomeFragment : Fragment() {
                             for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 var title = youtubeList.get(i).snippet.title
                                 title = title.replace("&#39;", "'")
+                                title = title.replace("&quot;","\"")
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
@@ -500,11 +351,13 @@ class HomeFragment : Fragment() {
 
                                     )
                                 )
-                                Log.d("c_datas", "$c_datas")
-                                listChannelAdapter.list = c_datas //리스트를 어댑터에 적용
-                                listChannelAdapter.notifyDataSetChanged()// notity
 
                             }
+                            Log.d("c_datas", "$c_datas")
+                            c_datas.add(TubeDataModel(" "))
+                            listChannelAdapter.list = c_datas //리스트를 어댑터에 적용
+                            listChannelAdapter.notifyDataSetChanged()// notity
+
                         }
 
                     }
@@ -544,6 +397,7 @@ class HomeFragment : Fragment() {
                             for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 var title = youtubeList.get(i).snippet.title
                                 title = title.replace("&#39;", "'")
+                                title = title.replace("&quot;","\"")
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
@@ -611,15 +465,16 @@ class HomeFragment : Fragment() {
                     if (youtubeList == null) {// 가져온 데이터 없으면 리턴
                         return
                     } else {
-                        nextPageToken = data?.nextPageToken
+                        nextPageTokenForShort = data?.nextPageToken
                         for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
                             title = title.replace("&#39;", "'")
+                            title = title.replace("&quot;","\"")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
                             val channelID = youtubeList.get(i).snippet.channelId
-                            var url = "https://www.youtube.com/watch?v=" + videoID
+                            var url = "https://www.youtube.com/shorts/" + videoID
 //                            val url = data.etag
                             Log.d("title", "$title")
                             Log.d("thumbnail", "$thumbnail")
@@ -680,11 +535,12 @@ class HomeFragment : Fragment() {
                         for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
                             title = title.replace("&#39;", "'")
+                            title = title.replace("&quot;","\"")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
                             val channelID = youtubeList.get(i).snippet.channelId
-                            var url = "https://www.youtube.com/watch?v=" + videoID
+                            var url = "https://www.youtube.com/channel/$channelID"
 //                            val url = data.etag
                             Log.d("title", "$title")
                             Log.d("thumbnail", "$thumbnail")
@@ -705,11 +561,12 @@ class HomeFragment : Fragment() {
 
 
                         }
-                        Log.d("y_datas", "$c_datas")
-                        c_datas.add(TubeDataModel(" "))
-                        listChannelAdapter.list = c_datas //리스트를 어댑터에 적용
-                        listChannelAdapter.notifyDataSetChanged()// notity
+
                     }
+                    Log.d("y_datas", "$c_datas")
+                    c_datas.add(TubeDataModel(" "))
+                    listChannelAdapter.list = c_datas //리스트를 어댑터에 적용
+                    listChannelAdapter.notifyDataSetChanged()// notity
 
                 }
             }
