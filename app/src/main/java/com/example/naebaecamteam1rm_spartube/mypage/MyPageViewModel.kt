@@ -13,7 +13,6 @@ class MyPageViewModel(private val Utils: UtilsImpl) : ViewModel() {
     private val _list: MutableLiveData<List<MyPageModel>> = MutableLiveData()
     val list: LiveData<List<MyPageModel>> get() = _list
 
-
     init {
 
     }

@@ -67,7 +67,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
-
         <TextView
             android:id="@+id/tv_channel"
             android:layout_width="wrap_content"
@@ -86,8 +85,6 @@
             app:layout_constraintStart_toStartOf="@id/iv_channel_thumb"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

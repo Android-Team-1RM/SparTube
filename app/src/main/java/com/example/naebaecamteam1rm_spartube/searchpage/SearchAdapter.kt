@@ -21,17 +21,16 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
     var items = ArrayList<TubeDataModel>()
     var mContext = context
 
-
     fun clearItem() {
         items.clear()
         notifyDataSetChanged()
     }
 
     interface ItemClick {
-        fun onClick(view : View, tubeData : TubeDataModel)
+        fun onClick(view: View, tubeData: TubeDataModel)
     }
 
-    var itemClick : ItemClick? = null
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
@@ -52,30 +51,31 @@ class SearchAdapter(private val context: Context) : RecyclerView.Adapter<SearchA
 
     override fun getItemCount() = items.size
 
-    inner class Holder(val binding: ItemFragmentSearchBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class Holder(val binding: ItemFragmentSearchBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TubeDataModel) = with(binding){ //클릭이벤트추가부분
-            RetrofitInstance.api.getChannelThumbnail(Contants.MY_KEY,"snippet", item.channelId)?.enqueue(object :
-                Callback<ChannelDTO> {
-                override fun onResponse(
-                    call: retrofit2.Call<ChannelDTO>,
-                    response: Response<ChannelDTO>
-                ) {
-                    if(response.isSuccessful) {
-                        Log.d("test", "Response")
-                        val data = response.body()
-                        Log.d("test1", "$data")
-                        ivChannelThumb.load(Uri.parse(data?.items!!.get(0).snippet.thumbnails.medium.url))
+        fun bind(item: TubeDataModel) = with(binding) { //클릭이벤트추가부분
+            RetrofitInstance.api.getChannelThumbnail(Contants.MY_KEY, "snippet", item.channelId)
+                ?.enqueue(object :
+                    Callback<ChannelDTO> {
+                    override fun onResponse(
+                        call: retrofit2.Call<ChannelDTO>,
+                        response: Response<ChannelDTO>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.d("test", "Response")
+                            val data = response.body()
+                            Log.d("test1", "$data")
+                            ivChannelThumb.load(Uri.parse(data?.items!!.get(0).snippet.thumbnails.medium.url))
+                        }
                     }
-                }
 
-                override fun onFailure(call: retrofit2.Call<ChannelDTO>, t: Throwable) {
-                    Log.d("test", "fail")
-                }
-            })
+                    override fun onFailure(call: retrofit2.Call<ChannelDTO>, t: Throwable) {
+                        Log.d("test", "fail")
+                    }
+                })
 
-
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 itemClick?.onClick(it, item)
             }
             Glide.with(mContext)
