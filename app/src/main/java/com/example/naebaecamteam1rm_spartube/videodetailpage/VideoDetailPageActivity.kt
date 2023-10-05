@@ -6,20 +6,24 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.example.naebaecamteam1rm_spartube.R
 import com.example.naebaecamteam1rm_spartube.Utils
+import com.example.naebaecamteam1rm_spartube.UtilsImpl
 import com.example.naebaecamteam1rm_spartube.data.TubeDataModel
 import com.example.naebaecamteam1rm_spartube.data.toMyPageModel
 import com.example.naebaecamteam1rm_spartube.databinding.ActivityVideoDetailPageBinding
 import com.example.naebaecamteam1rm_spartube.main.MainActivity
 import com.example.naebaecamteam1rm_spartube.mypage.MyPageModel
 
+
 class VideoDetailPageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityVideoDetailPageBinding
+    private val utils: Utils = UtilsImpl(this)
 
     // VideoDetailPage Intent 생성하기
     companion object {
@@ -32,6 +36,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
             }
 
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +53,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
     }
 
+
     private fun initView() {
 //        Glide.with(this)
 //            .load(Uri.parse(TubeData.thumbnail))
@@ -59,6 +65,9 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
         binding.tvTitle.text = TubeData.title
         binding.tvDescription.text = TubeData.description
+        if (TubeData.description == "" || TubeData.description == " "|| TubeData.description == null) {
+            binding.cvDescription.visibility = View.INVISIBLE
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -70,6 +79,7 @@ class VideoDetailPageActivity : AppCompatActivity() {
         val bottomPadding = resources.getDimensionPixelSize(R.dimen.bottom_padding)
 
         binding.btnLike.setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
+
 
         val backgroundDrawableRes = if (TubeData.isLike) {
             R.drawable.video_detail_page_btn_shape_like // 좋아요 상태일 때 배경 drawable
@@ -92,6 +102,8 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
         binding.btnLike.setBackgroundResource(backgroundDrawableRes)
 
+
+
         binding.btnLike.setOnClickListener {
 
 
@@ -110,7 +122,8 @@ class VideoDetailPageActivity : AppCompatActivity() {
                 val mainActivity = MainActivity.newInstence()
                 mainActivity!!.removeFavoriteToMyPage(TubeData.toMyPageModel())
                 mainActivity.modifyFavoriteToHome(TubeData)
-                Utils.deletePrefItem(this, TubeData.thumbnail!!)
+                mainActivity.modifyFavoriteToSearch(TubeData)
+                utils.deletePrefItem(TubeData.thumbnail!!)
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요 해제", Toast.LENGTH_SHORT).show()
             } else {
 
@@ -137,10 +150,12 @@ class VideoDetailPageActivity : AppCompatActivity() {
 
                 )
                 mainActivity.modifyFavoriteToHome(TubeData)
-                Utils.addPrefItem(this, TubeData.toMyPageModel())
+                mainActivity.modifyFavoriteToSearch(TubeData)
+                utils.addPrefItem(TubeData.toMyPageModel())
                 Toast.makeText(this@VideoDetailPageActivity, "좋아요", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         binding.btnShare.setOnClickListener {
             Log.d("btnShare", "btnShareOk")

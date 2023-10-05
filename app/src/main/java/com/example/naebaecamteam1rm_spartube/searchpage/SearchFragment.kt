@@ -56,6 +56,7 @@ class SearchFragment : Fragment() {
         setRecyclerViewScrollListener()
     }
 
+
     //키워드 버튼을 눌렀을 때 각 키워드로 검색
     private fun updateBtn() {
         val btnRandomWord = searchWordList.shuffled().take(3)
@@ -119,6 +120,7 @@ class SearchFragment : Fragment() {
 
     }
 
+
     fun settest(search: String) = with(binding) {
         CoroutineScope(Dispatchers.IO).launch {
             RetrofitInstance.api.getList(
@@ -138,8 +140,11 @@ class SearchFragment : Fragment() {
                             return
                         } else {
                             for (i in youtubeList.indices) {
-                                val title = youtubeList.get(i).snippet.title
+                                var title = youtubeList.get(i).snippet.title
+                                title = title.replace("&#39;", "'")
+                                title = title.replace("&quot;","\"")
                                 val channelId = youtubeList.get(i).snippet.channelId
+                                val description = youtubeList.get(i).snippet.description
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val channeltitle = youtubeList.get(i).snippet.channelTitle
                                 val videoID = youtubeList.get(i).id.videoId
@@ -150,6 +155,7 @@ class SearchFragment : Fragment() {
                                     TubeDataModel(
                                         title = title,
                                         thumbnail = thumbnail,
+                                        description = description,
                                         channelName = channeltitle,
                                         url = url,
                                         channelId = channelId
@@ -163,6 +169,7 @@ class SearchFragment : Fragment() {
                     }
 
                 }
+
 
                 override fun onFailure(call: Call<VideoDTO>, t: Throwable) {
                     Log.d("test1", "fail")
@@ -183,5 +190,10 @@ class SearchFragment : Fragment() {
             }
         })
     }
+    fun modifyItemToAddFavorite(item: TubeDataModel) {
+        adapter.modifyItemToAddFavorite(item)
+    }
+
+
 }
 

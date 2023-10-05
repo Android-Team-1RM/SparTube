@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity() {
         val myPageFragment = viewPagerAdapter.getMyPageFragment()
         myPageFragment.removeItem(item)
     }
+    fun modifyFavoriteToSearch(item:TubeDataModel){
+        val searchFragment = viewPagerAdapter.getSearchFragment()
+        searchFragment.modifyItemToAddFavorite(item)
+    }
 
 //    fun addPlayList(item: TubeDataModel?){
 //        val playListFragment = viewPagerAdapter.getPlayListFragment()
