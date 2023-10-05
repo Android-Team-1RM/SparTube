@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/video_detail_page_panel_layout"
@@ -25,16 +27,16 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
+            android:scaleType="fitXY"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:scaleType="fitXY"
             android:src="@drawable/video_detail_page_ic_btn_down"
-            app:tint="@color/light_blue" />
+            app:tint="@color/deep_blue" />
 
         <TextView
-            android:layout_width="303dp"
-            android:layout_height="27dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
@@ -43,9 +45,8 @@
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@+id/ic_btn_down"
             android:text="@string/tv_detailTitle"
-            android:textColor="@color/light_blue"
             android:textSize="26sp"
-            android:textStyle="bold" />
+            android:textColor="@color/deep_blue"/>
 
     </RelativeLayout>
 
@@ -92,17 +93,11 @@
 
 
 
-            <ImageView
-                android:id="@+id/iv_thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/video_detail_page_img_base" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -117,10 +112,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
-                        android:gravity="center"
-                        android:text="@string/tv_title"
+                        android:text="@string/tv_testShortDescription"
+                        android:textStyle="bold"
                         android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:gravity="center"/>
+
+
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
@@ -134,10 +131,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="12dp"
-                            android:text="@string/tv_description" />
+                            android:text="@string/tv_testLongDescription" />
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
         </LinearLayout>
     </ScrollView>
@@ -202,6 +202,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </androidx.appcompat.widget.AppCompatButton>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

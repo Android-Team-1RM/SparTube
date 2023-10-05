@@ -11,19 +11,23 @@
     <string name="tv_searchTitle"> Search </string>
 
     <!-- MyPage -->
-    <string name="tv_myPageTitle"> Favorite </string>
+    <string name="tv_mypageTitle"> Favorite </string>
 
     <!-- Detail -->
     <string name="tv_detailTitle"> Video Detail </string>
-    <string name="tv_title"> 항저우 아시안 게임 </string>
-    <string name="tv_description"> 항저우 2022 아시안게임 남자 축구 종목에서 대회 3연속 우승을 노리는 대한민국 축구 대표팀 </string>
     <string name="btn_like"> 좋아요 </string>
-    <string name="btn_share"> 공유하기 </string>
+    <string name="btn_share"> Share </string>
     <string name="btn_play_list"> 재생목록 추가하기 </string>
 
+
     <!-- Playlist -->
+    <string name="tv_playlistTitle"> Playlist </string>
+    <string name="et_playlistHint"> 재생목록 제목을 입력하세요 </string>
+    <string name="btn_playlistEdit"> 수 정 </string>
+    <string name="btn_playlistDelete"> 삭 제 </string>
 
     <!-- public -->
-    <string name="tv_testTitle"> 테스트용 제목으로 길게 한번 써볼게요 </string>
-    <string name="tv_testchannelsTitle"> 채널 테스트 </string>
+    <string name="tv_testShortDescription"> 항저우 아시안 게임 </string>
+    <string name ="tv_testLongDescription"> 항저우 2022 아시안게임 남자 축구 종목에서 대회 3연속 우승을 노리는 대한민국 축구 대표팀 </string>
+
 </resources>

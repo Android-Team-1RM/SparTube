@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.naebaecamteam1rm_spartube.api.Contants
 import com.example.naebaecamteam1rm_spartube.data.RetrofitInstance
@@ -22,6 +21,7 @@ import retrofit2.Response
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
+
     private val binding get() = _binding!!
 
     private var Q // 유튜브 검색값
@@ -49,8 +49,9 @@ class HomeFragment : Fragment() {
     private lateinit var smanager: LinearLayoutManager // 쇼츠 매니저
     private lateinit var cmanager: LinearLayoutManager // 채널 매니저
     private var nextPageToken: String? = null
-    private var nextPageTokenForShort:String? = null
-    private var nextPageTokenForChannel:String? = null
+    private var currentNextPageToken:String?= null
+    private var nextPageTokenForShort: String? = null
+    private var nextPageTokenForChannel: String? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -69,7 +70,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        infiniteScrollSet()
+        infiniteScrollSet()
 
     }
 
@@ -84,7 +85,7 @@ class HomeFragment : Fragment() {
         setMostPopulerShorts() // 쇼츠
         setCategoryCannels() // 카테고리 채널
         //모스트비디오 인피니티스크롤 적용
-        recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val lastVisibleItemPosition =
@@ -92,28 +93,33 @@ class HomeFragment : Fragment() {
                 val itemCount = listAdapter!!.itemCount - 1
                 Log.d("test7", "$lastVisibleItemPosition")
                 Log.d("test8", "$itemCount")
+                Log.d("test8", "$")
 
-                if (lastVisibleItemPosition == itemCount) {
+                if (!recyclerMpVideo.canScrollHorizontally(1) &&lastVisibleItemPosition == itemCount) {
                     infinityAddItems()
                 }
             }
         })
         //쇼츠 어뎁터 인피니티스크롤 적용
-        recyclerMpShorts.addOnScrollListener(object:RecyclerView.OnScrollListener(){
+        recyclerMpShorts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val lastVisibleItemPosition =
                     (recyclerMpShorts.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
                 val itemCount = listShortsAdapter!!.itemCount - 1
-                Log.d("test7", "$lastVisibleItemPosition")
-                Log.d("test8", "$itemCount")
-                if (lastVisibleItemPosition == itemCount) {
+                val test = recyclerMpShorts.scrollState
+//                Log.d("test7", "$lastVisibleItemPosition")
+//                Log.d("test8", "$itemCount")
+//                Log.d("test9", "$test")
+                if (!recyclerMpShorts.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
+                    Log.d("endScroll","endScroll")
                     infinityAddItemsShort()
+
                 }
             }
         })
         //채널 어뎁터 인피니티스크롤 적용
-        recyclerCategoryCannels.addOnScrollListener(object:RecyclerView.OnScrollListener(){
+        recyclerCategoryCannels.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 val lastVisibleItemPosition =
@@ -121,7 +127,7 @@ class HomeFragment : Fragment() {
                 val itemCount = listChannelAdapter!!.itemCount - 1
                 Log.d("test7", "$lastVisibleItemPosition")
                 Log.d("test8", "$itemCount")
-                if (lastVisibleItemPosition == itemCount) {
+                if (!recyclerCategoryCannels.canScrollHorizontally(1) && lastVisibleItemPosition == itemCount) {
                     infinityAddItemsChannel()
                 }
             }
@@ -131,9 +137,6 @@ class HomeFragment : Fragment() {
         vmanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerMpVideo.layoutManager = vmanager
         recyclerMpVideo.adapter = listAdapter
-        val pagerSnapHelper = PagerSnapHelper()
-        pagerSnapHelper.attachToRecyclerView(recyclerMpVideo)
-
 
         smanager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerMpShorts.layoutManager = smanager
@@ -166,13 +169,163 @@ class HomeFragment : Fragment() {
     }
 
 
+    //  scrolling banner
+    // viewPager쪽으로 하는게 더 편하다(처음 부터 미리 만들어진다) ++++      -> recyclerView 는 과부하가 없다
+    // 이 방법은 끊기는 느낌을 느낀다
+    // progressBarㄹ
+
+    private fun infiniteScrollSet() {
+        if (y_datas.isNotEmpty()) {
+            binding.recyclerMpVideo.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    if (!recyclerView.canScrollHorizontally(1)) {
+                        // 처음
+
+                        var changeDatas = y_datas
+
+                        for (i in 0 until 5) {
+                            changeDatas[y_datas.size - 6 + i] = y_datas[i]
+                        }
+
+                        for (i in 5 until y_datas.size) {
+                            changeDatas[i - 5] = y_datas[i]
+                        }
+
+                        y_datas.clear()
+                        y_datas.addAll(changeDatas)
+                        listAdapter.notifyDataSetChanged()
+                    } else if (!recyclerView.canScrollHorizontally(-1)) {
+                        // 끝에 도달
+
+                        var changeDatas = y_datas
+
+                        for (i in 0 until 5) {
+                            changeDatas[i] = y_datas[y_datas.size - 6 + i]
+                        }
+
+                        for (i in 5 until y_datas.size) {
+                            changeDatas[i] = y_datas[i - 5]
+                        }
+
+                        y_datas.clear()
+                        y_datas.addAll(changeDatas)
+                        listAdapter.notifyDataSetChanged()
+                    }
+                }
+            })
+        }
+        if (s_datas.isNotEmpty()) {
+            Log.d("set", "s_datas")
+            binding.recyclerMpShorts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+//                if(!recyclerView.canScrollHorizontally(1)){
+//                    // 끝에 도달
+//                    for(i in 0 until s_datas.size){
+//                        s_datas.add(s_datas[i])
+//                    }
+//                    listShortsAdapter.notifyDataSetChanged()
+//                }else if(!recyclerView.canScrollHorizontally(-1)){
+//                    //처음
+//                    for(i in 0 until 5){
+//                        s_datas.add(s_datas[i+5])
+//                    }
+//                    listShortsAdapter.notifyDataSetChanged()
+//                }
+
+
+                    if (!recyclerView.canScrollHorizontally(1)) {
+                        // 끝에 도달
+                        Log.d("set", "Bottom")
+                        var changeDatas = s_datas
+                        //처음꺼를 끝에 붙이기
+                        for (i in 0 until 5) {
+                            changeDatas[s_datas.size - 6 + i] = s_datas[i]
+                        }
+
+                        for (i in 5 until s_datas.size) {
+                            changeDatas[i - 5] = s_datas[i]
+                        }
+
+                        s_datas.clear()
+                        s_datas.addAll(changeDatas)
+                        listShortsAdapter.notifyDataSetChanged()
+                    } else if (!recyclerView.canScrollHorizontally(-1)) {
+                        //처음
+                        Log.d("set", "Top")
+                        var changeDatas = s_datas
+                        //끝에 있는거를 처음에 붙이기
+                        for (i in 0 until 5) {
+                            changeDatas[i] = s_datas[s_datas.size - 6 + i]
+                        }
+
+                        for (i in 5 until s_datas.size) {
+                            changeDatas[i] = s_datas[i - 5]
+                        }
+
+
+                        s_datas.clear()
+                        s_datas.addAll(changeDatas)
+                        listShortsAdapter.notifyDataSetChanged()
+                    }
+                }
+            })
+        }
+        if (c_datas.isNotEmpty()) {
+            binding.recyclerCategoryCannels.addOnScrollListener(object :
+                RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+
+
+                    if (!recyclerView.canScrollHorizontally(1)) {
+                        // 처음
+
+                        var changeDatas = c_datas
+
+                        for (i in 0 until 5) {
+                            changeDatas[c_datas.size - 6 + i] = c_datas[i]
+                        }
+
+                        for (i in 5 until c_datas.size) {
+                            changeDatas[i - 5] = c_datas[i]
+                        }
+
+                        c_datas.clear()
+                        c_datas.addAll(changeDatas)
+                        listChannelAdapter.notifyDataSetChanged()
+                    } else if (!recyclerView.canScrollHorizontally(-1)) {
+                        // 끝에 도달
+
+                        var changeDatas = c_datas
+
+                        for (i in 0 until 5) {
+                            changeDatas[i] = c_datas[c_datas.size - 6 + i]
+                        }
+
+                        for (i in 5 until c_datas.size) {
+                            changeDatas[i] = c_datas[i - 5]
+                        }
+
+                        c_datas.clear()
+                        c_datas.addAll(changeDatas)
+                        listChannelAdapter.notifyDataSetChanged()
+                    }
+                }
+            })
+        }
+    }
 
 
     // Most populer video 부분
     fun setMostPopulerVideo() = with(binding) {
 
         Q = "항저우 아시안게임"
-        RetrofitInstance.api.getList(Contants.MY_KEY, "snippet", Q, "video", MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getList(Contants.MY_KEY, "snippet", Q, "video", MAX_RESULTS)
+            ?.enqueue(object :
                 Callback<VideoDTO> {
                 override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                     if (response.isSuccessful) {//응답 성공시 실행
@@ -183,10 +336,11 @@ class HomeFragment : Fragment() {
                             return
                         } else {
                             nextPageToken = data?.nextPageToken
-                            Log.d("nextPageToken","$nextPageToken")
+
+                            Log.d("nextPageToken", "$nextPageToken")
                             for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 var title = youtubeList.get(i).snippet.title
-                                title = title.replace("&#39;","'")
+                                title = title.replace("&#39;", "'")
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
@@ -196,7 +350,7 @@ class HomeFragment : Fragment() {
                                 Log.d("title", "$title")
                                 Log.d("thumbnail", "$thumbnail")
                                 Log.d("description", "$description")
-                                Log.d("url","$url")
+                                Log.d("url", "$url")
 //                            Log.d("url","$url")
 
                                 y_datas.add(
@@ -207,15 +361,14 @@ class HomeFragment : Fragment() {
                                         videoId = videoID,
                                         url = url,
                                         channelId = channelID
-                                        )
+                                    )
                                 )
-
                                 Log.d("y_datas", "$y_datas")
                                 listAdapter.list = y_datas //리스트를 어댑터에 적용
                                 listAdapter.notifyDataSetChanged()// notity
 
-                            }
 
+                            }
                         }
 
                     }
@@ -226,13 +379,22 @@ class HomeFragment : Fragment() {
                 }
 
             })
+
     }
 
     // Most populer shorts 부분
     fun setMostPopulerShorts() = with(binding) {
-        Q = "황저우 아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/ -> 모든 쇼츠는 이 url을 가지고 잇어서 url제한을 하면 나올지도?
-                                        //videoCategoryId = "19" // videoDuration에서 short로 하고 필터로 시간 줄이기
-        RetrofitInstance.api.getShortsList(Contants.MY_KEY, "snippet", Q, videoDuration, "video", MAX_RESULTS)?.enqueue(object :
+        Q =
+            "황저우 아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/ -> 모든 쇼츠는 이 url을 가지고 잇어서 url제한을 하면 나올지도?
+        //videoCategoryId = "19" // videoDuration에서 short로 하고 필터로 시간 줄이기
+        RetrofitInstance.api.getShortsList(
+            Contants.MY_KEY,
+            "snippet",
+            Q,
+            videoDuration,
+            "video",
+            MAX_RESULTS
+        )?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
@@ -245,7 +407,7 @@ class HomeFragment : Fragment() {
                     } else {
                         for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
-                            title = title.replace("&#39;","'")
+                            title = title.replace("&#39;", "'")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
@@ -292,7 +454,8 @@ class HomeFragment : Fragment() {
 
         Q = "항저우 아시안게임"
         //channelId = "UCnXNukjRxXGD8aeZGRV-lYg" //스포타임 채널 ID
-        RetrofitInstance.api.getchannelList(Contants.MY_KEY, "snippet", Q, "channel", MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getchannelList(Contants.MY_KEY, "snippet", Q, "channel", MAX_RESULTS)
+            ?.enqueue(object :
                 Callback<VideoDTO> {
                 override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                     if (response.isSuccessful) {//응답 성공시 실행
@@ -305,7 +468,7 @@ class HomeFragment : Fragment() {
                         } else {
                             for (i in youtubeList.indices) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                                 var title = youtubeList.get(i).snippet.title
-                                title = title.replace("&#39;","'")
+                                title = title.replace("&#39;", "'")
                                 val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                                 val description = youtubeList.get(i).snippet.description
                                 val videoID = youtubeList.get(i).id.videoId
@@ -338,71 +501,97 @@ class HomeFragment : Fragment() {
 
                     }
                 }
+
                 override fun onFailure(call: Call<VideoDTO>, t: Throwable) {//실패시 찍히는 로그
                     Log.d("Channeltest", "Channelfail")
                 }
             })
     }
+
     fun infinityAddItems() {
-        Log.d("nextPageToken","$nextPageToken")
-        RetrofitInstance.api.getNextList(Contants.MY_KEY, "snippet", Q, "video",nextPageToken, MAX_RESULTS)?.enqueue(object :
-            Callback<VideoDTO> {
-            override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
-                if (response.isSuccessful) {//응답 성공시 실행
-                    Log.d("test", "Response")
-                    val data = response.body()
-                    val youtubeList = data?.items
-                    if (youtubeList == null) {// 가져온 데이터 없으면 리턴
-                        return
-                    } else {
-                        nextPageTokenForShort = data?.nextPageToken
-                        for (i in 1 until  youtubeList.size-1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
-                            var title = youtubeList.get(i).snippet.title
-                            title = title.replace("&#39;","'")
-                            val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
-                            val description = youtubeList.get(i).snippet.description
-                            val videoID = youtubeList.get(i).id.videoId
-                            val channelID = youtubeList.get(i).snippet.channelId
-                            var url = "https://www.youtube.com/watch?v=" + videoID
+        Log.d("nextPageToken", "$nextPageToken")
+        Log.d("currentNextPageToken","$currentNextPageToken")
+        if(nextPageToken == currentNextPageToken){
+            return
+        }else{
+            RetrofitInstance.api.getNextList(
+                Contants.MY_KEY,
+                "snippet",
+                Q,
+                "video",
+                nextPageToken,
+                MAX_RESULTS
+            )?.enqueue(object :
+                Callback<VideoDTO> {
+                override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
+                    if (response.isSuccessful) {//응답 성공시 실행
+                        Log.d("test", "Response")
+                        val data = response.body()
+                        val youtubeList = data?.items
+                        currentNextPageToken = data?.nextPageToken
+                        if (youtubeList == null) {// 가져온 데이터 없으면 리턴
+                            return
+                        } else {
+                            nextPageTokenForShort = data?.nextPageToken
+                            for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
+                                var title = youtubeList.get(i).snippet.title
+                                title = title.replace("&#39;", "'")
+                                val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
+                                val description = youtubeList.get(i).snippet.description
+                                val videoID = youtubeList.get(i).id.videoId
+                                val channelID = youtubeList.get(i).snippet.channelId
+                                var url = "https://www.youtube.com/watch?v=" + videoID
 //                            val url = data.etag
-                            Log.d("title", "$title")
-                            Log.d("thumbnail", "$thumbnail")
-                            Log.d("description", "$description")
-                            Log.d("url","$url")
+                                Log.d("title", "$title")
+                                Log.d("thumbnail", "$thumbnail")
+                                Log.d("description", "$description")
+                                Log.d("url", "$url")
 //                            Log.d("url","$url")
 
-                            y_datas.add(
-                                TubeDataModel(
-                                    title = title,
-                                    thumbnail = thumbnail,
-                                    description = description,
-                                    videoId = videoID,
-                                    url = url,
-                                    channelId = channelID
+                                y_datas.add(
+                                    TubeDataModel(
+                                        title = title,
+                                        thumbnail = thumbnail,
+                                        description = description,
+                                        videoId = videoID,
+                                        url = url,
+                                        channelId = channelID
+                                    )
                                 )
-                            )
-                            Log.d("y_datas", "$y_datas")
-                            listAdapter.list = y_datas //리스트를 어댑터에 적용
-                            listAdapter.notifyDataSetChanged()// notity
+                                Log.d("y_datas", "$y_datas")
+                                listAdapter.list = y_datas //리스트를 어댑터에 적용
+                                listAdapter.notifyDataSetChanged()// notity
 
+                            }
                         }
+
                     }
-
                 }
-            }
 
-            override fun onFailure(call: Call<VideoDTO>, t: Throwable) {//실패시 찍히는 로그
-                Log.d("test1", "fail")
-            }
+                override fun onFailure(call: Call<VideoDTO>, t: Throwable) {//실패시 찍히는 로그
+                    Log.d("test1", "fail")
+                }
 
-        })
+            })
+        }
+
 
     }
+
     fun infinityAddItemsShort() {
-        Log.d("nextPageTokenForShort","$nextPageTokenForShort")
-        Q = "황저우 아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/ -> 모든 쇼츠는 이 url을 가지고 잇어서 url제한을 하면 나올지도?
+        Log.d("nextPageTokenForShort", "$nextPageTokenForShort")
+        Q =
+            "황저우 아시안게임 쇼츠 shorts" // https://www.youtube.com/shorts/ -> 모든 쇼츠는 이 url을 가지고 잇어서 url제한을 하면 나올지도?
         //videoCategoryId = "19" // videoDuration에서 short로 하고 필터로 시간 줄이기
-        RetrofitInstance.api.getNextShortsList(Contants.MY_KEY, "snippet", Q,videoDuration,"video",nextPageTokenForShort, MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getNextShortsList(
+            Contants.MY_KEY,
+            "snippet",
+            Q,
+            videoDuration,
+            "video",
+            nextPageTokenForShort,
+            MAX_RESULTS
+        )?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
@@ -413,9 +602,9 @@ class HomeFragment : Fragment() {
                         return
                     } else {
                         nextPageToken = data?.nextPageToken
-                        for (i in 1 until  youtubeList.size-1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
+                        for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
-                            title = title.replace("&#39;","'")
+                            title = title.replace("&#39;", "'")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
@@ -425,7 +614,7 @@ class HomeFragment : Fragment() {
                             Log.d("title", "$title")
                             Log.d("thumbnail", "$thumbnail")
                             Log.d("description", "$description")
-                            Log.d("url","$url")
+                            Log.d("url", "$url")
 //                            Log.d("url","$url")
 
                             s_datas.add(
@@ -455,10 +644,18 @@ class HomeFragment : Fragment() {
         })
 
     }
+
     private fun infinityAddItemsChannel() {
-        Log.d("nextPageTokenForChannel","$nextPageTokenForChannel")
+        Log.d("nextPageTokenForChannel", "$nextPageTokenForChannel")
         Q = "황저우 아시안게임"
-        RetrofitInstance.api.getNextChannelList(Contants.MY_KEY, "snippet", Q,"Channel",nextPageTokenForShort, MAX_RESULTS)?.enqueue(object :
+        RetrofitInstance.api.getNextChannelList(
+            Contants.MY_KEY,
+            "snippet",
+            Q,
+            "Channel",
+            nextPageTokenForShort,
+            MAX_RESULTS
+        )?.enqueue(object :
             Callback<VideoDTO> {
             override fun onResponse(call: Call<VideoDTO>, response: Response<VideoDTO>) {
                 if (response.isSuccessful) {//응답 성공시 실행
@@ -469,9 +666,9 @@ class HomeFragment : Fragment() {
                         return
                     } else {
                         nextPageTokenForChannel = data?.nextPageToken
-                        for (i in 1 until  youtubeList.size-1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
+                        for (i in 1 until youtubeList.size - 1) { // 가져오고 싶은 데이터 불러오고 어뎁터에 저장하는 위치
                             var title = youtubeList.get(i).snippet.title
-                            title = title.replace("&#39;","'")
+                            title = title.replace("&#39;", "'")
                             val thumbnail = youtubeList.get(i).snippet.thumbnails.high.url
                             val description = youtubeList.get(i).snippet.description
                             val videoID = youtubeList.get(i).id.videoId
@@ -481,7 +678,7 @@ class HomeFragment : Fragment() {
                             Log.d("title", "$title")
                             Log.d("thumbnail", "$thumbnail")
                             Log.d("description", "$description")
-                            Log.d("url","$url")
+                            Log.d("url", "$url")
 //                            Log.d("url","$url")
 
                             c_datas.add(

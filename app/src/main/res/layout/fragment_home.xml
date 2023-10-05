@@ -20,12 +20,11 @@
             android:id="@+id/tv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:text="@string/tv_homeTitle"
             android:textColor="@color/deep_blue"
             android:textSize="26sp"
-            android:textStyle="bold" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 
@@ -34,15 +33,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rl_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/rl_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tv_mpVideo"
                 android:layout_width="match_parent"
@@ -82,7 +80,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_mpShorts" />
 
             <TextView
-                android:id="@+id/tv_categoryCannels"
+                android:id="@+id/tv_categoryChannels"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_categoryChannels"
@@ -98,8 +96,9 @@
                 android:layout_height="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_categoryCannels" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_categoryChannels" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

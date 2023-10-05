@@ -30,7 +30,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
@@ -38,7 +37,7 @@
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="@string/tv_testTitle"
+        android:text="@string/tv_testLongDescription"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
