@@ -16,7 +16,6 @@
 6. 트러블 슈팅
 7. 참고 자료 / 외부 리소스 정보
 8. 팀 노션 주소
-9. 라이센스
 
 ## 프로젝트 명
 Asian Game Clip
@@ -52,6 +51,7 @@ Asian Game Clip
 - 상세 정보(Detail) 페이지
   - 좋아요/즐겨찾기/링크공유 기능
   - 링크 공유시 url이 자동복사 되어 메시지로 전달 가능
+  - 썸네일 클릭 시 해당 비디오/쇼츠/채널 페이지로 이동동
 
 ## 🎉 팀원 및 역할 분담
 <table>
@@ -144,5 +144,3 @@ https://teamsparta.notion.site/16-Team-3-500-SA-4ee02e52d5fe4011a0643711d9ea6642
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"><img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"><img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white">
 
 <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=Kotlin&logoColor=white"><img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=Android&logoColor=white">
-
-##라이센스
